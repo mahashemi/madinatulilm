@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}{{ category.title_en }} — Announcements{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">{{ category.title_en }}</h1>
+    {% if category.title_ar %}<p class="page-header-subtitle">{{ category.title_ar }}</p>{% endif %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'announcements:home' %}">Announcements</a></li>
+        <li class="breadcrumb-item active">{{ category.title_en }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="py-6">
+  <div class="container">
+    {% if announcements %}
+    <div class="row g-4">
+      {% for ann in announcements %}
+      <div class="col-lg-6" data-aos="fade-up">
+        <div class="announcement-card {% if ann.is_pinned %}pinned{% endif %}">
+          {% if ann.is_pinned %}
+          <span class="pinned-badge"><i class="fas fa-thumbtack me-1"></i>Pinned</span>
+          {% endif %}
+          <div class="announcement-meta">
+            <span class="ann-category">{{ category.title_en }}</span>
+            <span class="ann-date"><i class="far fa-calendar-alt me-1"></i>{{ ann.publish_date }}</span>
+          </div>
+          <h5 class="announcement-title">{{ ann.title_en }}</h5>
+          {% if ann.title_ar %}<p class="announcement-title-ar">{{ ann.title_ar }}</p>{% endif %}
+          <div class="announcement-excerpt">{{ ann.body_en|safe|truncatewords_html:30 }}</div>
+          <div class="mt-3 d-flex gap-2">
+            <a href="{% url 'announcements:detail' ann.pk %}" class="btn btn-sm btn-gold">Read More</a>
+            {% if ann.attachment %}
+            <a href="{{ ann.attachment.url }}" class="btn btn-sm btn-outline-gold" download>
+              <i class="fas fa-paperclip me-1"></i>Attachment
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-6">
+      <div class="founder-photo-placeholder mx-auto mb-4" style="width:100px;height:100px;font-size:2.5rem;">
+        <i class="fas fa-bullhorn"></i>
+      </div>
+      <h5 class="text-muted">No {{ category.title_en }} announcements yet.</h5>
+      <p class="text-muted">Check back soon for updates.</p>
+      <a href="{% url 'announcements:home' %}" class="btn btn-outline-gold mt-3">
+        <i class="fas fa-arrow-left me-2"></i>Back to Announcements
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

@@ -28,6 +28,7 @@ def about(request):
         "mission": MissionSection.objects.filter(is_active=True).first(),
         "vision": VisionSection.objects.filter(is_active=True).first(),
         "trustees": Trustee.objects.filter(is_active=True),
+        "ijazat": Ijazah.objects.all().order_by("sort_order"),
         "gallery": MadrasahGallery.objects.filter(is_active=True),
     }
     return render(request, "core/about.html", context)

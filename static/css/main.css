@@ -5,6 +5,7 @@
 
 /* ── CSS Variables ──────────────────────────────────────── */
 :root {
+  /* ── Core palette ─────────────────────────────────── */
   --gold:        #c9a84c;
   --gold-light:  #e8c97a;
   --gold-dark:   #9a7a2e;
@@ -13,17 +14,38 @@
   --green-light: #3d7a52;
   --cream:       #faf6ee;
   --text-dark:   #1a1a1a;
-  --text-mid:    #444;
-  --text-light:  #888;
+  --text-mid:    #444444;
+  --text-light:  #888888;
   --white:       #ffffff;
   --border:      #e0d5c0;
+
+  /* ── Shadows ──────────────────────────────────────── */
   --shadow:      0 4px 24px rgba(0,0,0,0.10);
+  --shadow-md:   0 4px 24px rgba(0,0,0,0.10);
   --shadow-lg:   0 8px 40px rgba(0,0,0,0.16);
+
+  /* ── Radii ────────────────────────────────────────── */
   --radius:      12px;
   --radius-lg:   20px;
-  --font-body:   'Lato', sans-serif;
-  --font-head:   'Playfair Display', serif;
-  --font-arabic: 'Amiri', serif;
+
+  /* ── Typography ───────────────────────────────────── */
+  --font-body:    'Lato', sans-serif;
+  --font-head:    'Playfair Display', serif;
+  --font-arabic:  'Amiri', serif;
+  --font-primary: 'Playfair Display', serif;  /* alias for --font-head */
+
+  /* ── Semantic colour aliases (used in template inline styles) ── */
+  --color-navy:       #1a3a2a;   /* = --green-dark  */
+  --color-navy-light: #2d5a3d;   /* = --green-mid   */
+  --color-gold:       #c9a84c;   /* = --gold        */
+  --color-gold-dark:  #9a7a2e;   /* = --gold-dark   */
+  --color-white:      #ffffff;   /* = --white       */
+  --color-text-muted: #444444;   /* = --text-mid    */
+  --color-cream:      #faf6ee;   /* = --cream       */
+
+  /* ── RGB triplets for rgba() usage ───────────────── */
+  --color-navy-rgb:   26,58,42;
+  --color-gold-rgb:   201,168,76;
 }
 
 /* ── Reset & Base ───────────────────────────────────────── */

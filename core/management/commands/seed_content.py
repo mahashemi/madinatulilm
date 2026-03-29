@@ -30,6 +30,7 @@ class Command(BaseCommand):
         self._seed_about()
         self._seed_founder()
         self._seed_trustees()
+        self._seed_ijazat()
         self._seed_academic_programs()
         self._seed_subjects()
         self._seed_announcement_categories()
@@ -251,23 +252,58 @@ class Command(BaseCommand):
 
     # ── Trustees ───────────────────────────────────────────────────────────
     def _seed_trustees(self):
+        from django.core.files import File
+        import os
+
         trustees = [
-            dict(
-                name="Syed Minhal Hussain Rizvi",
-                designation="Principal & Founder — Centre of Fiqāhat",
-                phone="+91 8828073319",
-                sort_order=1,
-            ),
-            dict(
-                name="Maulana Syed Javed Akhtar",
-                designation="Vice Principal — Imam Juma wa Jama'at, Gopalpur",
-                phone="+91 9973559812",
-                sort_order=2,
-            ),
+            dict(name="Syed Minhal Hussain Rizvi",    designation="Principal & Founder — Centre of Fiqāhat",          phone="+91 8828073319", sort_order=1, photo_file="minhal.jpg"),
+            dict(name="Maulana Syed Javed Akhtar",    designation="Vice Principal — Imam Juma wa Jama'at, Gopalpur",  phone="+91 9973559812", sort_order=2, photo_file="javed_akhtar.jpg"),
+            dict(name="Mohammad Feroz Hashemi",       designation="Treasurer & Trustee — Muhammadiyah Trust",         phone="+91 9702289112", sort_order=3, photo_file="mohammad_feroz_hashemi.jpg"),
+            dict(name="Syed Abul Qasim",              designation="Trustee — Muhammadiyah Trust",                     phone="",              sort_order=4, photo_file="syed_abulqasim.jpg"),
+            dict(name="Syed Ali Abbas",               designation="Trustee — Muhammadiyah Trust",                     phone="",              sort_order=5, photo_file="syed_ali_abbas.jpg"),
+            dict(name="Syed Ehtesham Hussain",        designation="Trustee — Muhammadiyah Trust",                     phone="",              sort_order=6, photo_file="syed_ehtesham.jpg"),
+            dict(name="Syed MD Rizvi",                designation="Trustee — Muhammadiyah Trust",                     phone="",              sort_order=7, photo_file="syed_md_rizvi.jpg"),
+            dict(name="Syed MD Zahid",                designation="Trustee — Muhammadiyah Trust",                     phone="",              sort_order=8, photo_file="syed_md_zahid.jpg"),
+            dict(name="Ibrahim Chacha",               designation="Trustee — Muhammadiyah Trust",                     phone="",              sort_order=9, photo_file="ibrahim_chacha.jpg"),
         ]
+        media_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))), "media", "trustees")
         for t in trustees:
-            obj, created = Trustee.objects.get_or_create(name=t["name"], defaults=t)
+            photo_file = t.pop("photo_file")
+            obj, created = Trustee.objects.get_or_create(name=t["name"], defaults={**t, "is_active": True})
+            if obj.photo == "" or obj.photo is None or not obj.photo:
+                photo_path = os.path.join(media_dir, photo_file)
+                if os.path.exists(photo_path):
+                    with open(photo_path, "rb") as f:
+                        obj.photo.save(photo_file, File(f), save=True)
             self._log(f"Trustee: {t['name']}", created)
+
+    # ── Ijazat ─────────────────────────────────────────────────────────────
+    def _seed_ijazat(self):
+        from django.core.files import File
+        import os
+        from core.models import Ijazah
+
+        media_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))), "media", "ijazat")
+        ijazat = [
+            dict(title="Ijāzat Naql Riwāyat — Āyatullāh Ahmad Kalbasi",          from_scholar="Āyatullāh Ahmad Kalbasi",                ijazah_type="riwayat",   sort_order=1, photo_file="riwayat_kalbasi.jpg"),
+            dict(title="Ijāzat Naql Riwāyat — Āyatullāh Syed Kazim Mustafawi",   from_scholar="Āyatullāh Syed Kazim Mustafawi",         ijazah_type="riwayat",   sort_order=2, photo_file="riwayat_mustafawi.jpg"),
+            dict(title="Ijāzat Naql Riwāyat — Āyatullāh Nasir Makarem Shirazi",  from_scholar="Āyatullāh Nasir Makarem Shirazi",        ijazah_type="riwayat",   sort_order=3, photo_file="riwayat_makarem.jpg"),
+            dict(title="Ijāzat Naql Riwāyat — Āyatullāh Jafar Subhani (p.1)",   from_scholar="Āyatullāh Sheikh Jafar Subhani",         ijazah_type="riwayat",   sort_order=4, photo_file="riwayat_subhani_p1.jpg"),
+            dict(title="Ijāzat Naql Riwāyat — Āyatullāh Jafar Subhani (p.2)",   from_scholar="Āyatullāh Sheikh Jafar Subhani",         ijazah_type="riwayat",   sort_order=5, photo_file="riwayat_subhani_p2.jpg"),
+            dict(title="Ijāzat Wakalat — Āyatullāh Syed Kazim Mustafawi",        from_scholar="Āyatullāh Syed Kazim Mustafawi",         ijazah_type="wakalat",   sort_order=6, photo_file="wakalat_mustafawi.jpg"),
+            dict(title="Ijāzat Wakalat — Āyatullāh Nasir Makarem Shirazi",       from_scholar="Āyatullāh Nasir Makarem Shirazi",        ijazah_type="wakalat",   sort_order=7, photo_file="wakalat_makarem.jpg"),
+            dict(title="Ijāzat Wakalat — Āyatullāh Syed Musa Shubayri Zanjani", from_scholar="Āyatullāh Syed Musa Shubayri Zanjani",   ijazah_type="wakalat",   sort_order=8, photo_file="wakalat_zanjani.jpg"),
+            dict(title="Ijāzat Sahm-e-Imam — Āyatullāh Syed Ali Sistani",       from_scholar="Āyatullāh Syed Ali Hussaini Sistani",    ijazah_type="sahm_imam", sort_order=9, photo_file="sahm_sistani.jpg"),
+        ]
+        for ij in ijazat:
+            photo_file = ij.pop("photo_file")
+            obj, created = Ijazah.objects.get_or_create(title=ij["title"], defaults=ij)
+            if not obj.image:
+                photo_path = os.path.join(media_dir, photo_file)
+                if os.path.exists(photo_path):
+                    with open(photo_path, "rb") as f:
+                        obj.image.save(photo_file, File(f), save=True)
+            self._log(f"Ijazah: {ij['title'][:50]}", created)
 
     # ── Academic Programs ──────────────────────────────────────────────────
     def _seed_academic_programs(self):

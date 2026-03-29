@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}{{ category.title_en }} — Books & Articles{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">{{ category.title_en }}</h1>
+    {% if category.title_ar %}<p class="page-header-subtitle">{{ category.title_ar }}</p>{% endif %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'books:home' %}">Books & Articles</a></li>
+        <li class="breadcrumb-item active">{{ category.title_en }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="py-6">
+  <div class="container">
+    {% if books %}
+    <div class="row g-4">
+      {% for book in books %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up">
+        <div class="resource-card h-100 d-flex flex-column">
+          {% if book.cover_image %}
+          <div class="resource-cover mb-3">
+            <img src="{{ book.cover_image.url }}" alt="{{ book.title_en }}" class="img-fluid rounded" style="max-height:180px;object-fit:cover;width:100%;">
+          </div>
+          {% else %}
+          <div class="book-cover-placeholder mb-3 rounded" style="height:120px;">
+            <i class="fas fa-book-open"></i>
+          </div>
+          {% endif %}
+          <div class="resource-type-badge {{ book.content_type }}">{{ book.get_content_type_display }}</div>
+          <h6 class="resource-title mt-2">{{ book.title_en }}</h6>
+          {% if book.title_ar %}<p class="resource-title-ar">{{ book.title_ar }}</p>{% endif %}
+          {% if book.author %}<p class="text-muted small"><i class="fas fa-user-edit me-1"></i>{{ book.author }}</p>{% endif %}
+          {% if book.language %}<p class="text-muted small"><i class="fas fa-language me-1"></i>{{ book.language }}</p>{% endif %}
+          <div class="d-flex gap-2 mt-auto pt-3">
+            <a href="{% url 'books:detail' book.pk %}" class="btn btn-sm btn-gold flex-fill">View</a>
+            {% if book.is_downloadable and book.pdf_file %}
+            <a href="{% url 'books:download' book.pk %}" class="btn btn-sm btn-outline-gold flex-fill">
+              <i class="fas fa-download me-1"></i>PDF
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-6">
+      <div class="founder-photo-placeholder mx-auto mb-4" style="width:100px;height:100px;font-size:2.5rem;">
+        <i class="fas fa-books"></i>
+      </div>
+      <h5 class="text-muted">No {{ category.title_en }} resources yet.</h5>
+      <p class="text-muted">Resources will be added to this category shortly.</p>
+      <a href="{% url 'books:home' %}" class="btn btn-outline-gold mt-3">
+        <i class="fas fa-arrow-left me-2"></i>Back to Library
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}
