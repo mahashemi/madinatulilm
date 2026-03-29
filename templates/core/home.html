@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero-section">
+  <div class="hero-overlay"></div>
+  <div class="container h-100">
+    <div class="row h-100 align-items-center">
+      <div class="col-lg-8" data-aos="fade-up">
+        <p class="hero-bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+        <h1 class="hero-title-ar">مدرسة مدينة العلم</h1>
+        <h2 class="hero-title-en">Madrasah Madinatul Ilm</h2>
+        <p class="hero-subtitle">Centre of Fiqāhat — Under Muhammadiyah Trust</p>
+        <p class="hero-tagline">
+          {% if welcome %}{{ welcome.body_en|striptags|truncatewords:25 }}{% else %}
+          A premier Shia Islamic Seminary dedicated to advancing the legacy of knowledge, ethics, and Islamic civilisation in India.
+          {% endif %}
+        </p>
+        <div class="hero-btns d-flex flex-wrap gap-3 mt-4">
+          <a href="{% url 'core:about' %}" class="btn btn-gold btn-lg">
+            <i class="fas fa-info-circle me-2"></i>About Us
+          </a>
+          <a href="{% url 'lessons:home' %}" class="btn btn-outline-light btn-lg">
+            <i class="fas fa-chalkboard-teacher me-2"></i>Explore Lessons
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Scroll indicator -->
+  <div class="hero-scroll-indicator">
+    <i class="fas fa-chevron-down"></i>
+  </div>
+</section>
+
+<!-- ═══════════════ WELCOME BANNER ═══════════════ -->
+{% if welcome %}
+<section class="welcome-banner py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-9 text-center" data-aos="fade-up">
+        <div class="section-ornament">❖</div>
+        <h2 class="section-title">{{ welcome.title_en }}</h2>
+        <div class="welcome-text">{{ welcome.body_en|safe }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ═══════════════ STATS BAR ═══════════════ -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="row g-0 text-center">
+      <div class="col-6 col-md-3 stat-item" data-aos="fade-up" data-aos-delay="0">
+        <i class="fas fa-graduation-cap stat-icon"></i>
+        <div class="stat-number">8+</div>
+        <div class="stat-label">Academic Disciplines</div>
+      </div>
+      <div class="col-6 col-md-3 stat-item" data-aos="fade-up" data-aos-delay="100">
+        <i class="fas fa-scroll stat-icon"></i>
+        <div class="stat-number">4</div>
+        <div class="stat-label">Ijazāt from Grand Ayatollahs</div>
+      </div>
+      <div class="col-6 col-md-3 stat-item" data-aos="fade-up" data-aos-delay="200">
+        <i class="fas fa-mosque stat-icon"></i>
+        <div class="stat-number">2026</div>
+        <div class="stat-label">Year Founded</div>
+      </div>
+      <div class="col-6 col-md-3 stat-item" data-aos="fade-up" data-aos-delay="300">
+        <i class="fas fa-map-marker-alt stat-icon"></i>
+        <div class="stat-number">Bihar</div>
+        <div class="stat-label">Gopalpur, Siwan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ MISSION & VISION ═══════════════ -->
+<section class="mission-vision-section py-6">
+  <div class="container">
+    <div class="row g-5">
+      {% if mission %}
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="mv-card mission-card">
+          <div class="mv-icon"><i class="fas fa-bullseye"></i></div>
+          <h3 class="mv-title">{{ mission.title_en }}</h3>
+          <div class="mv-text">{{ mission.body_en|safe }}</div>
+        </div>
+      </div>
+      {% endif %}
+      {% if vision %}
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="mv-card vision-card">
+          <div class="mv-icon"><i class="fas fa-eye"></i></div>
+          <h3 class="mv-title">{{ vision.title_en }}</h3>
+          <div class="mv-text">{{ vision.body_en|safe }}</div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ACADEMIC PROGRAMS ═══════════════ -->
+{% if programs %}
+<section class="programs-section py-6 section-bg-light">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-ornament">❖</div>
+      <h2 class="section-title">Academic Programs</h2>
+      <p class="section-subtitle">Core disciplines offered at Madrasah Madinatul Ilm</p>
+    </div>
+    <div class="row g-4">
+      {% for program in programs %}
+      <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:"0" }}00">
+        <div class="program-card">
+          <div class="program-icon">
+            <i class="{{ program.icon_class|default:'fas fa-book' }}"></i>
+          </div>
+          <h5 class="program-title">{{ program.title_en }}</h5>
+          {% if program.title_ar %}
+          <p class="program-title-ar">{{ program.title_ar }}</p>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-5">
+      <a href="{% url 'core:academics' %}" class="btn btn-gold">
+        <i class="fas fa-graduation-cap me-2"></i>View Full Curriculum
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ═══════════════ LATEST ANNOUNCEMENTS ═══════════════ -->
+{% if latest_announcements %}
+<section class="announcements-section py-6">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-5" data-aos="fade-up">
+      <div>
+        <div class="section-ornament text-start">❖</div>
+        <h2 class="section-title mb-0">Latest Announcements</h2>
+      </div>
+      <a href="{% url 'announcements:home' %}" class="btn btn-outline-gold">View All</a>
+    </div>
+    <div class="row g-4">
+      {% for ann in latest_announcements %}
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+        <div class="announcement-card {% if ann.is_pinned %}pinned{% endif %}">
+          {% if ann.is_pinned %}<span class="pinned-badge"><i class="fas fa-thumbtack"></i> Pinned</span>{% endif %}
+          <div class="ann-category">{{ ann.category.title_en }}</div>
+          <h6 class="ann-title">{{ ann.title_en }}</h6>
+          <p class="ann-date"><i class="fas fa-calendar-alt me-1"></i>{{ ann.publish_date }}</p>
+          <a href="{% url 'announcements:detail' ann.pk %}" class="ann-read-more">Read more <i class="fas fa-arrow-right ms-1"></i></a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ═══════════════ LATEST LESSONS ═══════════════ -->
+{% if latest_lessons %}
+<section class="lessons-section py-6 section-bg-light">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-5" data-aos="fade-up">
+      <div>
+        <div class="section-ornament text-start">❖</div>
+        <h2 class="section-title mb-0">Latest Lessons</h2>
+      </div>
+      <a href="{% url 'lessons:home' %}" class="btn btn-outline-gold">View All</a>
+    </div>
+    <div class="row g-4">
+      {% for series in latest_lessons %}
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+        <div class="lesson-card">
+          {% if series.thumbnail %}
+            <div class="lesson-thumb"><img src="{{ series.thumbnail.url }}" alt="{{ series.title_en }}"></div>
+          {% else %}
+            <div class="lesson-thumb-placeholder"><i class="fas fa-chalkboard-teacher"></i></div>
+          {% endif %}
+          <div class="lesson-body">
+            <span class="lesson-subject-badge">{{ series.subject.title_en }}</span>
+            <h6 class="lesson-title">{{ series.title_en }}</h6>
+            {% if series.instructor %}<p class="lesson-instructor"><i class="fas fa-user-tie me-1"></i>{{ series.instructor }}</p>{% endif %}
+            <a href="{% url 'lessons:series' series.pk %}" class="btn btn-sm btn-gold w-100 mt-2">View Series</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ═══════════════ LATEST BOOKS ═══════════════ -->
+{% if latest_books %}
+<section class="books-section py-6">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-5" data-aos="fade-up">
+      <div>
+        <div class="section-ornament text-start">❖</div>
+        <h2 class="section-title mb-0">Books & Articles</h2>
+      </div>
+      <a href="{% url 'books:home' %}" class="btn btn-outline-gold">View Library</a>
+    </div>
+    <div class="row g-4">
+      {% for book in latest_books %}
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+        <div class="book-card">
+          {% if book.cover_image %}
+            <div class="book-cover"><img src="{{ book.cover_image.url }}" alt="{{ book.title_en }}"></div>
+          {% else %}
+            <div class="book-cover-placeholder"><i class="fas fa-book-open"></i></div>
+          {% endif %}
+          <div class="book-body">
+            <span class="book-cat-badge">{{ book.category.title_en }}</span>
+            <h6 class="book-title">{{ book.title_en }}</h6>
+            {% if book.title_ar %}<p class="book-title-ar">{{ book.title_ar }}</p>{% endif %}
+            {% if book.author %}<p class="book-author"><i class="fas fa-pen-nib me-1"></i>{{ book.author }}</p>{% endif %}
+            <div class="d-flex gap-2 mt-2">
+              <a href="{% url 'books:detail' book.pk %}" class="btn btn-sm btn-outline-gold flex-fill">Details</a>
+              {% if book.is_downloadable and book.pdf_file %}
+              <a href="{% url 'books:download' book.pk %}" class="btn btn-sm btn-gold flex-fill"><i class="fas fa-download me-1"></i>PDF</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ═══════════════ GALLERY STRIP ═══════════════ -->
+{% if gallery %}
+<section class="gallery-strip py-6 section-bg-dark">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-ornament text-gold">❖</div>
+      <h2 class="section-title text-white">Gallery</h2>
+    </div>
+    <div class="row g-3">
+      {% for item in gallery %}
+      <div class="col-6 col-md-4 col-lg-2" data-aos="zoom-in" data-aos-delay="{{ forloop.counter0 }}00">
+        <a href="{{ item.image.url }}" class="gallery-thumb" data-bs-toggle="tooltip" title="{{ item.caption }}">
+          <img src="{{ item.image.url }}" alt="{{ item.title }}" class="img-fluid rounded">
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+      <a href="{% url 'core:gallery' %}" class="btn btn-gold">View Full Gallery</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ═══════════════ CTA STRIP ═══════════════ -->
+<section class="cta-section py-5">
+  <div class="container text-center" data-aos="fade-up">
+    <h2 class="cta-title">وَقُل رَّبِّ زِدۡنِي عِلۡمٗا</h2>
+    <p class="cta-translation">"And say: My Lord, increase me in knowledge." — Qurʾān 20:114</p>
+    <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+      <a href="{% url 'contact:contact' %}" class="btn btn-gold btn-lg">
+        <i class="fas fa-envelope me-2"></i>Get In Touch
+      </a>
+      <a href="{% url 'contact:ask' %}" class="btn btn-outline-light btn-lg">
+        <i class="fas fa-question-circle me-2"></i>Ask a Question
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

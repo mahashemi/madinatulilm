@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}About Us{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">About Us</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="breadcrumb-item active">About Us</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="py-6">
+  <div class="container">
+    {% if about %}
+    <div class="row justify-content-center mb-6" data-aos="fade-up">
+      <div class="col-lg-9">
+        <div class="content-block">
+          <div class="section-ornament">❖</div>
+          <h2 class="section-title">{{ about.title_en }}</h2>
+          <div class="rich-text">{{ about.body_en|safe }}</div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if mission or vision %}
+    <div class="row g-5 mb-6">
+      {% if mission %}
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="mv-card mission-card h-100">
+          <div class="mv-icon"><i class="fas fa-bullseye"></i></div>
+          <h3 class="mv-title">{{ mission.title_en }}</h3>
+          <div class="mv-text">{{ mission.body_en|safe }}</div>
+        </div>
+      </div>
+      {% endif %}
+      {% if vision %}
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="mv-card vision-card h-100">
+          <div class="mv-icon"><i class="fas fa-eye"></i></div>
+          <h3 class="mv-title">{{ vision.title_en }}</h3>
+          <div class="mv-text">{{ vision.body_en|safe }}</div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% if trustees %}
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-ornament">❖</div>
+      <h2 class="section-title">Board of Trustees</h2>
+    </div>
+    <div class="row g-4">
+      {% for trustee in trustees %}
+      <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+        <div class="trustee-card text-center">
+          {% if trustee.photo %}
+            <img src="{{ trustee.photo.url }}" alt="{{ trustee.name }}" class="trustee-photo">
+          {% else %}
+            <div class="trustee-photo-placeholder"><i class="fas fa-user-tie"></i></div>
+          {% endif %}
+          <h6 class="trustee-name mt-3">{{ trustee.name }}</h6>
+          {% if trustee.designation %}<p class="trustee-designation">{{ trustee.designation }}</p>{% endif %}
+          {% if trustee.phone %}<p class="trustee-phone"><i class="fas fa-phone-alt me-1"></i>{{ trustee.phone }}</p>{% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

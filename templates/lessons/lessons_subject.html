@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{ subject.title_en }} Lessons{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">{{ subject.title_en }}</h1>
+    {% if subject.title_ar %}<p class="page-header-subtitle">{{ subject.title_ar }}</p>{% endif %}
+    <nav aria-label="breadcrumb"><ol class="breadcrumb justify-content-center">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'lessons:home' %}">Lessons</a></li>
+      <li class="breadcrumb-item active">{{ subject.title_en }}</li>
+    </ol></nav>
+  </div>
+</div>
+<section class="py-6">
+  <div class="container">
+    {% if series_list %}
+    <div class="row g-4">
+      {% for series in series_list %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up">
+        <div class="lesson-card">
+          {% if series.thumbnail %}<div class="lesson-thumb"><img src="{{ series.thumbnail.url }}" alt="{{ series.title_en }}"></div>
+          {% else %}<div class="lesson-thumb-placeholder"><i class="{{ subject.icon_class|default:'fas fa-book' }}"></i></div>{% endif %}
+          <div class="lesson-body">
+            <span class="lesson-subject-badge">{{ subject.title_en }}</span>
+            <h6 class="lesson-title mt-2">{{ series.title_en }}</h6>
+            {% if series.instructor %}<p class="lesson-instructor"><i class="fas fa-chalkboard-teacher me-1"></i>{{ series.instructor }}</p>{% endif %}
+            <a href="{% url 'lessons:series' series.pk %}" class="btn btn-sm btn-gold mt-2">View Series</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+      <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
+      <h5 class="text-muted">No lessons in {{ subject.title_en }} yet.</h5>
+      <p class="text-muted">Check back soon — lessons are being added.</p>
+      <a href="{% url 'lessons:home' %}" class="btn btn-outline-gold mt-2"><i class="fas fa-arrow-left me-2"></i>Back to Lessons</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

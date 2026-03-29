@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{{ book.title_en }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">{{ book.title_en }}</h1>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb justify-content-center">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'books:home' %}">Books & Articles</a></li>
+      <li class="breadcrumb-item active">{{ book.title_en|truncatewords:5 }}</li>
+    </ol></nav>
+  </div>
+</div>
+<section class="py-6">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-3 text-center" data-aos="fade-right">
+        {% if book.cover_image %}<img src="{{ book.cover_image.url }}" alt="{{ book.title_en }}" class="img-fluid rounded shadow mb-3">
+        {% else %}<div class="book-cover-placeholder rounded mb-3" style="height:280px;"><i class="fas fa-book-open"></i></div>{% endif %}
+        {% if book.is_downloadable and book.pdf_file %}
+        <a href="{% url 'books:download' book.pk %}" class="btn btn-gold w-100"><i class="fas fa-download me-2"></i>Download PDF</a>
+        {% endif %}
+        {% if book.external_url %}
+        <a href="{{ book.external_url }}" class="btn btn-outline-gold w-100 mt-2" target="_blank"><i class="fas fa-external-link-alt me-2"></i>External Link</a>
+        {% endif %}
+      </div>
+      <div class="col-lg-9" data-aos="fade-left">
+        <div class="detail-card">
+          <span class="book-cat-badge mb-3 d-inline-block">{{ book.category.title_en }}</span>
+          <h2 class="detail-title">{{ book.title_en }}</h2>
+          {% if book.title_ar %}<p class="detail-title-ar">{{ book.title_ar }}</p>{% endif %}
+          <table class="table table-sm mt-3">
+            {% if book.author %}<tr><th>Author</th><td>{{ book.author }}</td></tr>{% endif %}
+            {% if book.language %}<tr><th>Language</th><td>{{ book.language }}</td></tr>{% endif %}
+            {% if book.pages %}<tr><th>Pages</th><td>{{ book.pages }}</td></tr>{% endif %}
+            {% if book.published_year %}<tr><th>Year</th><td>{{ book.published_year }}</td></tr>{% endif %}
+          </table>
+          {% if book.description_en %}<div class="rich-text mt-4">{{ book.description_en|safe }}</div>{% endif %}
+          <div class="mt-4"><a href="{% url 'books:home' %}" class="btn btn-outline-gold"><i class="fas fa-arrow-left me-2"></i>Back to Library</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

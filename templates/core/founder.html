@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Biography of the Founder{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">Biography of the Founder</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="breadcrumb-item active">Founder</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="py-6">
+  <div class="container">
+    {% if founder %}
+    <div class="row g-5 mb-6" data-aos="fade-up">
+      <div class="col-lg-3 text-center">
+        {% if founder.photo %}
+          <img src="{{ founder.photo.url }}" alt="{{ founder.name_en }}" class="founder-photo img-fluid rounded-circle shadow">
+        {% else %}
+          <div class="founder-photo-placeholder"><i class="fas fa-user-graduate"></i></div>
+        {% endif %}
+        <h4 class="founder-name mt-3">{{ founder.name_en }}</h4>
+        {% if founder.name_ur %}<p class="founder-name-ur">{{ founder.name_ur }}</p>{% endif %}
+        {% if founder.title_en %}<p class="founder-title">{{ founder.title_en }}</p>{% endif %}
+        {% if founder.phone %}<p><i class="fas fa-phone-alt me-1 text-gold"></i><a href="tel:{{ founder.phone }}">{{ founder.phone }}</a></p>{% endif %}
+      </div>
+      <div class="col-lg-9">
+        <div class="section-ornament">❖</div>
+        <h2 class="section-title">باسمہ تعالی</h2>
+        {% if founder.biography_ur %}
+        <div class="rich-text rtl-text mb-4">{{ founder.biography_ur|safe }}</div>
+        {% endif %}
+        {% if founder.biography_en %}
+        <div class="rich-text">{{ founder.biography_en|safe }}</div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if ijazat %}
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-ornament">❖</div>
+      <h2 class="section-title">Ijazāt (Scholarly Certifications)</h2>
+      <p class="section-subtitle">Certifications received from Grand Ayatollahs</p>
+    </div>
+
+    <!-- Riwayat -->
+    <h4 class="ijazah-type-heading mb-4">Ijazāt Naql Riwayat</h4>
+    <div class="row g-4 mb-5">
+      {% for ijazah in ijazat %}{% if ijazah.ijazah_type == 'riwayat' %}
+      <div class="col-lg-3 col-md-4 col-6" data-aos="zoom-in">
+        <div class="ijazah-card">
+          <a href="{{ ijazah.image.url }}" target="_blank">
+            <img src="{{ ijazah.image.url }}" alt="{{ ijazah.title }}" class="img-fluid rounded">
+          </a>
+          <p class="ijazah-from mt-2">{{ ijazah.from_scholar }}</p>
+        </div>
+      </div>
+      {% endif %}{% endfor %}
+    </div>
+
+    <!-- Wakalat -->
+    <h4 class="ijazah-type-heading mb-4">Ijazāt Wakalat & Sahm Imam</h4>
+    <div class="row g-4">
+      {% for ijazah in ijazat %}{% if ijazah.ijazah_type != 'riwayat' %}
+      <div class="col-lg-3 col-md-4 col-6" data-aos="zoom-in">
+        <div class="ijazah-card">
+          <a href="{{ ijazah.image.url }}" target="_blank">
+            <img src="{{ ijazah.image.url }}" alt="{{ ijazah.title }}" class="img-fluid rounded">
+          </a>
+          <p class="ijazah-from mt-2">{{ ijazah.from_scholar }}</p>
+        </div>
+      </div>
+      {% endif %}{% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

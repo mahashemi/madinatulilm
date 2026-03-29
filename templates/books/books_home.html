@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Books & Articles{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">Books & Articles</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="breadcrumb-item active">Books & Articles</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="py-6">
+  <div class="container">
+    <!-- Category Filter -->
+    <div class="category-filter-bar mb-5" data-aos="fade-up">
+      <a href="{% url 'books:home' %}" class="filter-btn active">All</a>
+      {% for cat in categories %}
+      <a href="{% url 'books:category' cat.slug %}" class="filter-btn">{{ cat.title_en }}</a>
+      {% endfor %}
+    </div>
+
+    <div class="row g-4">
+      {% for book in books %}
+      <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up">
+        <div class="book-card">
+          {% if book.cover_image %}
+            <div class="book-cover"><img src="{{ book.cover_image.url }}" alt="{{ book.title_en }}"></div>
+          {% else %}
+            <div class="book-cover-placeholder"><i class="fas fa-book-open"></i></div>
+          {% endif %}
+          <div class="book-body">
+            <span class="book-cat-badge">{{ book.category.title_en }}</span>
+            <h6 class="book-title">{{ book.title_en }}</h6>
+            {% if book.title_ar %}<p class="book-title-ar">{{ book.title_ar }}</p>{% endif %}
+            {% if book.author %}<p class="book-author"><i class="fas fa-pen-nib me-1"></i>{{ book.author }}</p>{% endif %}
+            <div class="d-flex gap-2 mt-2">
+              <a href="{% url 'books:detail' book.pk %}" class="btn btn-sm btn-outline-gold flex-fill">Details</a>
+              {% if book.is_downloadable and book.pdf_file %}
+              <a href="{% url 'books:download' book.pk %}" class="btn btn-sm btn-gold flex-fill"><i class="fas fa-download me-1"></i>PDF</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center text-muted py-5">No books available yet.</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

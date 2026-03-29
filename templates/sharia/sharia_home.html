@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Sharia Matters{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">Sharia Matters</h1>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb justify-content-center">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+      <li class="breadcrumb-item active">Sharia Matters</li>
+    </ol></nav>
+  </div>
+</div>
+<section class="py-6">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-ornament">❖</div>
+      <h2 class="section-title">Islamic Disciplines</h2>
+      <p class="section-subtitle">Browse content by discipline</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+      {% for cat in categories %}
+      <div class="col-lg-3 col-md-4" data-aos="fade-up">
+        <a href="{% url 'sharia:category' cat.name %}" class="subject-card-link">
+          <div class="subject-card text-center">
+            <div class="subject-icon"><i class="{{ cat.icon_class|default:'fas fa-star-and-crescent' }}"></i></div>
+            <h5 class="subject-title">{{ cat.title_en }}</h5>
+            {% if cat.title_ar %}<p class="subject-title-ar">{{ cat.title_ar }}</p>{% endif %}
+          </div>
+        </a>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center text-muted py-5">No categories available yet.</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ content.title_en }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">{{ content.category.title_en }}</h1>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb justify-content-center">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'sharia:home' %}">Sharia Matters</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'sharia:category' content.category.name %}">{{ content.category.title_en }}</a></li>
+      <li class="breadcrumb-item active">{{ content.title_en|truncatewords:5 }}</li>
+    </ol></nav>
+  </div>
+</div>
+<section class="py-6">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <div class="detail-card" data-aos="fade-up">
+          <h2 class="detail-title">{{ content.title_en }}</h2>
+          {% if content.title_ar %}<p class="detail-title-ar">{{ content.title_ar }}</p>{% endif %}
+          {% if content.body_en %}<div class="rich-text">{{ content.body_en|safe }}</div>{% endif %}
+          {% if content.body_ar %}<div class="rich-text rtl-text mt-4">{{ content.body_ar|safe }}</div>{% endif %}
+          {% if content.body_ur %}<div class="rich-text rtl-text mt-4">{{ content.body_ur|safe }}</div>{% endif %}
+          {% if content.pdf_file %}
+          <div class="mt-4"><a href="{{ content.pdf_file.url }}" class="btn btn-gold" download><i class="fas fa-download me-2"></i>Download PDF</a></div>
+          {% endif %}
+          <div class="mt-5">
+            <a href="{% url 'sharia:category' content.category.name %}" class="btn btn-outline-gold"><i class="fas fa-arrow-left me-2"></i>Back</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

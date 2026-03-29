@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Lessons{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">Lessons</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="breadcrumb-item active">Lessons</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="py-6">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-ornament">❖</div>
+      <h2 class="section-title">Choose a Discipline</h2>
+    </div>
+    <div class="row g-4">
+      {% for subject in subjects %}
+      <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+        <a href="{% url 'lessons:subject' subject.slug %}" class="subject-card-link">
+          <div class="subject-card">
+            <div class="subject-icon"><i class="{{ subject.icon_class|default:'fas fa-book' }}"></i></div>
+            <h5 class="subject-title">{{ subject.title_en }}</h5>
+            {% if subject.title_ar %}<p class="subject-title-ar">{{ subject.title_ar }}</p>{% endif %}
+          </div>
+        </a>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center text-muted py-5">No subjects available yet.</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

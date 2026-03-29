@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Gallery{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">Gallery</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="breadcrumb-item active">Gallery</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="py-6">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-ornament">❖</div>
+      <h2 class="section-title">Madrasah Gallery</h2>
+      <p class="section-subtitle">Glimpses of our learning environment and community</p>
+    </div>
+
+    {% if gallery %}
+    <div class="row g-3">
+      {% for item in gallery %}
+      <div class="col-lg-4 col-md-6 col-6" data-aos="zoom-in" data-aos-delay="{{ forloop.counter0 }}00">
+        <a href="{{ item.image.url }}" class="gallery-thumb d-block overflow-hidden rounded" style="height:220px;">
+          <img src="{{ item.image.url }}" alt="{{ item.title }}"
+               class="w-100 h-100 object-fit-cover"
+               style="object-fit:cover; transition: transform 0.35s;">
+        </a>
+        {% if item.caption %}
+        <p class="text-muted small mt-1 text-center">{{ item.caption }}</p>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-6">
+      <div class="founder-photo-placeholder mx-auto mb-4" style="width:120px;height:120px;font-size:3rem;">
+        <i class="fas fa-images"></i>
+      </div>
+      <h5 class="text-muted">Gallery coming soon</h5>
+      <p class="text-muted">Photos of the madrasah will be uploaded shortly.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

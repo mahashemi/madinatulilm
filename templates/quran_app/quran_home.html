@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Quran{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">القرآن الكريم</h1>
+    <p class="page-header-subtitle">Al-Qurʾān al-Karīm</p>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="breadcrumb-item active">Quran</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="py-6">
+  <div class="container">
+    <!-- Type Filter -->
+    <div class="category-filter-bar mb-5" data-aos="fade-up">
+      <a href="{% url 'quran:home' %}" class="filter-btn {% if not resource_type %}active{% endif %}">All</a>
+      {% for value, label in resource_types %}
+      <a href="?type={{ value }}" class="filter-btn {% if resource_type == value %}active{% endif %}">{{ label }}</a>
+      {% endfor %}
+    </div>
+
+    <div class="row g-4">
+      {% for res in resources %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up">
+        <div class="resource-card">
+          <div class="resource-type-badge {{ res.resource_type }}">{{ res.get_resource_type_display }}</div>
+          <h6 class="resource-title">{{ res.title }}</h6>
+          {% if res.title_ar %}<p class="resource-title-ar">{{ res.title_ar }}</p>{% endif %}
+          {% if res.surah_name %}<p class="text-muted small"><i class="fas fa-bookmark me-1"></i>{{ res.surah_name }}</p>{% endif %}
+          <a href="{% url 'quran:detail' res.pk %}" class="btn btn-sm btn-gold mt-2">View</a>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center text-muted py-5">No Quran resources yet.</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

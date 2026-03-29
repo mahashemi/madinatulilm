@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Announcements{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">Announcements</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="breadcrumb-item active">Announcements</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="py-6">
+  <div class="container">
+    <!-- Category tabs -->
+    <div class="category-filter-bar mb-5" data-aos="fade-up">
+      <a href="{% url 'announcements:home' %}" class="filter-btn active">All</a>
+      {% for cat in categories %}
+      <a href="{% url 'announcements:category' cat.slug %}" class="filter-btn">{{ cat.title_en }}</a>
+      {% endfor %}
+    </div>
+
+    <div class="row g-4">
+      {% for ann in announcements %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up">
+        <div class="announcement-card {% if ann.is_pinned %}pinned{% endif %}">
+          {% if ann.is_pinned %}<span class="pinned-badge"><i class="fas fa-thumbtack"></i> Pinned</span>{% endif %}
+          <div class="ann-category">{{ ann.category.title_en }}</div>
+          <h6 class="ann-title">{{ ann.title_en }}</h6>
+          <p class="ann-date"><i class="fas fa-calendar-alt me-1"></i>{{ ann.publish_date }}</p>
+          <a href="{% url 'announcements:detail' ann.pk %}" class="ann-read-more">Read more <i class="fas fa-arrow-right ms-1"></i></a>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center text-muted py-5">No announcements yet.</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{{ category.title_en }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">{{ category.title_en }}</h1>
+    {% if category.title_ar %}<p class="page-header-subtitle">{{ category.title_ar }}</p>{% endif %}
+    <nav aria-label="breadcrumb"><ol class="breadcrumb justify-content-center">
+      <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'sharia:home' %}">Sharia Matters</a></li>
+      <li class="breadcrumb-item active">{{ category.title_en }}</li>
+    </ol></nav>
+  </div>
+</div>
+<section class="py-6">
+  <div class="container">
+    {% if contents %}
+    <div class="row g-4">
+      {% for item in contents %}
+      <div class="col-lg-4 col-md-6" data-aos="fade-up">
+        <div class="resource-card">
+          <div class="resource-type-badge text">{{ category.title_en }}</div>
+          <h6 class="resource-title">{{ item.title_en }}</h6>
+          {% if item.title_ar %}<p class="resource-title-ar">{{ item.title_ar }}</p>{% endif %}
+          <div class="d-flex gap-2 mt-3">
+            <a href="{% url 'sharia:detail' item.pk %}" class="btn btn-sm btn-gold flex-fill">Read</a>
+            {% if item.pdf_file %}<a href="{{ item.pdf_file.url }}" class="btn btn-sm btn-outline-gold flex-fill" download><i class="fas fa-download me-1"></i>PDF</a>{% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+      <i class="fas fa-book fa-3x text-muted mb-3"></i>
+      <h5 class="text-muted">No content in {{ category.title_en }} yet.</h5>
+      <a href="{% url 'sharia:home' %}" class="btn btn-outline-gold mt-3"><i class="fas fa-arrow-left me-2"></i>Back</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

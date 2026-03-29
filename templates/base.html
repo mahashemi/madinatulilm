@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{{ site.site_name_en|default:"Madrasah Madinatul Ilm" }}{% endblock %} | Centre of Fiqāhat</title>
+  <meta name="description" content="{% block meta_description %}Madrasah Madinatul Ilm — Premier Shia Islamic Seminary, Gopalpur, Siwan, Bihar, India. Under Muhammadiyah Trust.{% endblock %}" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- AOS Animations -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<!-- ═══════════════════════ TOP BAR ═══════════════════════ -->
+<div class="topbar">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div class="topbar-left">
+      <span class="basmala-text">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</span>
+    </div>
+    <div class="topbar-right d-flex gap-3 align-items-center">
+      {% if site and site.phone_primary %}
+      <a href="tel:{{ site.phone_primary }}" class="topbar-link"><i class="fas fa-phone-alt me-1"></i>{{ site.phone_primary }}</a>
+      {% endif %}
+      {% if site and site.email %}
+      <a href="mailto:{{ site.email }}" class="topbar-link"><i class="fas fa-envelope me-1"></i>{{ site.email }}</a>
+      {% endif %}
+      <div class="social-links">
+        {% if site and site.facebook_url %}<a href="{{ site.facebook_url }}" class="topbar-social" target="_blank"><i class="fab fa-facebook-f"></i></a>{% endif %}
+        {% if site and site.youtube_url %}<a href="{{ site.youtube_url }}" class="topbar-social" target="_blank"><i class="fab fa-youtube"></i></a>{% endif %}
+        {% if site and site.whatsapp_number %}<a href="https://wa.me/{{ site.whatsapp_number }}" class="topbar-social" target="_blank"><i class="fab fa-whatsapp"></i></a>{% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
+<nav class="navbar navbar-expand-lg navbar-dark main-navbar sticky-top">
+  <div class="container">
+    <!-- Brand -->
+    <a class="navbar-brand d-flex align-items-center gap-3" href="{% url 'core:home' %}">
+      {% if site and site.logo %}
+        <img src="{{ site.logo.url }}" alt="Logo" height="55" class="navbar-logo">
+      {% else %}
+        <div class="navbar-logo-placeholder d-flex flex-column align-items-center">
+          <span class="logo-ar">مدرسة مدينة العلم</span>
+          <span class="logo-en">Madrasah Madinatul Ilm</span>
+        </div>
+      {% endif %}
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+
+        <!-- Introduction -->
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.namespace == 'core' and request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'core:home' %}">
+            <i class="fas fa-home me-1"></i> Introduction
+          </a>
+        </li>
+
+        <!-- Quran -->
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.namespace == 'quran' %}active{% endif %}" href="{% url 'quran:home' %}">
+            <i class="fas fa-book-open me-1"></i> Quran
+          </a>
+        </li>
+
+        <!-- Sharia Matters -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if request.resolver_match.namespace == 'sharia' %}active{% endif %}" href="#" data-bs-toggle="dropdown">
+            <i class="fas fa-mosque me-1"></i> Sharia Matters
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-custom">
+            <li><a class="dropdown-item" href="{% url 'sharia:category' 'kalam' %}"><i class="fas fa-star-and-crescent me-2"></i>Kalām & ʿAqīdah</a></li>
+            <li><a class="dropdown-item" href="{% url 'sharia:category' 'akhlaq' %}"><i class="fas fa-heart me-2"></i>Akhlāq (Ethics)</a></li>
+            <li><a class="dropdown-item" href="{% url 'sharia:category' 'fiqh' %}"><i class="fas fa-balance-scale me-2"></i>Fiqh (Jurisprudence)</a></li>
+          </ul>
+        </li>
+
+        <!-- Announcements -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if request.resolver_match.namespace == 'announcements' %}active{% endif %}" href="#" data-bs-toggle="dropdown">
+            <i class="fas fa-bullhorn me-1"></i> Announcements
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-custom">
+            <li><a class="dropdown-item" href="{% url 'announcements:category' 'statement' %}"><i class="fas fa-file-alt me-2"></i>Statement</a></li>
+            <li><a class="dropdown-item" href="{% url 'announcements:category' 'message' %}"><i class="fas fa-envelope-open-text me-2"></i>Issued Message</a></li>
+            <li><a class="dropdown-item" href="{% url 'announcements:category' 'meeting' %}"><i class="fas fa-users me-2"></i>Meeting</a></li>
+          </ul>
+        </li>
+
+        <!-- Lessons -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if request.resolver_match.namespace == 'lessons' %}active{% endif %}" href="#" data-bs-toggle="dropdown">
+            <i class="fas fa-chalkboard-teacher me-1"></i> Lessons
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-custom">
+            <li><a class="dropdown-item" href="{% url 'lessons:subject' 'tafsir' %}"><i class="fas fa-quran me-2"></i>Tafsīr</a></li>
+            <li><a class="dropdown-item" href="{% url 'lessons:subject' 'hadith' %}"><i class="fas fa-scroll me-2"></i>Hadith</a></li>
+            <li><a class="dropdown-item" href="{% url 'lessons:subject' 'fiqh' %}"><i class="fas fa-balance-scale me-2"></i>Fiqh</a></li>
+            <li><a class="dropdown-item" href="{% url 'lessons:subject' 'usul' %}"><i class="fas fa-project-diagram me-2"></i>Usūl</a></li>
+            <li><a class="dropdown-item" href="{% url 'lessons:subject' 'kalam' %}"><i class="fas fa-star-and-crescent me-2"></i>Kalām & ʿAqīdah</a></li>
+            <li><a class="dropdown-item" href="{% url 'lessons:subject' 'akhlaq' %}"><i class="fas fa-heart me-2"></i>Akhlāq</a></li>
+            <li><a class="dropdown-item" href="{% url 'lessons:subject' 'rational' %}"><i class="fas fa-brain me-2"></i>Rational Sciences</a></li>
+            <li><a class="dropdown-item" href="{% url 'lessons:subject' 'arabic' %}"><i class="fas fa-language me-2"></i>Arabic Literature</a></li>
+          </ul>
+        </li>
+
+        <!-- Books & Articles -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if request.resolver_match.namespace == 'books' %}active{% endif %}" href="#" data-bs-toggle="dropdown">
+            <i class="fas fa-book me-1"></i> Books & Articles
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-custom">
+            <li><a class="dropdown-item" href="{% url 'books:category' 'tafsir_hadith' %}">Tafsīr & Hadith</a></li>
+            <li><a class="dropdown-item" href="{% url 'books:category' 'rijal' %}">Rijāl</a></li>
+            <li><a class="dropdown-item" href="{% url 'books:category' 'fiqh' %}">Fiqh</a></li>
+            <li><a class="dropdown-item" href="{% url 'books:category' 'usul' %}">Usūl al-Fiqh</a></li>
+            <li><a class="dropdown-item" href="{% url 'books:category' 'kalam' %}">Kalām & ʿAqīdah</a></li>
+            <li><a class="dropdown-item" href="{% url 'books:category' 'akhlaq' %}">Akhlāq</a></li>
+            <li><a class="dropdown-item" href="{% url 'books:category' 'rational' %}">Rational Sciences</a></li>
+            <li><a class="dropdown-item" href="{% url 'books:category' 'arabic' %}">Arabic Literature</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'books:category' 'misc' %}">Miscellaneous</a></li>
+          </ul>
+        </li>
+
+        <!-- Ask a Question -->
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.namespace == 'contact' and request.resolver_match.url_name == 'ask' %}active{% endif %}" href="{% url 'contact:ask' %}">
+            <i class="fas fa-question-circle me-1"></i> Ask a Question
+          </a>
+        </li>
+
+        <!-- Contact Us -->
+        <li class="nav-item">
+          <a class="nav-link btn btn-gold ms-lg-2 px-3 {% if request.resolver_match.namespace == 'contact' and request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact:contact' %}">
+            <i class="fas fa-envelope me-1"></i> Contact Us
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ MESSAGES ═══════════════════════ -->
+{% if messages %}
+<div class="container mt-3">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- ═══════════════════════ CONTENT ═══════════════════════ -->
+{% block content %}{% endblock %}
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row g-4">
+
+        <!-- About Column -->
+        <div class="col-lg-4 col-md-6">
+          <div class="footer-brand mb-3">
+            <div class="footer-logo-text">
+              <span class="footer-ar">مدرسة مدينة العلم</span>
+              <span class="footer-en">Madrasah Madinatul Ilm</span>
+              <span class="footer-trust">Under Muhammadiyah Trust</span>
+            </div>
+          </div>
+          <p class="footer-text">
+            Centre of Fiqāhat — Dedicated to advancing Islamic jurisprudence, ethics, and knowledge in India. Established 14 Sha'ban 1447 AH.
+          </p>
+          <div class="footer-social mt-3">
+            {% if site and site.facebook_url %}<a href="{{ site.facebook_url }}" target="_blank"><i class="fab fa-facebook-f"></i></a>{% endif %}
+            {% if site and site.youtube_url %}<a href="{{ site.youtube_url }}" target="_blank"><i class="fab fa-youtube"></i></a>{% endif %}
+            {% if site and site.whatsapp_number %}<a href="https://wa.me/{{ site.whatsapp_number }}" target="_blank"><i class="fab fa-whatsapp"></i></a>{% endif %}
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="col-lg-2 col-md-6">
+          <h5 class="footer-heading">Quick Links</h5>
+          <ul class="footer-links">
+            <li><a href="{% url 'core:home' %}">Home</a></li>
+            <li><a href="{% url 'core:about' %}">About Us</a></li>
+            <li><a href="{% url 'core:founder' %}">Founder</a></li>
+            <li><a href="{% url 'core:academics' %}">Academics</a></li>
+            <li><a href="{% url 'core:gallery' %}">Gallery</a></li>
+          </ul>
+        </div>
+
+        <!-- Academics -->
+        <div class="col-lg-3 col-md-6">
+          <h5 class="footer-heading">Academic Disciplines</h5>
+          <ul class="footer-links">
+            <li><a href="{% url 'lessons:subject' 'tafsir' %}">Tafsīr</a></li>
+            <li><a href="{% url 'lessons:subject' 'hadith' %}">Hadith</a></li>
+            <li><a href="{% url 'lessons:subject' 'fiqh' %}">Fiqh</a></li>
+            <li><a href="{% url 'lessons:subject' 'usul' %}">Usūl al-Fiqh</a></li>
+            <li><a href="{% url 'lessons:subject' 'kalam' %}">Kalām & ʿAqīdah</a></li>
+            <li><a href="{% url 'lessons:subject' 'arabic' %}">Arabic Literature</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="col-lg-3 col-md-6">
+          <h5 class="footer-heading">Contact Us</h5>
+          <ul class="footer-contact-list">
+            <li><i class="fas fa-map-marker-alt me-2"></i>Gopalpur, Siwan, Bihar — 841286</li>
+            {% if site and site.phone_primary %}<li><i class="fas fa-phone-alt me-2"></i><a href="tel:{{ site.phone_primary }}">{{ site.phone_primary }}</a></li>{% endif %}
+            {% if site and site.phone_secondary %}<li><i class="fas fa-phone-alt me-2"></i><a href="tel:{{ site.phone_secondary }}">{{ site.phone_secondary }}</a></li>{% endif %}
+            {% if site and site.email %}<li><i class="fas fa-envelope me-2"></i><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>{% endif %}
+          </ul>
+          <a href="{% url 'contact:ask' %}" class="btn btn-gold-outline mt-3 btn-sm">
+            <i class="fas fa-question-circle me-1"></i>Ask a Question
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container text-center">
+      <p class="mb-1">
+        <span class="footer-arabic-quote">وَقُل رَّبِّ زِدۡنِي عِلۡمٗا</span>
+      </p>
+      <p class="mb-0">
+        &copy; {% now "Y" %} Madrasah Madinatul Ilm — Muhammadiyah Trust. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- AOS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>AOS.init({ duration: 800, once: true });</script>
+{% load static %}
+<script src="{% static 'js/main.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

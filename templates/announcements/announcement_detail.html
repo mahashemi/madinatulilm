@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ announcement.title_en }}{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title">{{ announcement.category.title_en }}</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'announcements:home' %}">Announcements</a></li>
+        <li class="breadcrumb-item active">{{ announcement.title_en|truncatewords:6 }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="py-6">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-9" data-aos="fade-up">
+        <div class="detail-card">
+          <div class="detail-meta mb-3">
+            <span class="ann-category me-3">{{ announcement.category.title_en }}</span>
+            <span class="text-muted"><i class="fas fa-calendar-alt me-1"></i>{{ announcement.publish_date }}</span>
+          </div>
+          <h2 class="detail-title">{{ announcement.title_en }}</h2>
+          {% if announcement.title_ar %}<p class="detail-title-ar">{{ announcement.title_ar }}</p>{% endif %}
+          {% if announcement.image %}<img src="{{ announcement.image.url }}" class="img-fluid rounded mb-4" alt="">{% endif %}
+          <div class="rich-text">{{ announcement.body_en|safe }}</div>
+          {% if announcement.body_ar %}
+          <hr>
+          <div class="rich-text rtl-text">{{ announcement.body_ar|safe }}</div>
+          {% endif %}
+          {% if announcement.attachment %}
+          <div class="mt-4">
+            <a href="{{ announcement.attachment.url }}" class="btn btn-gold" download>
+              <i class="fas fa-paperclip me-2"></i>Download Attachment
+            </a>
+          </div>
+          {% endif %}
+          <div class="mt-5">
+            <a href="{% url 'announcements:home' %}" class="btn btn-outline-gold">
+              <i class="fas fa-arrow-left me-2"></i>Back to Announcements
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
