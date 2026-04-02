@@ -4,7 +4,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">{{ resource.title }}</h1>
+    <h1 class="page-header-title"
+        data-lang-en="{{ resource.title }}" data-lang-ar="{{ resource.title_ar }}">{{ resource.title }}</h1>
     <nav aria-label="breadcrumb"><ol class="breadcrumb justify-content-center">
       <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
       <li class="breadcrumb-item"><a href="{% url 'quran:home' %}">Quran</a></li>
@@ -18,14 +19,14 @@
       <div class="col-lg-9">
         <div class="detail-card" data-aos="fade-up">
           <div class="resource-type-badge {{ resource.resource_type }} mb-3">{{ resource.get_resource_type_display }}</div>
-          <h2 class="detail-title">{{ resource.title }}</h2>
-          {% if resource.title_ar %}<p class="detail-title-ar">{{ resource.title_ar }}</p>{% endif %}
+          <h2 class="detail-title"
+              data-lang-en="{{ resource.title }}" data-lang-ar="{{ resource.title_ar }}">{{ resource.title }}</h2>
           {% if resource.surah_name %}<p class="text-muted"><i class="fas fa-bookmark me-1"></i>{{ resource.surah_name }}</p>{% endif %}
           {% if resource.audio_file %}<div class="mb-4"><audio controls class="w-100"><source src="{{ resource.audio_file.url }}"></audio></div>{% endif %}
           {% if resource.video_url %}<div class="ratio ratio-16x9 mb-4"><iframe src="{{ resource.video_url }}" allowfullscreen class="rounded"></iframe></div>{% endif %}
           {% if resource.body %}<div class="rich-text rtl-text">{{ resource.body|safe }}</div>{% endif %}
           {% if resource.pdf_file %}<div class="mt-4"><a href="{{ resource.pdf_file.url }}" class="btn btn-gold" download><i class="fas fa-download me-2"></i>Download</a></div>{% endif %}
-          <div class="mt-5"><a href="{% url 'quran:home' %}" class="btn btn-outline-gold"><i class="fas fa-arrow-left me-2"></i>Back to Quran</a></div>
+          <div class="mt-5"><a href="{% url 'quran:home' %}" class="btn btn-outline-gold"><i class="fas fa-arrow-left me-2"></i><span data-lang-en="Back to Quran" data-lang-ar="العودة للقرآن" data-lang-ur="قرآن پر واپس" data-lang-fa="بازگشت به قرآن">Back to Quran</span></a></div>
         </div>
       </div>
     </div>

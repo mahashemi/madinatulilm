@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='Subject',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.CharField(choices=[('tafsir', 'Tafsīr (Quranic Exegesis)'), ('hadith', 'Hadith (Prophetic Traditions)'), ('fiqh', 'Fiqh (Jurisprudence)'), ('usul', 'Usūl al-Fiqh (Principles of Jurisprudence)'), ('kalam', 'Kalām & ʿAqīdah (Theology & Creed)'), ('akhlaq', 'Akhlāq (Ethics)'), ('rational', 'Rational Sciences (Logic & Philosophy)'), ('arabic', 'Language & Literature (Arabic, English, Persian)')], max_length=20, unique=True)),
+                ('slug', models.CharField(choices=[('tafsir', 'Tafsīr (Quranic Exegesis)'), ('hadith', 'Hadith (Prophetic Traditions)'), ('Fiqh', 'Fiqh (Jurisprudence)'), ('usul', 'Usūl al-Fiqh (Principles of Jurisprudence)'), ('kalam', 'Kalām & ʿAqīdah (Theology & Creed)'), ('akhlaq', 'Akhlāq (Ethics)'), ('rational', 'Rational Sciences (Logic & Philosophy)'), ('arabic', 'Language & Literature (Arabic, English, Persian)')], max_length=20, unique=True)),
                 ('title_en', models.CharField(max_length=200)),
                 ('title_ar', models.CharField(blank=True, max_length=200)),
                 ('description_en', models.TextField(blank=True)),

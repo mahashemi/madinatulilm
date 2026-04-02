@@ -5,7 +5,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">{{ category.title_en }}</h1>
+    <h1 class="page-header-title"
+    data-lang-en="{{ category.title_en }}" data-lang-ar="{{ category.title_ar }}" data-lang-ur="{{ category.title_ur }}" data-lang-fa="{{ category.title_fa }}">{{ category.title_en }}</h1>
     {% if category.title_ar %}<p class="page-header-subtitle">{{ category.title_ar }}</p>{% endif %}
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb justify-content-center">

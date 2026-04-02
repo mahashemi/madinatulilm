@@ -5,7 +5,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">Gallery</h1>
+    <h1 class="page-header-title"
+        data-lang-en="Gallery" data-lang-ar="معرض الصور" data-lang-ur="گیلری" data-lang-fa="گالری">Gallery</h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb justify-content-center">
         <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
@@ -19,8 +20,13 @@
   <div class="container">
     <div class="text-center mb-5" data-aos="fade-up">
       <div class="section-ornament">❖</div>
-      <h2 class="section-title">Madrasah Gallery</h2>
-      <p class="section-subtitle">Glimpses of our learning environment and community</p>
+      <h2 class="section-title"
+          data-lang-en="Madrasah Gallery" data-lang-ar="معرض صور المدرسة" data-lang-ur="مدرسہ گیلری" data-lang-fa="گالری مدرسه">Madrasah Gallery</h2>
+      <p class="section-subtitle"
+         data-lang-en="Glimpses of our learning environment and community"
+         data-lang-ar="لمحات من بيئتنا التعليمية ومجتمعنا"
+         data-lang-ur="ہمارے تعلیمی ماحول اور کمیونٹی کی جھلکیاں"
+         data-lang-fa="نگاهی به محیط آموزشی و جامعه ما">Glimpses of our learning environment and community</p>
     </div>
 
     {% if gallery %}

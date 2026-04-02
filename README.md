@@ -1,5 +1,5 @@
 # مدرسة مدينة العلم — Madrasah Madinatul Ilm
-## Centre of Fiqāhat | Under Muhammadiyah Trust
+## Centre of Faqāhat | Under Muhammadiyah Trust
 
 **Established:** 14 Sha'ban 1447 AH / 3 February 2026  
 **Location:** Gopalpur, Siwan, Bihar, India — 841286  

@@ -5,7 +5,11 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">Biography of the Founder</h1>
+    <h1 class="page-header-title"
+    data-lang-en="Biography of the Founder"
+    data-lang-ar="سيرة المؤسس"
+    data-lang-ur="بانی کی سوانح حیات"
+    data-lang-fa="زندگینامه بنیانگذار">Biography of the Founder</h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb justify-content-center">
         <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
@@ -32,12 +36,13 @@
       </div>
       <div class="col-lg-9">
         <div class="section-ornament">❖</div>
-        <h2 class="section-title">باسمہ تعالی</h2>
-        {% if founder.biography_ur %}
-        <div class="rich-text rtl-text mb-4">{{ founder.biography_ur|safe }}</div>
-        {% endif %}
-        {% if founder.biography_en %}
-        <div class="rich-text">{{ founder.biography_en|safe }}</div>
+        <h2 class="section-title" style="font-family:'Amiri',serif;direction:rtl;">باسمہ تعالی</h2>
+        {% if founder.biography_en or founder.biography_ur %}
+        <div class="rich-text"
+             data-html-lang-en="{{ founder.biography_en|default:''|force_escape }}"
+             data-html-lang-ar="{{ founder.biography_ar|default:''|force_escape }}"
+             data-html-lang-ur="{{ founder.biography_ur|default:''|force_escape }}"
+             data-html-lang-fa="{{ founder.biography_fa|default:''|force_escape }}">{{ founder.biography_en|safe }}</div>
         {% endif %}
       </div>
     </div>
@@ -46,12 +51,24 @@
     {% if ijazat %}
     <div class="text-center mb-5" data-aos="fade-up">
       <div class="section-ornament">❖</div>
-      <h2 class="section-title">Ijazāt (Scholarly Certifications)</h2>
-      <p class="section-subtitle">Certifications received from Grand Ayatollahs</p>
+    <h2 class="section-title"
+        data-lang-en="Ijazāt (Scholarly Certifications)"
+        data-lang-ar="الإجازات العلمية"
+        data-lang-ur="علمی اجازات"
+        data-lang-fa="اجازه‌نامه‌های علمی">Ijazāt (Scholarly Certifications)</h2>
+    <p class="section-subtitle"
+       data-lang-en="Certifications received from Grand Ayatollahs"
+       data-lang-ar="إجازات من كبار المراجع والأيات العظام"
+       data-lang-ur="بڑے آیت اللہ حضرات سے حاصل شدہ سندیں"
+       data-lang-fa="اجازه‌ها از آیات عظام">Certifications received from Grand Ayatollahs</p>
     </div>
 
     <!-- Riwayat -->
-    <h4 class="ijazah-type-heading mb-4">Ijazāt Naql Riwayat</h4>
+    <h4 class="ijazah-type-heading mb-4"
+        data-lang-en="Ijazāt Naql Riwayat"
+        data-lang-ar="إجازات نقل الرواية"
+        data-lang-ur="اجازات نقل روایت"
+        data-lang-fa="اجازه نقل روایت">Ijazāt Naql Riwayat</h4>
     <div class="row g-4 mb-5">
       {% for ijazah in ijazat %}{% if ijazah.ijazah_type == 'riwayat' %}
       <div class="col-lg-3 col-md-4 col-6" data-aos="zoom-in">
@@ -66,7 +83,11 @@
     </div>
 
     <!-- Wakalat -->
-    <h4 class="ijazah-type-heading mb-4">Ijazāt Wakalat & Sahm Imam</h4>
+    <h4 class="ijazah-type-heading mb-4"
+        data-lang-en="Ijazāt Wakalat &amp; Sahm Imam"
+        data-lang-ar="إجازات الوكالة وسهم الإمام"
+        data-lang-ur="اجازات وکالت و سہم امام"
+        data-lang-fa="اجازه وکالت و سهم امام">Ijazāt Wakalat &amp; Sahm Imam</h4>
     <div class="row g-4">
       {% for ijazah in ijazat %}{% if ijazah.ijazah_type != 'riwayat' %}
       <div class="col-lg-3 col-md-4 col-6" data-aos="zoom-in">

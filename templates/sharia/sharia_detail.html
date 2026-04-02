@@ -4,7 +4,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">{{ content.category.title_en }}</h1>
+    <h1 class="page-header-title"
+        data-lang-en="{{ content.category.title_en }}" data-lang-ar="{{ content.category.title_ar }}" data-lang-ur="{{ content.category.title_ur }}" data-lang-fa="{{ content.category.title_fa }}">{{ content.category.title_en }}</h1>
     <nav aria-label="breadcrumb"><ol class="breadcrumb justify-content-center">
       <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
       <li class="breadcrumb-item"><a href="{% url 'sharia:home' %}">Sharia Matters</a></li>
@@ -18,16 +19,21 @@
     <div class="row justify-content-center">
       <div class="col-lg-9">
         <div class="detail-card" data-aos="fade-up">
-          <h2 class="detail-title">{{ content.title_en }}</h2>
-          {% if content.title_ar %}<p class="detail-title-ar">{{ content.title_ar }}</p>{% endif %}
-          {% if content.body_en %}<div class="rich-text">{{ content.body_en|safe }}</div>{% endif %}
-          {% if content.body_ar %}<div class="rich-text rtl-text mt-4">{{ content.body_ar|safe }}</div>{% endif %}
-          {% if content.body_ur %}<div class="rich-text rtl-text mt-4">{{ content.body_ur|safe }}</div>{% endif %}
+          <h2 class="detail-title"
+              data-lang-en="{{ content.title_en }}" data-lang-ar="{{ content.title_ar }}" data-lang-ur="{{ content.title_ur }}" data-lang-fa="{{ content.title_fa }}">{{ content.title_en }}</h2>
+          <div class="rich-text"
+               data-html-lang-en="{{ content.body_en|default:''|force_escape }}"
+               data-html-lang-ar="{{ content.body_ar|default:''|force_escape }}"
+               data-html-lang-ur="{{ content.body_ur|default:''|force_escape }}"
+               data-html-lang-fa="{{ content.body_fa|default:''|force_escape }}">{{ content.body_en|safe }}</div>
           {% if content.pdf_file %}
           <div class="mt-4"><a href="{{ content.pdf_file.url }}" class="btn btn-gold" download><i class="fas fa-download me-2"></i>Download PDF</a></div>
           {% endif %}
           <div class="mt-5">
-            <a href="{% url 'sharia:category' content.category.name %}" class="btn btn-outline-gold"><i class="fas fa-arrow-left me-2"></i>Back</a>
+            <a href="{% url 'sharia:category' content.category.name %}" class="btn btn-outline-gold">
+              <i class="fas fa-arrow-left me-2"></i>
+              <span data-lang-en="Back" data-lang-ar="رجوع" data-lang-ur="واپس" data-lang-fa="بازگشت">Back</span>
+            </a>
           </div>
         </div>
       </div>

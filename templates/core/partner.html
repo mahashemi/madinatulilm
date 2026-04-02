@@ -1,0 +1,708 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Be A Partner — Madrasah Madinatul Ilm{% endblock %}
+
+{% block content %}
+
+<!-- ═══════════════ PAGE HEADER ═══════════════ -->
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center position-relative" style="z-index:1;">
+    <div class="section-ornament text-gold" data-aos="fade-up">❖</div>
+    <h1 class="page-header-title" data-aos="fade-up" data-aos-delay="50"
+        data-lang-en="Be A Partner"
+        data-lang-ar="كن شريكاً"
+        data-lang-ur="شراکت دار بنیں"
+        data-lang-fa="شریک باشید">Be A Partner</h1>
+    <p class="page-header-subtitle" data-aos="fade-up" data-aos-delay="100"
+       data-lang-en="Support the Centre of Faqāhat — Muhammadiyyah Trust"
+       data-lang-ar="ادعم مركز الفقاهة — مؤسسة محمدية"
+       data-lang-ur="مرکزِ فقاہت کی مدد کریں — محمدیہ ٹرسٹ"
+       data-lang-fa="از مرکز فقاهت حمایت کنید — موقوفه محمدیه">Support the Centre of Faqāhat — Muhammadiyyah Trust</p>
+    <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="150">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="breadcrumb-item active"
+            data-lang-en="Be A Partner"
+            data-lang-ar="كن شريكاً"
+            data-lang-ur="شراکت دار بنیں"
+            data-lang-fa="شریک باشید">Be A Partner</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<!-- ═══════════════ INTRO HADITH BAND ═══════════════ -->
+<section class="partner-hadith-band py-5">
+  <div class="container text-center">
+    <div class="section-ornament text-gold mb-2" style="letter-spacing:.3em;">❖</div>
+    <p class="arabic-text mb-2" style="font-size:1.5rem; color:var(--color-gold);">مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ طَرِيقًا إِلَى الْجَنَّةِ</p>
+    <p class="text-muted mb-1"
+       data-lang-en='"Whoever takes a path seeking knowledge, Allah will ease for him the path to Paradise."'
+       data-lang-ar='"مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ طَرِيقًا إِلَى الْجَنَّةِ"'
+       data-lang-ur='"جو شخص علم حاصل کرنے کے لیے کوئی راستہ اختیار کرے، اللہ اس کے لیے جنت کا راستہ آسان کر دیتا ہے۔"'
+       data-lang-fa='"هر کس مسیری را برای جستجوی علم بپیماید، خداوند راه بهشت را برای او آسان می‌کند."'>"Whoever takes a path seeking knowledge, Allah will ease for him the path to Paradise."</p>
+    <p class="hadith-source mb-0"
+       data-lang-en="— Prophet Muhammad (ﷺ) · Al-Kāfī, Sheikh al-Kulaynī, Vol. 1, p. 35"
+       data-lang-ar="— النبي محمد ﷺ · الكافي، الشيخ الكليني، ج١، ص٣٥"
+       data-lang-ur="— نبی اکرم ﷺ · الکافی، شیخ کلینی، ج١، ص٣٥"
+       data-lang-fa="— پیامبر اکرم ﷺ · الکافی، شیخ کلینی، ج١، ص٣٥">— Prophet Muhammad (ﷺ) · Al-Kāfī, Sheikh al-Kulaynī, Vol. 1, p. 35</p>
+  </div>
+</section>
+
+<!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+<section class="py-6">
+  <div class="container">
+
+    <!-- ── Row 1: Support Types + Bank Details ── -->
+    <div class="row g-5 mb-5">
+
+      <!-- LEFT: How to Support -->
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="partner-card h-100">
+          <h3 class="partner-section-title">
+            <i class="fas fa-hand-holding-heart me-2 text-gold"></i>
+            <span data-lang-en="Please Support Us With Your:"
+                  data-lang-ar="يرجى دعمنا بـ:"
+                  data-lang-ur="براہ کرم ہماری مدد کریں:"
+                  data-lang-fa="لطفاً از ما حمایت کنید:">Please Support Us With Your:</span>
+          </h3>
+          <p class="text-muted mb-4"
+             data-lang-en="You may support Madrasah Madinatul Ilm through any of the following:"
+             data-lang-ar="يمكنكم دعم مدرسة مدينة العلم من خلال ما يلي:"
+             data-lang-ur="آپ مدرسہ مدینۃ العلم کو درج ذیل طریقوں سے سپورٹ کر سکتے ہیں:"
+             data-lang-fa="می‌توانید مدرسه مدینةالعلم را از طریق موارد زیر حمایت کنید:">You may support Madrasah Madinatul Ilm through any of the following:</p>
+
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <a href="#khums-detail" class="donation-item-card text-decoration-none">
+                <span class="donation-num">1</span>
+                <div>
+                  <div class="donation-label"
+                       data-lang-en="Sahme Imam"
+                       data-lang-ar="سهم الإمام"
+                       data-lang-ur="سہمِ امام"
+                       data-lang-fa="سهم الامام">Sahme Imam</div>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-6">
+              <a href="#khums-detail" class="donation-item-card text-decoration-none">
+                <span class="donation-num">2</span>
+                <div>
+                  <div class="donation-label"
+                       data-lang-en="Sahme Sadaat"
+                       data-lang-ar="سهم السادات"
+                       data-lang-ur="سہمِ سادات"
+                       data-lang-fa="سهم السادات">Sahme Sadaat</div>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-6">
+              <a href="#mazalim-detail" class="donation-item-card text-decoration-none">
+                <span class="donation-num">3</span>
+                <div>
+                  <div class="donation-label"
+                       data-lang-en="Radde Mazalim"
+                       data-lang-ar="ردّ المظالم"
+                       data-lang-ur="ردّ مظالم"
+                       data-lang-fa="رد مظالم">Radde Mazalim</div>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-6">
+              <a href="#zakat-detail" class="donation-item-card text-decoration-none">
+                <span class="donation-num">4</span>
+                <div>
+                  <div class="donation-label"
+                       data-lang-en="Zakaat"
+                       data-lang-ar="الزكاة"
+                       data-lang-ur="زکات"
+                       data-lang-fa="زکات">Zakaat</div>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-6">
+              <a href="#sadqa-detail" class="donation-item-card text-decoration-none">
+                <span class="donation-num">5</span>
+                <div>
+                  <div class="donation-label"
+                       data-lang-en="Sadqa"
+                       data-lang-ar="الصدقة"
+                       data-lang-ur="صدقہ"
+                       data-lang-fa="صدقه">Sadqa</div>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-6">
+              <a href="#marhumeen-detail" class="donation-item-card text-decoration-none">
+                <span class="donation-num">6</span>
+                <div>
+                  <div class="donation-label"
+                       data-lang-en="Remembrance for Marhoomeen"
+                       data-lang-ar="إيصال الثواب للمرحومين"
+                       data-lang-ur="مرحومین کے لیے ایصالِ ثواب"
+                       data-lang-fa="ایصال ثواب به مرحومین">Remembrance for Marhoomeen</div>
+                </div>
+              </a>
+            </div>
+            <div class="col-12">
+              <a href="#charity-detail" class="donation-item-card text-decoration-none">
+                <span class="donation-num">7</span>
+                <div>
+                  <div class="donation-label"
+                       data-lang-en="General Charity"
+                       data-lang-ar="الخيرات العامة"
+                       data-lang-ur="عام صدقہ و خیرات"
+                       data-lang-fa="خیرات عمومی">General Charity</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Bank Details + Notes -->
+      <div class="col-lg-6" data-aos="fade-left">
+
+        <!-- Bank Details -->
+        <div class="partner-card mb-4">
+          <h3 class="partner-section-title">
+            <i class="fas fa-university me-2 text-gold"></i>
+            <span data-lang-en="Bank Details"
+                  data-lang-ar="تفاصيل البنك"
+                  data-lang-ur="بینک کی تفصیلات"
+                  data-lang-fa="مشخصات بانک">Bank Details</span>
+          </h3>
+
+          <!-- ICICI Bank -->
+          <div class="bank-block mb-4">
+            <div class="bank-name-badge"><i class="fas fa-landmark me-1"></i>ICICI Bank</div>
+            <table class="bank-table w-100">
+              <tr>
+                <td class="bank-td-label"
+                    data-lang-en="Beneficiary"
+                    data-lang-ar="المستفيد"
+                    data-lang-ur="مستفید"
+                    data-lang-fa="ذینفع">Beneficiary</td>
+                <td class="bank-td-val">Muhammadiyyah Educational &amp; Social Welfare Trust</td>
+              </tr>
+              <tr>
+                <td class="bank-td-label"
+                    data-lang-en="Branch"
+                    data-lang-ar="الفرع"
+                    data-lang-ur="برانچ"
+                    data-lang-fa="شعبه">Branch</td>
+                <td class="bank-td-val"
+                    data-lang-en="Siwan, Bihar"
+                    data-lang-ar="سيوان، بيهار"
+                    data-lang-ur="سیوان، بہار"
+                    data-lang-fa="سیوان، بیهار">Siwan, Bihar</td>
+              </tr>
+              <tr>
+                <td class="bank-td-label"
+                    data-lang-en="Account No."
+                    data-lang-ar="رقم الحساب"
+                    data-lang-ur="اکاؤنٹ نمبر"
+                    data-lang-fa="شماره حساب">Account No.</td>
+                <td class="bank-td-val"><span class="placeholder-val">000000000</span></td>
+              </tr>
+              <tr>
+                <td class="bank-td-label"
+                    data-lang-en="IFSC Code"
+                    data-lang-ar="رمز IFSC"
+                    data-lang-ur="IFSC کوڈ"
+                    data-lang-fa="کد IFSC">IFSC Code</td>
+                <td class="bank-td-val"><span class="placeholder-val">000000000</span></td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- SBI -->
+          <div class="bank-block">
+            <div class="bank-name-badge"><i class="fas fa-landmark me-1"></i>State Bank of India</div>
+            <table class="bank-table w-100">
+              <tr>
+                <td class="bank-td-label"
+                    data-lang-en="Beneficiary"
+                    data-lang-ar="المستفيد"
+                    data-lang-ur="مستفید"
+                    data-lang-fa="ذینفع">Beneficiary</td>
+                <td class="bank-td-val">Muhammadiyyah Educational &amp; Social Welfare Trust</td>
+              </tr>
+              <tr>
+                <td class="bank-td-label"
+                    data-lang-en="Branch"
+                    data-lang-ar="الفرع"
+                    data-lang-ur="برانچ"
+                    data-lang-fa="شعبه">Branch</td>
+                <td class="bank-td-val"
+                    data-lang-en="Gopal Pur, Bihar"
+                    data-lang-ar="گوپال‌پور، بيهار"
+                    data-lang-ur="گوپالپور، بہار"
+                    data-lang-fa="گوپال‌پور، بیهار">Gopal Pur, Bihar</td>
+              </tr>
+              <tr>
+                <td class="bank-td-label"
+                    data-lang-en="Account No."
+                    data-lang-ar="رقم الحساب"
+                    data-lang-ur="اکاؤنٹ نمبر"
+                    data-lang-fa="شماره حساب">Account No.</td>
+                <td class="bank-td-val"><span class="placeholder-val">000000000</span></td>
+              </tr>
+              <tr>
+                <td class="bank-td-label"
+                    data-lang-en="IFSC Code"
+                    data-lang-ar="رمز IFSC"
+                    data-lang-ur="IFSC کوڈ"
+                    data-lang-fa="کد IFSC">IFSC Code</td>
+                <td class="bank-td-val"><span class="placeholder-val">000000000</span></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="partner-card partner-notes">
+          <ul class="partner-notes-list mb-0">
+            <li>
+              <i class="fas fa-check-circle me-2 text-gold"></i>
+              <span data-lang-en="Cheques may be drawn in the name of: Muhammadiyyah Educational &amp; Social Welfare Trust"
+                    data-lang-ar="يمكن تحرير الشيكات باسم: Muhammadiyyah Educational &amp; Social Welfare Trust"
+                    data-lang-ur="چیک اس نام پر بنائے جا سکتے ہیں: Muhammadiyyah Educational &amp; Social Welfare Trust"
+                    data-lang-fa="چک‌ها به نام زیر قابل قبول است: Muhammadiyyah Educational &amp; Social Welfare Trust">Cheques may be drawn in the name of: <strong>Muhammadiyyah Educational &amp; Social Welfare Trust</strong></span>
+            </li>
+            <li>
+              <i class="fas fa-qrcode me-2 text-gold"></i>
+              <span data-lang-en="Payments can be done via QR codes provided on this page."
+                    data-lang-ar="يمكن الدفع عبر رموز QR المتاحة في هذه الصفحة."
+                    data-lang-ur="ادائیگی اس صفحے پر موجود QR کوڈز کے ذریعے کی جا سکتی ہے۔"
+                    data-lang-fa="پرداخت از طریق کدهای QR موجود در این صفحه امکان‌پذیر است.">Payments can be done via QR codes provided on this page.</span>
+            </li>
+            <li>
+              <i class="fas fa-phone me-2 text-gold"></i>
+              <span data-lang-en="For cash payments, please contact Vice Principal or Treasurer over phone."
+                    data-lang-ar="للدفع نقداً، يرجى التواصل مع نائب المدير أو أمين الصندوق هاتفياً."
+                    data-lang-ur="نقد ادائیگی کے لیے وائس پرنسپل یا خزانچی سے فون پر رابطہ کریں۔"
+                    data-lang-fa="برای پرداخت نقدی، با معاون مدیر یا خزانه‌دار تلفنی تماس بگیرید.">For cash payments, please contact <strong>Vice Principal</strong> or <strong>Treasurer</strong> over phone.</span>
+            </li>
+            <li>
+              <i class="fas fa-file-invoice me-2 text-gold"></i>
+              <span data-lang-en="Tax Benefit: Applied For"
+                    data-lang-ar="الإعفاء الضريبي: تم التقدم بطلبه"
+                    data-lang-ur="ٹیکس بینیفٹ: درخواست دی گئی ہے"
+                    data-lang-fa="معافیت مالیاتی: درخواست داده شده"><strong>Tax Benefit:</strong> Applied For</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Row 2: QR Codes + Ijazah ── -->
+    <div class="row g-5 mb-5">
+
+      <!-- QR Codes -->
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="partner-card text-center h-100">
+          <h3 class="partner-section-title">
+            <i class="fas fa-qrcode me-2 text-gold"></i>
+            <span data-lang-en="Scan to Pay"
+                  data-lang-ar="امسح للدفع"
+                  data-lang-ur="ادائیگی کے لیے اسکین کریں"
+                  data-lang-fa="برای پرداخت اسکن کنید">Scan to Pay</span>
+          </h3>
+          {% if page and page.qr_code_1 or page and page.qr_code_2 %}
+          <div class="row g-3 mt-2 justify-content-center">
+            {% if page.qr_code_1 %}
+            <div class="col-6">
+              <img src="{{ page.qr_code_1.url }}" alt="ICICI QR" class="img-fluid qr-img rounded">
+              <p class="small text-muted mt-2 fw-bold">ICICI Bank</p>
+            </div>
+            {% endif %}
+            {% if page.qr_code_2 %}
+            <div class="col-6">
+              <img src="{{ page.qr_code_2.url }}" alt="SBI QR" class="img-fluid qr-img rounded">
+              <p class="small text-muted mt-2 fw-bold">State Bank of India</p>
+            </div>
+            {% endif %}
+          </div>
+          {% else %}
+          <div class="qr-placeholder-card mt-3">
+            <i class="fas fa-qrcode qr-placeholder-icon"></i>
+            <p class="text-muted mt-3 mb-1"
+               data-lang-en="QR codes will appear here once uploaded via Admin Panel."
+               data-lang-ar="ستظهر رموز QR هنا بعد رفعها عبر لوحة الإدارة."
+               data-lang-ur="QR کوڈز ایڈمن پینل سے اپلوڈ ہونے کے بعد یہاں ظاہر ہوں گے۔"
+               data-lang-fa="کدهای QR پس از آپلود از طریق پنل مدیریت اینجا نمایش داده می‌شوند.">QR codes will appear here once uploaded via Admin Panel.</p>
+            <p class="small"><a href="/admin/core/partnerpage/" class="text-gold">Upload QR codes →</a></p>
+          </div>
+          {% endif %}
+
+          <div class="mt-4 pt-3 border-top">
+            <p class="fw-bold mb-3"
+               data-lang-en="Need help or have questions?"
+               data-lang-ar="هل تحتاج مساعدة أو لديك استفسارات؟"
+               data-lang-ur="مدد چاہیے یا کوئی سوال ہے؟"
+               data-lang-fa="نیاز به کمک دارید یا سوالی دارید؟">Need help or have questions?</p>
+            <a href="{% url 'contact:contact' %}" class="btn btn-gold w-100 mb-2">
+              <i class="fas fa-envelope me-2"></i>
+              <span data-lang-en="Contact Us"
+                    data-lang-ar="تواصل معنا"
+                    data-lang-ur="ہم سے رابطہ کریں"
+                    data-lang-fa="تماس با ما">Contact Us</span>
+            </a>
+            <a href="{% url 'contact:ask' %}" class="btn btn-outline-gold w-100">
+              <i class="fas fa-question-circle me-2"></i>
+              <span data-lang-en="Ask a Question"
+                    data-lang-ar="اطرح سؤالاً"
+                    data-lang-ur="سوال پوچھیں"
+                    data-lang-fa="سوال بپرسید">Ask a Question</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ijazah for Collection -->
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="partner-card h-100">
+          <h3 class="partner-section-title">
+            <i class="fas fa-certificate me-2 text-gold"></i>
+            <span data-lang-en="Our Scholarly Authorisation (Ijāzah)"
+                  data-lang-ar="إجازاتنا العلمية"
+                  data-lang-ur="ہماری علمی اجازت (اجازہ)"
+                  data-lang-fa="اجازه‌های علمی ما">Our Scholarly Authorisation (Ijāzah)</span>
+          </h3>
+          <p class="text-muted mb-4"
+             data-lang-en="We hold Ijāzah from the following Grand Marjas to collect Sahm-e-Imam, Sahm-e-Sadaat, Zakat, and other religious dues. These documents can be viewed in the Ijāzah section of this website:"
+             data-lang-ar="نحمل إجازة من المراجع العظام التالية لجمع سهم الإمام وسهم السادات والزكاة وسائر الحقوق الشرعية. يمكن الاطلاع على هذه الوثائق في قسم الإجازات:"
+             data-lang-ur="ہمارے پاس درج ذیل بڑے مراجع کی اجازت ہے جس کے تحت ہم سہمِ امام، سہمِ سادات، زکات اور دیگر شرعی حقوق وصول کر سکتے ہیں۔ یہ دستاویزات اس ویب سائٹ کے اجازہ سیکشن میں دیکھی جا سکتی ہیں:"
+             data-lang-fa="ما دارای اجازه از مراجع عظام زیر برای دریافت سهم الامام، سهم السادات، زکات و سایر حقوق شرعی هستیم. این اسناد در بخش اجازات این وبسایت قابل مشاهده است:">We hold <strong>Ijāzah</strong> from the following Grand Marjas to collect Sahm-e-Imam, Sahm-e-Sadaat, Zakat, and other religious dues. These documents can be viewed in the <a href="{% url 'core:founder' %}" class="text-gold">Ijāzah section</a> of this website:</p>
+          <ul class="ijazah-marja-list">
+            <li>
+              <i class="fas fa-scroll text-gold me-2"></i>
+              <div>
+                <strong data-lang-en="Āyatullāh al-ʿUẓmā Syed Ali Hussaini Sistani"
+                        data-lang-ar="آية الله العظمى السيد علي الحسيني السيستاني"
+                        data-lang-ur="آیة اللہ العظمیٰ سید علی حسینی سیستانی"
+                        data-lang-fa="آیت‌الله العظمی سید علی حسینی سیستانی">Āyatullāh al-ʿUẓmā Syed Ali Hussaini Sistani</strong>
+                <span class="dz-badge">DZ</span>
+              </div>
+            </li>
+            <li>
+              <i class="fas fa-scroll text-gold me-2"></i>
+              <div>
+                <strong data-lang-en="Āyatullāh al-ʿUẓmā Syed Musa Shubayri Zanjani"
+                        data-lang-ar="آية الله العظمى السيد موسى شبيري الزنجاني"
+                        data-lang-ur="آیة اللہ العظمیٰ سید موسیٰ شبیری زنجانی"
+                        data-lang-fa="آیت‌الله العظمی سید موسی شبیری زنجانی">Āyatullāh al-ʿUẓmā Syed Musa Shubayri Zanjani</strong>
+                <span class="dz-badge">DZ</span>
+              </div>
+            </li>
+            <li>
+              <i class="fas fa-scroll text-gold me-2"></i>
+              <div>
+                <strong data-lang-en="Āyatullāh al-ʿUẓmā Sheikh Nasir Makarem Shirazi"
+                        data-lang-ar="آية الله العظمى الشيخ ناصر مكارم الشيرازي"
+                        data-lang-ur="آیة اللہ العظمیٰ شیخ ناصر مکارم شیرازی"
+                        data-lang-fa="آیت‌الله العظمی شیخ ناصر مکارم شیرازی">Āyatullāh al-ʿUẓmā Sheikh Nasir Makarem Shirazi</strong>
+                <span class="dz-badge">DZ</span>
+              </div>
+            </li>
+            <li>
+              <i class="fas fa-scroll text-gold me-2"></i>
+              <div>
+                <strong data-lang-en="Āyatullāh Syed Kazim Mustafawi"
+                        data-lang-ar="آية الله السيد كاظم المصطفوي"
+                        data-lang-ur="آیة اللہ سید کاظم مصطفوی"
+                        data-lang-fa="آیت‌الله سید کاظم مصطفوی">Āyatullāh Syed Kazim Mustafawi</strong>
+                <span class="dz-badge">DZ</span>
+              </div>
+            </li>
+          </ul>
+          <div class="mt-4">
+            <a href="{% url 'core:founder' %}" class="btn btn-outline-gold">
+              <i class="fas fa-eye me-2"></i>
+              <span data-lang-en="View Ijāzah Documents"
+                    data-lang-ar="عرض وثائق الإجازات"
+                    data-lang-ur="اجازہ دستاویزات دیکھیں"
+                    data-lang-fa="مشاهده اسناد اجازات">View Ijāzah Documents</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══════════════ DETAILED ILLUSTRATIONS ═══════════════ -->
+    <div class="row">
+      <div class="col-12" data-aos="fade-up">
+        <div class="text-center my-4">
+          <span class="section-ornament">❖</span>
+          <h2 class="section-title mt-2"
+              data-lang-en="Islamic Financial Obligations &amp; Charity — A Guide"
+              data-lang-ar="الالتزامات المالية الإسلامية والصدقات — دليل توضيحي"
+              data-lang-ur="اسلامی مالی فرائض اور صدقات — ایک رہنما"
+              data-lang-fa="تکالیف مالی اسلامی و خیرات — راهنما">Islamic Financial Obligations &amp; Charity — A Guide</h2>
+          <p class="text-muted"
+             data-lang-en="Understanding each form of support you can offer"
+             data-lang-ar="شرح تفصيلي لكل شكل من أشكال الدعم"
+             data-lang-ur="ہر قسم کی مدد کو سمجھنا"
+             data-lang-fa="درک هر شکل از حمایتی که می‌توانید ارائه دهید">Understanding each form of support you can offer</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- 1 & 2. Khums -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="0" id="khums-detail">
+        <div class="illustration-card">
+          <div class="illustration-number">1 &amp; 2</div>
+          <div class="illustration-icon"><i class="fas fa-coins"></i></div>
+          <h4 class="illustration-title"
+              data-lang-en="Khums — Sahm-e-Imam &amp; Sahm-e-Sadaat"
+              data-lang-ar="الخمس — سهم الإمام وسهم السادات"
+              data-lang-ur="خمس — سہمِ امام و سہمِ سادات"
+              data-lang-fa="خمس — سهم الامام و سهم السادات">Khums — Sahm-e-Imam &amp; Sahm-e-Sadaat</h4>
+          <p data-lang-en="Khums is a compulsory contribution of 20% on one's annual savings — including cash and bank balance — that have not been used for personal needs over the course of one year."
+             data-lang-ar="الخمس هو مساهمة واجبة بنسبة 20٪ من المدخرات السنوية — بما فيها النقد والرصيد البنكي — التي لم تُستخدم للاحتياجات الشخصية خلال السنة."
+             data-lang-ur="خمس سالانہ بچت کا 20٪ واجب ادائیگی ہے — نقد اور بینک بیلنس سمیت — جو پورے سال ذاتی ضروریات میں خرچ نہ ہوا ہو۔"
+             data-lang-fa="خمس 20٪ از پس‌انداز سالانه — شامل وجه نقد و موجودی بانکی — است که طی یک سال برای نیازهای شخصی استفاده نشده باشد.">Khums is a compulsory contribution of <strong>20%</strong> on one's annual savings — including cash and bank balance — that have not been used for personal needs over the course of one year.</p>
+          <ul class="illustration-points">
+            <li data-lang-en="It should be calculated and paid once every year on a fixed date chosen by the individual."
+                data-lang-ar="يجب احتسابه ودفعه مرة واحدة سنوياً في تاريخ ثابت يختاره الفرد."
+                data-lang-ur="اسے سال میں ایک بار خود منتخب کردہ مقررہ تاریخ پر حساب کر کے ادا کیا جائے۔"
+                data-lang-fa="باید یک بار در سال در تاریخ ثابتی که خود فرد انتخاب می‌کند محاسبه و پرداخت شود.">It should be calculated and paid <strong>once every year</strong> on a fixed date chosen by the individual.</li>
+            <li data-lang-en="This date should remain consistent each year (e.g., every Muharram 1st or one's birthday)."
+                data-lang-ar="يجب أن يكون هذا التاريخ ثابتاً كل عام (مثلاً: أول محرم أو ذكرى الميلاد)."
+                data-lang-ur="یہ تاریخ ہر سال یکساں رہنی چاہیے (مثلاً: یکم محرم یا سالگرہ)۔"
+                data-lang-fa="این تاریخ باید هر سال ثابت باشد (مثلاً اول محرم یا روز تولد).">This date should remain <strong>consistent</strong> each year (e.g., every Muharram 1st or one's birthday).</li>
+            <li data-lang-en="Half goes to Sahm-e-Imam (for Islamic institutes and religious causes)."
+                data-lang-ar="نصفه يذهب إلى سهم الإمام (للمؤسسات الإسلامية والأعمال الدينية)."
+                data-lang-ur="نصف سہمِ امام کے لیے ہے (اسلامی اداروں اور دینی کاموں کے لیے)۔"
+                data-lang-fa="نیمی از آن به سهم الامام (برای مؤسسات اسلامی و اهداف دینی) تعلق دارد.">Half goes to <em>Sahm-e-Imam ʿAlayh al-Salam</em> (for Islamic institutes and religious causes).</li>
+            <li data-lang-en="Half goes to Sahm-e-Sadaat (for the poor and needy among the descendants of the Prophet ﷺ)."
+                data-lang-ar="والنصف الآخر يذهب إلى سهم السادات (للفقراء والمحتاجين من ذرية النبي ﷺ)."
+                data-lang-ur="نصف سہمِ سادات کے لیے ہے (سادات میں فقراء اور ضرورت مند لوگوں کے لیے)۔"
+                data-lang-fa="نیم دیگر به سهم السادات (برای فقرا و نیازمندان از نسل پیامبر ﷺ) تعلق دارد.">Half goes to <em>Sahm-e-Sadaat</em> (for the poor and needy among the descendants of the Prophet ﷺ).</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 3. Radd-e-Mazalim -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100" id="mazalim-detail">
+        <div class="illustration-card">
+          <div class="illustration-number">3</div>
+          <div class="illustration-icon"><i class="fas fa-balance-scale"></i></div>
+          <h4 class="illustration-title"
+              data-lang-en="Radd-e-Mazalim"
+              data-lang-ar="ردّ المظالم"
+              data-lang-ur="ردّ مظالم"
+              data-lang-fa="رد مظالم">Radd-e-Mazalim</h4>
+          <p data-lang-en="Radd-e-Mazalim is an amount given in charity to compensate for unpaid or forgotten debts, especially when:"
+             data-lang-ar="ردّ المظالم هو مبلغ يُعطى صدقةً لتعويض الديون غير المسددة أو المنسية، خاصةً في الحالات التالية:"
+             data-lang-ur="ردّ مظالم وہ رقم ہے جو ادا نہ کیے گئے یا بھولے گئے قرضوں کے ازالے کے لیے صدقہ کی نیت سے دی جاتی ہے، خاص طور پر جب:"
+             data-lang-fa="رد مظالم مبلغی است که به عنوان صدقه برای جبران بدهی‌های پرداخت‌نشده یا فراموش‌شده داده می‌شود، به‌ویژه در موارد زیر:">Radd-e-Mazalim is an amount given in charity to compensate for unpaid or forgotten debts, especially when:</p>
+          <ul class="illustration-points">
+            <li data-lang-en="The creditor cannot be traced, or"
+                data-lang-ar="لا يمكن تحديد مكان الدائن، أو"
+                data-lang-ur="صاحبِ حق کو تلاش نہ کیا جا سکے، یا"
+                data-lang-fa="طلبکار قابل ردیابی نیست، یا">The creditor <strong>cannot be traced</strong>, or</li>
+            <li data-lang-en="One fears embarrassment or difficulty in returning it directly."
+                data-lang-ar="يخشى الحرج أو الصعوبة في إعادته مباشرة."
+                data-lang-ur="واپس کرنے میں شرمندگی یا دشواری کا خوف ہو۔"
+                data-lang-fa="از خجالت یا دشواری در پس دادن مستقیم آن هراس داشته باشد.">One fears embarrassment or difficulty in returning it directly.</li>
+          </ul>
+          <p data-lang-en="This amount is given in charity on behalf of the rightful owner, freeing one's conscience and account in the hereafter."
+             data-lang-ar="يُعطى هذا المبلغ صدقةً نيابةً عن صاحب الحق، مما يُطهّر الذمة في الدنيا والآخرة."
+             data-lang-ur="یہ رقم صاحبِ حق کی طرف سے صدقہ دی جاتی ہے، جس سے انسان کا ضمیر اور آخرت کا حساب پاک ہوتا ہے۔"
+             data-lang-fa="این مبلغ از طرف صاحب حق به صدقه پرداخت می‌شود و وجدان و حساب آخرت را پاک می‌کند.">This amount is given in charity <em>on behalf of the rightful owner</em>, freeing one's conscience and account in the hereafter.</p>
+        </div>
+      </div>
+
+      <!-- 4. Zakat -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="0" id="zakat-detail">
+        <div class="illustration-card">
+          <div class="illustration-number">4</div>
+          <div class="illustration-icon"><i class="fas fa-seedling"></i></div>
+          <h4 class="illustration-title"
+              data-lang-en="Zakaat"
+              data-lang-ar="الزكاة"
+              data-lang-ur="زکات"
+              data-lang-fa="زکات">Zakaat</h4>
+          <p data-lang-en="Zakat is a compulsory charity applicable to specific forms of wealth according to Islamic guidelines:"
+             data-lang-ar="الزكاة صدقة واجبة تنطبق على أنواع محددة من الثروة وفق الأحكام الإسلامية:"
+             data-lang-ur="زکات ایک واجب صدقہ ہے جو اسلامی احکام کے مطابق خاص قسم کی دولت پر لاگو ہوتی ہے:"
+             data-lang-fa="زکات صدقه‌ای واجب است که طبق دستورالعمل‌های اسلامی بر انواع خاصی از ثروت اعمال می‌شود:">Zakat is a <strong>compulsory charity</strong> applicable to specific forms of wealth according to Islamic guidelines:</p>
+          <ul class="illustration-points">
+            <li data-lang-en="Food grains (wheat, barley, dates, raisins) — upon reaching the prescribed minimum (nisab)"
+                data-lang-ar="الحبوب الغذائية (القمح والشعير والتمر والزبيب) — عند بلوغ النصاب المقرر"
+                data-lang-ur="غلہ جات (گندم، جو، کھجور، کشمش) — نصاب کو پہنچنے پر"
+                data-lang-fa="غلات (گندم، جو، خرما، کشمش) — پس از رسیدن به حد نصاب">Food grains (wheat, barley, dates, raisins) — upon reaching the prescribed minimum (nisab)</li>
+            <li data-lang-en="Livestock — cattle, sheep/goats, camels"
+                data-lang-ar="الأنعام — البقر والغنم والإبل"
+                data-lang-ur="مویشی — گائے، بکری، اونٹ"
+                data-lang-fa="دام — گاو، گوسفند/بز، شتر">Livestock — cattle, sheep/goats, camels</li>
+          </ul>
+          <p data-lang-en="Zakat purifies one's wealth and is among the pillars of Islamic financial obligation."
+             data-lang-ar="الزكاة تطهّر المال وهي من أركان الالتزامات المالية الإسلامية."
+             data-lang-ur="زکات مال کو پاک کرتی ہے اور اسلامی مالی فرائض کے ستونوں میں سے ہے۔"
+             data-lang-fa="زکات ثروت را تطهیر می‌کند و از ارکان تکالیف مالی اسلامی است.">Zakat purifies one's wealth and is among the pillars of Islamic financial obligation.</p>
+        </div>
+      </div>
+
+      <!-- 5. Sadaqah -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100" id="sadqa-detail">
+        <div class="illustration-card">
+          <div class="illustration-number">5</div>
+          <div class="illustration-icon"><i class="fas fa-heart"></i></div>
+          <h4 class="illustration-title"
+              data-lang-en="Sadaqah (Voluntary Charity)"
+              data-lang-ar="الصدقة (التبرع الطوعي)"
+              data-lang-ur="صدقہ (نفلی خیرات)"
+              data-lang-fa="صدقه (خیرات داوطلبانه)">Sadaqah (Voluntary Charity)</h4>
+          <p data-lang-en="Sadaqah should be given whenever needed and without delay, as its impact is immediate and spiritually beneficial."
+             data-lang-ar="ينبغي إخراج الصدقة عند الحاجة وبدون تأخير، إذ أثرها فوري ومبارك."
+             data-lang-ur="صدقہ جب بھی ضرورت ہو فوری طور پر دیا جانا چاہیے، کیونکہ اس کا اثر آنی ہوتا ہے۔"
+             data-lang-fa="صدقه باید هر زمان که لازم است و بدون تأخیر داده شود، زیرا تأثیر آن فوری و معنوی است.">Sadaqah should be given whenever needed and <strong>without delay</strong>, as its impact is immediate and spiritually beneficial.</p>
+          <ul class="illustration-points">
+            <li data-lang-en="Give daily Sadaqah via QR code — even a small amount each day carries immense reward."
+                data-lang-ar="أخرج صدقة يومية عبر رمز QR — حتى المبلغ البسيط يوميًا له أجر عظيم."
+                data-lang-ur="روزانہ QR کوڈ کے ذریعے صدقہ دیں — ہر روز ایک چھوٹی رقم بھی عظیم ثواب رکھتی ہے۔"
+                data-lang-fa="صدقه روزانه از طریق کد QR بدهید — حتی مبلغ کمی در هر روز پاداش بزرگی دارد.">Give <strong>daily Sadaqah</strong> via QR code — even a small amount each day carries immense reward.</li>
+            <li data-lang-en="Set aside contributions in a box at home and donate monthly or at your convenience."
+                data-lang-ar="ضع مساهماتك في صندوق بالمنزل وتبرع شهريًا أو في الوقت المناسب لك."
+                data-lang-ur="گھر میں ایک ڈبے میں رقم رکھیں اور ماہانہ یا اپنی سہولت کے مطابق ہمیں دیں۔"
+                data-lang-fa="مشارکت‌ها را در جعبه‌ای در خانه کنار بگذارید و ماهانه یا به میل خود اهدا کنید.">Set aside contributions in a <strong>box at home</strong> and donate monthly or at your convenience.</li>
+          </ul>
+          <div class="hadith-quote">
+            <p class="hadith-text mb-1"
+               data-lang-en='"Sadaqah extinguishes sin as water extinguishes fire."'
+               data-lang-ar='"الصدقة تطفئ الخطيئة كما يطفئ الماء النار."'
+               data-lang-ur='"صدقہ گناہ کو ایسے بجھا دیتا ہے جیسے پانی آگ کو۔"'
+               data-lang-fa='"صدقه گناه را خاموش می‌کند همان‌طور که آب آتش را."'>"Sadaqah extinguishes sin as water extinguishes fire."</p>
+            <p class="hadith-src mb-0"
+               data-lang-en="— Prophet Muhammad (ﷺ) · Thawāb al-Aʿmāl, Sheikh al-Ṣadūq, p. 142 · Also: Al-Kāfī, Vol. 4, p. 3"
+               data-lang-ar="— النبي محمد ﷺ · ثواب الأعمال، الشيخ الصدوق، ص١٤٢ · وأيضاً: الكافي، ج٤، ص٣"
+               data-lang-ur="— نبی اکرم ﷺ · ثواب الاعمال، شیخ صدوق، ص١٤٢ · نیز: الکافی، ج٤، ص٣"
+               data-lang-fa="— پیامبر اکرم ﷺ · ثواب الاعمال، شیخ صدوق، ص١٤٢ · همچنین: الکافی، ج٤، ص٣">— Prophet Muhammad (ﷺ) · Thawāb al-Aʿmāl, Sheikh al-Ṣadūq, p. 142 · Also: Al-Kāfī, Vol. 4, p. 3</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Isaal-e-Sawab -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="0" id="marhumeen-detail">
+        <div class="illustration-card">
+          <div class="illustration-number">6</div>
+          <div class="illustration-icon"><i class="fas fa-moon"></i></div>
+          <h4 class="illustration-title"
+              data-lang-en="Remembrance for Your Marhoomeen"
+              data-lang-ar="إيصال الثواب للمرحومين"
+              data-lang-ur="مرحومین کے لیے ایصالِ ثواب"
+              data-lang-fa="ایصال ثواب به مرحومین">Remembrance for Your Marhoomeen</h4>
+          <p data-lang-en="You may dedicate charity — cash or food grains — for the Isaal-e-Sawab (transfer of spiritual reward) to your deceased loved ones."
+             data-lang-ar="يمكنك تخصيص صدقة — نقداً أو حبوباً — لإيصال الثواب إلى أرواح أحبائك المتوفين."
+             data-lang-ur="آپ نقد رقم یا غلہ — اپنے مرحوم پیاروں کے لیے ایصالِ ثواب کی نیت سے دے سکتے ہیں۔"
+             data-lang-fa="می‌توانید صدقه‌ای — نقدی یا غله — برای ایصال ثواب به ارواح عزیزان متوفای خود اهدا کنید.">You may dedicate charity — cash or food grains — for the <strong>Isaal-e-Sawab</strong> (transfer of spiritual reward) to your deceased loved ones.</p>
+          <ul class="illustration-points">
+            <li data-lang-en="This act carries immense spiritual reward and benefits them in the hereafter."
+                data-lang-ar="هذا العمل له أجر روحي عظيم ويُفيد أرواح المتوفين في الآخرة."
+                data-lang-ur="یہ عمل عظیم روحانی ثواب رکھتا ہے اور آخرت میں مرحومین کو فائدہ دیتا ہے۔"
+                data-lang-fa="این عمل پاداش معنوی بزرگی دارد و در آخرت به ارواح مرحومین سود می‌رساند.">This act carries <strong>immense spiritual reward</strong> and benefits them in the hereafter.</li>
+            <li data-lang-en="You may give a certain amount or foodgrain in their name — it reaches them as a gift of light."
+                data-lang-ar="يمكنك التبرع بمبلغ أو حبوب باسمهم — يصل إليهم كهدية نورانية."
+                data-lang-ur="ان کے نام پر رقم یا اناج دیں — یہ ان تک نور کے تحفے کے طور پر پہنچتا ہے۔"
+                data-lang-fa="می‌توانید به نام آنها مبلغ یا غله‌ای بدهید — که به عنوان هدیه‌ای از نور به آنها می‌رسد.">You may give a certain amount or foodgrain in their name — it reaches them as a gift of light.</li>
+          </ul>
+          <p data-lang-en="This is among the most beautiful acts of love one can offer to a departed soul."
+             data-lang-ar="هذا من أجمل أعمال الحب التي يمكن تقديمها لروح راحلة."
+             data-lang-ur="یہ کسی روانہ ہوئی روح کے لیے محبت کے خوبصورت ترین عمل میں سے ہے۔"
+             data-lang-fa="این از زیباترین اعمال محبتی است که می‌توان به روح درگذشته‌ای تقدیم کرد.">This is among the most beautiful acts of love one can offer to a departed soul.</p>
+        </div>
+      </div>
+
+      <!-- 7. General Charity -->
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100" id="charity-detail">
+        <div class="illustration-card">
+          <div class="illustration-number">7</div>
+          <div class="illustration-icon"><i class="fas fa-hands-helping"></i></div>
+          <h4 class="illustration-title"
+              data-lang-en="General Charity"
+              data-lang-ar="الخيرات العامة"
+              data-lang-ur="عام صدقہ و خیرات"
+              data-lang-fa="خیرات عمومی">General Charity</h4>
+          <p data-lang-en="According to Hadith, even one rupee given in charity to a religious teacher or religious student carries great reward — multiplied many times in the sight of Allah."
+             data-lang-ar="وفق الحديث الشريف، حتى روبية واحدة تُعطى صدقةً لمعلم ديني أو طالب علم، لها أجر عظيم مضاعف عند الله."
+             data-lang-ur="حدیث کے مطابق، ایک دینی استاد یا طالب علم کو صدقے میں دیا گیا ایک روپیہ بھی اللہ کے نزدیک کئی گنا اجر رکھتا ہے۔"
+             data-lang-fa="طبق حدیث، حتی یک روپیه صدقه داده شده به معلم دینی یا طالب علم، پاداش بزرگی دارد که نزد خداوند چند برابر می‌شود.">According to Hadith, <strong>even one rupee given in charity</strong> to a religious teacher or religious student carries great reward — multiplied many times in the sight of Allah.</p>
+          <ul class="illustration-points">
+            <li data-lang-en="Supporting an Islamic institution is among the highest forms of Sadaqah Jariyah (ongoing charity)."
+                data-lang-ar="دعم مؤسسة إسلامية هو من أعلى أشكال الصدقة الجارية."
+                data-lang-ur="اسلامی ادارے کی حمایت سب سے اعلیٰ صدقہ جاریہ میں سے ہے۔"
+                data-lang-fa="حمایت از یک مؤسسه اسلامی از بالاترین اشکال صدقه جاریه است.">Supporting an Islamic institution is among the highest forms of Sadaqah Jariyah (ongoing charity).</li>
+            <li data-lang-en="Your contribution directly sustains scholars, students, and the dissemination of Islamic knowledge."
+                data-lang-ar="مساهمتك تُغذّي مباشرةً العلماء والطلاب وتدعم نشر العلوم الإسلامية."
+                data-lang-ur="آپ کا تعاون براہ راست علماء، طلاب اور اسلامی علوم کی اشاعت کو پروان چڑھاتا ہے۔"
+                data-lang-fa="مشارکت شما مستقیماً علما، دانش‌آموزان و نشر علوم اسلامی را پشتیبانی می‌کند.">Your contribution directly sustains scholars, students, and the dissemination of Islamic knowledge.</li>
+          </ul>
+          <div class="hadith-quote">
+            <p class="hadith-text mb-1"
+               data-lang-en='"When a person dies, his deeds come to an end except for three: Sadaqah Jariyah, knowledge by which people benefit, or a righteous child who prays for him."'
+               data-lang-ar='"إذا مات الإنسان انقطع عمله إلا من ثلاث: صدقة جارية، أو علم ينتفع به، أو ولد صالح يدعو له."'
+               data-lang-ur='"جب انسان مر جاتا ہے تو اس کا عمل منقطع ہو جاتا ہے، مگر تین چیزوں سے: صدقہ جاریہ، علم جس سے نفع اٹھایا جائے، یا نیک اولاد جو اس کے لیے دعا کرے۔"'
+               data-lang-fa='"وقتی انسان می‌میرد اعمالش قطع می‌شود مگر از سه چیز: صدقه جاریه، علمی که مردم از آن بهره برند، یا فرزند صالحی که برایش دعا کند."'>"When a person dies, his deeds come to an end except for three: Sadaqah Jariyah, knowledge by which people benefit, or a righteous child who prays for him."</p>
+            <p class="hadith-src mb-0"
+               data-lang-en="— Prophet Muhammad (ﷺ) · Man Lā Yaḥḍuruhu al-Faqīh, Sheikh al-Ṣadūq, Vol. 2, p. 90 · Also: Wasāʾil al-Shīʿa, Vol. 16, p. 289"
+               data-lang-ar="— النبي محمد ﷺ · من لا يحضره الفقيه، الشيخ الصدوق، ج٢، ص٩٠ · وأيضاً: وسائل الشيعة، ج١٦، ص٢٨٩"
+               data-lang-ur="— نبی اکرم ﷺ · من لا یحضرہ الفقیہ، شیخ صدوق، ج٢، ص٩٠ · نیز: وسائل الشیعہ، ج١٦، ص٢٨٩"
+               data-lang-fa="— پیامبر اکرم ﷺ · من لا یحضره الفقیه، شیخ صدوق، ج٢، ص٩٠ · همچنین: وسائل الشیعه، ج١٦، ص٢٨٩">— Prophet Muhammad (ﷺ) · Man Lā Yaḥḍuruhu al-Faqīh, Sheikh al-Ṣadūq, Vol. 2, p. 90 · Also: Wasāʾil al-Shīʿa, Vol. 16, p. 289</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.row illustrations -->
+
+    <!-- ═══════════════ FINAL CTA ═══════════════ -->
+    <div class="row mt-5">
+      <div class="col-12 text-center" data-aos="fade-up">
+        <div class="partner-cta-block">
+          <div class="section-ornament text-gold mb-3">❖</div>
+          <h3 class="mb-3">وَأَنفِقُواْ فِي سَبِيلِ اللَّهِ</h3>
+          <p class="text-muted mb-4"
+             data-lang-en='"And spend in the way of Allah…" — Qurʾān 2:195'
+             data-lang-ar='"وَأَنفِقُواْ فِي سَبِيلِ اللَّهِ…" — القرآن الكريم ٢:١٩٥'
+             data-lang-ur='"اور اللہ کی راہ میں خرچ کرو…" — قرآن ٢:١٩٥'
+             data-lang-fa='"و در راه خدا انفاق کنید…" — قرآن ٢:١٩٥'>"And spend in the way of Allah…" — Qurʾān 2:195</p>
+          <div class="d-flex flex-wrap justify-content-center gap-3">
+            <a href="{% url 'contact:contact' %}" class="btn btn-gold btn-lg">
+              <i class="fas fa-envelope me-2"></i>
+              <span data-lang-en="Contact Us to Donate"
+                    data-lang-ar="تواصل معنا للتبرع"
+                    data-lang-ur="عطیہ دینے کے لیے رابطہ کریں"
+                    data-lang-fa="برای اهدا با ما تماس بگیرید">Contact Us to Donate</span>
+            </a>
+            <a href="{% url 'contact:ask' %}" class="btn btn-outline-gold btn-lg">
+              <i class="fas fa-question-circle me-2"></i>
+              <span data-lang-en="Ask About Donations"
+                    data-lang-ar="استفسر عن التبرعات"
+                    data-lang-ur="عطیات کے بارے میں پوچھیں"
+                    data-lang-fa="درباره اهدا بپرسید">Ask About Donations</span>
+            </a>
+            <a href="{% url 'core:founder' %}" class="btn btn-outline-gold btn-lg">
+              <i class="fas fa-certificate me-2"></i>
+              <span data-lang-en="View Ijāzah Documents"
+                    data-lang-ar="عرض وثائق الإجازات"
+                    data-lang-ur="اجازہ دستاویزات دیکھیں"
+                    data-lang-fa="مشاهده اسناد اجازات">View Ijāzah Documents</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.container -->
+</section>
+
+{% endblock %}

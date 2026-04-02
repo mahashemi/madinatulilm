@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
                 ('full_name', models.CharField(max_length=200)),
                 ('email', models.EmailField(max_length=254)),
                 ('phone', models.CharField(blank=True, max_length=30)),
-                ('category', models.CharField(choices=[('fiqh', 'Fiqh (Jurisprudence)'), ('aqeedah', 'ʿAqīdah (Creed)'), ('akhlaq', 'Akhlāq (Ethics)'), ('quran', 'Qurʾān'), ('hadith', 'Hadith'), ('general', 'General Islamic'), ('other', 'Other')], default='general', max_length=20)),
+                ('category', models.CharField(choices=[('Fiqh', 'Fiqh (Jurisprudence)'), ('aqeedah', 'ʿAqīdah (Creed)'), ('akhlaq', 'Akhlāq (Ethics)'), ('quran', 'Qurʾān'), ('hadith', 'Hadith'), ('general', 'General Islamic'), ('other', 'Other')], default='general', max_length=20)),
                 ('question', models.TextField()),
                 ('is_anonymous', models.BooleanField(default=False)),
                 ('is_public', models.BooleanField(default=False, help_text='Show question and answer publicly?')),

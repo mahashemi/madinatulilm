@@ -5,7 +5,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">Academic Programs</h1>
+    <h1 class="page-header-title"
+        data-lang-en="Academic Programs" data-lang-ar="البرامج الأكاديمية" data-lang-ur="تعلیمی پروگرام" data-lang-fa="برنامه‌های آموزشی">Academic Programs</h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb justify-content-center">
         <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
@@ -19,18 +20,31 @@
   <div class="container">
     <div class="text-center mb-5" data-aos="fade-up">
       <div class="section-ornament">❖</div>
-      <h2 class="section-title">Core Disciplines</h2>
-      <p class="section-subtitle">Madrasah Madinatul Ilm offers a robust curriculum in the following core disciplines</p>
+      <h2 class="section-title"
+          data-lang-en="Core Disciplines" data-lang-ar="التخصصات الأساسية" data-lang-ur="بنیادی شعبہ جات" data-lang-fa="رشته‌های اصلی">Core Disciplines</h2>
+      <p class="section-subtitle"
+         data-lang-en="Madrasah Madinatul Ilm offers a robust curriculum in the following core disciplines"
+         data-lang-ar="تقدم مدرسة مدينة العلم منهجاً شاملاً في التخصصات الأساسية التالية"
+         data-lang-ur="مدرسہ مدینۃ العلم درج ذیل بنیادی شعبوں میں ایک مضبوط نصاب پیش کرتا ہے"
+         data-lang-fa="مدرسه مدینةالعلم یک برنامه درسی جامع در رشته‌های اصلی ارائه می‌دهد">Madrasah Madinatul Ilm offers a robust curriculum in the following core disciplines</p>
     </div>
     <div class="row g-4">
       {% for program in programs %}
       <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
         <div class="program-card-large">
           <div class="program-icon-large"><i class="{{ program.icon_class|default:'fas fa-book' }}"></i></div>
-          <h5 class="program-title">{{ program.title_en }}</h5>
-          {% if program.title_ar %}<p class="program-title-ar">{{ program.title_ar }}</p>{% endif %}
-          {% if program.description_en %}<div class="program-desc">{{ program.description_en|safe }}</div>{% endif %}
-          <a href="{% url 'lessons:subject' program.subject %}" class="btn btn-sm btn-gold mt-3">Explore Lessons</a>
+          <h5 class="program-title"
+              data-lang-en="{{ program.title_en }}" data-lang-ar="{{ program.title_ar }}" data-lang-ur="{{ program.title_ur }}" data-lang-fa="{{ program.title_fa }}">{{ program.title_en }}</h5>
+          {% if program.description_en %}
+          <div class="program-desc rich-text"
+               data-html-lang-en="{{ program.description_en|default:''|force_escape }}"
+               data-html-lang-ar="{{ program.description_ar|default:''|force_escape }}"
+               data-html-lang-ur="{{ program.description_ur|default:''|force_escape }}"
+               data-html-lang-fa="{{ program.description_fa|default:''|force_escape }}">{{ program.description_en|safe }}</div>
+          {% endif %}
+          <a href="{% url 'lessons:subject' program.subject %}" class="btn btn-sm btn-gold mt-3">
+            <span data-lang-en="Explore Lessons" data-lang-ar="استكشف الدروس" data-lang-ur="اسباق دیکھیں" data-lang-fa="بررسی درس‌ها">Explore Lessons</span>
+          </a>
         </div>
       </div>
       {% endfor %}

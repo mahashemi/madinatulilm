@@ -6,7 +6,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">About Us</h1>
+    <h1 class="page-header-title"
+        data-lang-en="About Us" data-lang-ar="من نحن" data-lang-ur="ہمارے بارے میں" data-lang-fa="درباره ما">About Us</h1>
     <p class="page-header-subtitle">Muhammadiyah Trust · Madrasah Madinatul Ilm</p>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb justify-content-center">
@@ -23,17 +24,20 @@
     <ul class="nav nav-tabs border-0 justify-content-center" id="aboutTabs" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link about-tab active" id="tab-about" data-bs-toggle="tab" data-bs-target="#pane-about" type="button" role="tab">
-          <i class="fas fa-mosque me-2"></i>About Us
+          <i class="fas fa-mosque me-2"></i>
+          <span data-lang-en="About Us" data-lang-ar="من نحن" data-lang-ur="ہمارے بارے میں" data-lang-fa="درباره ما">About Us</span>
         </button>
       </li>
       <li class="nav-item" role="presentation">
         <button class="nav-link about-tab" id="tab-trustees" data-bs-toggle="tab" data-bs-target="#pane-trustees" type="button" role="tab">
-          <i class="fas fa-users me-2"></i>Trustees
+          <i class="fas fa-users me-2"></i>
+          <span data-lang-en="Trustees" data-lang-ar="أمناء المؤسسة" data-lang-ur="ٹرسٹی" data-lang-fa="امنا">Trustees</span>
         </button>
       </li>
       <li class="nav-item" role="presentation">
         <button class="nav-link about-tab" id="tab-ijazat" data-bs-toggle="tab" data-bs-target="#pane-ijazat" type="button" role="tab">
-          <i class="fas fa-certificate me-2"></i>Ijāzah Certificates
+          <i class="fas fa-certificate me-2"></i>
+          <span data-lang-en="Ijāzah Certificates" data-lang-ar="الإجازات العلمية" data-lang-ur="اجازات" data-lang-fa="اجازه‌نامه‌ها">Ijāzah Certificates</span>
         </button>
       </li>
     </ul>
@@ -53,8 +57,16 @@
         <div class="row g-5 align-items-start mb-6" data-aos="fade-up">
           <div class="col-lg-8">
             <div class="section-ornament">❖</div>
-            <h2 class="section-title">{{ about.title_en }}</h2>
-            <div class="rich-text mt-4">{{ about.body_en|safe }}</div>
+            <h2 class="section-title"
+                data-lang-en="{{ about.title_en }}"
+                data-lang-ar="{{ about.title_ar }}"
+                data-lang-ur="{{ about.title_ur }}"
+                data-lang-fa="{{ about.title_fa }}">{{ about.title_en }}</h2>
+            <div class="rich-text mt-4"
+                 data-html-lang-en="{{ about.body_en|force_escape }}"
+                 data-html-lang-ar="{{ about.body_ar|force_escape }}"
+                 data-html-lang-ur="{{ about.body_ur|force_escape }}"
+                 data-html-lang-fa="{{ about.body_fa|force_escape }}">{{ about.body_en|safe }}</div>
           </div>
           <div class="col-lg-4">
             <div class="contact-info-card">
@@ -73,8 +85,13 @@
           <div class="col-md-6" data-aos="fade-up">
             <div class="mv-card h-100">
               <div class="mv-icon"><i class="fas fa-bullseye"></i></div>
-              <h4 class="mv-title">Our Mission</h4>
-              <div class="mv-body">{{ mission.body_en|safe }}</div>
+            <h4 class="mv-title"
+                data-lang-en="Our Mission" data-lang-ar="مهمتنا" data-lang-ur="ہمارا مشن" data-lang-fa="مأموریت ما">Our Mission</h4>
+            <div class="mv-body"
+                 data-html-lang-en="{{ mission.body_en|force_escape }}"
+                 data-html-lang-ar="{{ mission.body_ar|force_escape }}"
+                 data-html-lang-ur="{{ mission.body_ur|force_escape }}"
+                 data-html-lang-fa="{{ mission.body_fa|force_escape }}">{{ mission.body_en|safe }}</div>
             </div>
           </div>
           {% endif %}
@@ -82,8 +99,13 @@
           <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
             <div class="mv-card h-100">
               <div class="mv-icon"><i class="fas fa-eye"></i></div>
-              <h4 class="mv-title">Our Vision</h4>
-              <div class="mv-body">{{ vision.body_en|safe }}</div>
+            <h4 class="mv-title"
+                data-lang-en="Our Vision" data-lang-ar="رؤيتنا" data-lang-ur="ہمارا وژن" data-lang-fa="چشم‌انداز ما">Our Vision</h4>
+            <div class="mv-body"
+                 data-html-lang-en="{{ vision.body_en|force_escape }}"
+                 data-html-lang-ar="{{ vision.body_ar|force_escape }}"
+                 data-html-lang-ur="{{ vision.body_ur|force_escape }}"
+                 data-html-lang-fa="{{ vision.body_fa|force_escape }}">{{ vision.body_en|safe }}</div>
             </div>
           </div>
           {% endif %}
@@ -99,8 +121,13 @@
       <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
           <div class="section-ornament">❖</div>
-          <h2 class="section-title">Board of Trustees</h2>
-          <p class="section-subtitle">Muhammadiyah Trust — Dedicated Servants of Knowledge &amp; Community</p>
+          <h2 class="section-title"
+              data-lang-en="Board of Trustees" data-lang-ar="مجلس الأمناء" data-lang-ur="بورڈ آف ٹرسٹیز" data-lang-fa="هیئت امنا">Board of Trustees</h2>
+          <p class="section-subtitle"
+             data-lang-en="Muhammadiyah Trust — Dedicated Servants of Knowledge &amp; Community"
+             data-lang-ar="مؤسسة محمدية — خدام العلم والمجتمع"
+             data-lang-ur="محمدیہ ٹرسٹ — علم و خدمت کے فداکار"
+             data-lang-fa="موقوفه محمدیه — خادمان علم و جامعه">Muhammadiyah Trust — Dedicated Servants of Knowledge &amp; Community</p>
         </div>
 
         <div class="row g-4 justify-content-center">
@@ -140,8 +167,13 @@
       <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
           <div class="section-ornament">❖</div>
-          <h2 class="section-title">Scholarly Certifications (Ijāzāt)</h2>
-          <p class="section-subtitle">Certificates of narration and authority received from the leading Marāji' of our time</p>
+          <h2 class="section-title"
+              data-lang-en="Scholarly Certifications (Ijāzāt)" data-lang-ar="الإجازات العلمية" data-lang-ur="علمی اجازات" data-lang-fa="اجازه‌نامه‌های علمی">Scholarly Certifications (Ijāzāt)</h2>
+          <p class="section-subtitle"
+             data-lang-en="Certificates of narration and authority received from the leading Marāji' of our time"
+             data-lang-ar="شهادات الرواية والولاية من كبار المراجع في عصرنا"
+             data-lang-ur="ہمارے زمانے کے بڑے مراجع سے حاصل کردہ روایت و وکالت کی سندیں"
+             data-lang-fa="گواهینامه‌های روایت و وکالت از مراجع بزرگ عصر">Certificates of narration and authority received from the leading Marāji' of our time</p>
         </div>
 
         <!-- Riwayat group -->

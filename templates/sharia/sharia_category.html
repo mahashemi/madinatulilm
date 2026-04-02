@@ -4,8 +4,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">{{ category.title_en }}</h1>
-    {% if category.title_ar %}<p class="page-header-subtitle">{{ category.title_ar }}</p>{% endif %}
+    <h1 class="page-header-title"
+        data-lang-en="{{ category.title_en }}" data-lang-ar="{{ category.title_ar }}" data-lang-ur="{{ category.title_ur }}" data-lang-fa="{{ category.title_fa }}">{{ category.title_en }}</h1>
     <nav aria-label="breadcrumb"><ol class="breadcrumb justify-content-center">
       <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
       <li class="breadcrumb-item"><a href="{% url 'sharia:home' %}">Sharia Matters</a></li>
@@ -20,11 +20,14 @@
       {% for item in contents %}
       <div class="col-lg-4 col-md-6" data-aos="fade-up">
         <div class="resource-card">
-          <div class="resource-type-badge text">{{ category.title_en }}</div>
-          <h6 class="resource-title">{{ item.title_en }}</h6>
-          {% if item.title_ar %}<p class="resource-title-ar">{{ item.title_ar }}</p>{% endif %}
+          <div class="resource-type-badge text"
+               data-lang-en="{{ category.title_en }}" data-lang-ar="{{ category.title_ar }}" data-lang-ur="{{ category.title_ur }}" data-lang-fa="{{ category.title_fa }}">{{ category.title_en }}</div>
+          <h6 class="resource-title"
+              data-lang-en="{{ item.title_en }}" data-lang-ar="{{ item.title_ar }}" data-lang-ur="{{ item.title_ur }}" data-lang-fa="{{ item.title_fa }}">{{ item.title_en }}</h6>
           <div class="d-flex gap-2 mt-3">
-            <a href="{% url 'sharia:detail' item.pk %}" class="btn btn-sm btn-gold flex-fill">Read</a>
+            <a href="{% url 'sharia:detail' item.pk %}" class="btn btn-sm btn-gold flex-fill">
+              <span data-lang-en="Read" data-lang-ar="اقرأ" data-lang-ur="پڑھیں" data-lang-fa="بخوانید">Read</span>
+            </a>
             {% if item.pdf_file %}<a href="{{ item.pdf_file.url }}" class="btn btn-sm btn-outline-gold flex-fill" download><i class="fas fa-download me-1"></i>PDF</a>{% endif %}
           </div>
         </div>

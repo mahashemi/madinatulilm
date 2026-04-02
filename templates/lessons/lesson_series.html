@@ -4,7 +4,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">{{ series.title_en }}</h1>
+    <h1 class="page-header-title"
+        data-lang-en="{{ series.title_en }}" data-lang-ar="{{ series.title_ar }}" data-lang-ur="{{ series.title_ur }}" data-lang-fa="{{ series.title_fa }}">{{ series.title_en }}</h1>
     <nav aria-label="breadcrumb"><ol class="breadcrumb justify-content-center">
       <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
       <li class="breadcrumb-item"><a href="{% url 'lessons:home' %}">Lessons</a></li>
@@ -21,11 +22,14 @@
           <div class="d-flex align-items-center gap-3">
             <div class="lesson-num">{{ forloop.counter }}</div>
             <div>
-              <h6 class="mb-0">{{ lesson.title_en }}</h6>
+              <h6 class="mb-0"
+                  data-lang-en="{{ lesson.title_en }}" data-lang-ar="{{ lesson.title_ar }}" data-lang-ur="{{ lesson.title_ur }}" data-lang-fa="{{ lesson.title_fa }}">{{ lesson.title_en }}</h6>
               {% if lesson.duration %}<small class="text-muted"><i class="fas fa-clock me-1"></i>{{ lesson.duration }}</small>{% endif %}
             </div>
             <div class="ms-auto">
-              <a href="{% url 'lessons:detail' lesson.pk %}" class="btn btn-sm btn-gold">Open</a>
+              <a href="{% url 'lessons:detail' lesson.pk %}" class="btn btn-sm btn-gold">
+                <span data-lang-en="Open" data-lang-ar="افتح" data-lang-ur="کھولیں" data-lang-fa="باز کن">Open</span>
+              </a>
             </div>
           </div>
         </div>
@@ -35,7 +39,8 @@
       </div>
       <div class="col-lg-4">
         <div class="contact-info-card">
-          <h5 class="contact-info-title">{{ series.title_en }}</h5>
+          <h5 class="contact-info-title"
+              data-lang-en="{{ series.title_en }}" data-lang-ar="{{ series.title_ar }}" data-lang-ur="{{ series.title_ur }}" data-lang-fa="{{ series.title_fa }}">{{ series.title_en }}</h5>
           {% if series.description_en %}<div class="footer-text">{{ series.description_en|safe }}</div>{% endif %}
           {% if series.instructor %}<p class="mt-3"><i class="fas fa-chalkboard-teacher me-2 text-gold"></i>{{ series.instructor }}</p>{% endif %}
           <p class="mt-2"><i class="fas fa-list me-2 text-gold"></i>{{ lessons|length }} lesson{{ lessons|length|pluralize }}</p>

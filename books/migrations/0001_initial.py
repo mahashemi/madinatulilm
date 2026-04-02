@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='BookCategory',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.CharField(choices=[('tafsir_hadith', 'Tafsīr & Hadith'), ('rijal', 'Rijāl (Science of Narrators)'), ('fiqh', 'Fiqh (Jurisprudence)'), ('usul', 'Usūl al-Fiqh'), ('kalam', 'Kalām & ʿAqīdah'), ('akhlaq', 'Akhlāq (Ethics)'), ('rational', 'Rational Sciences'), ('arabic', 'Arabic Literature'), ('misc', 'Miscellaneous')], max_length=20, unique=True)),
+                ('slug', models.CharField(choices=[('tafsir_hadith', 'Tafsīr & Hadith'), ('rijal', 'Rijāl (Science of Narrators)'), ('Fiqh', 'Fiqh (Jurisprudence)'), ('usul', 'Usūl al-Fiqh'), ('kalam', 'Kalām & ʿAqīdah'), ('akhlaq', 'Akhlāq (Ethics)'), ('rational', 'Rational Sciences'), ('arabic', 'Arabic Literature'), ('misc', 'Miscellaneous')], max_length=20, unique=True)),
                 ('title_en', models.CharField(max_length=200)),
                 ('title_ar', models.CharField(blank=True, max_length=200)),
                 ('icon_class', models.CharField(blank=True, max_length=100)),

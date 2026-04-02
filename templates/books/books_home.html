@@ -5,7 +5,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">Books & Articles</h1>
+    <h1 class="page-header-title"
+        data-lang-en="Books &amp; Articles" data-lang-ar="الكتب والمقالات" data-lang-ur="کتب و مضامین" data-lang-fa="کتاب‌ها و مقالات">Books &amp; Articles</h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb justify-content-center">
         <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
@@ -19,9 +20,11 @@
   <div class="container">
     <!-- Category Filter -->
     <div class="category-filter-bar mb-5" data-aos="fade-up">
-      <a href="{% url 'books:home' %}" class="filter-btn active">All</a>
+      <a href="{% url 'books:home' %}" class="filter-btn active"
+         data-lang-en="All" data-lang-ar="الكل" data-lang-ur="سب" data-lang-fa="همه">All</a>
       {% for cat in categories %}
-      <a href="{% url 'books:category' cat.slug %}" class="filter-btn">{{ cat.title_en }}</a>
+      <a href="{% url 'books:category' cat.slug %}" class="filter-btn"
+         data-lang-en="{{ cat.title_en }}" data-lang-ar="{{ cat.title_ar }}" data-lang-ur="{{ cat.title_ur }}" data-lang-fa="{{ cat.title_fa }}">{{ cat.title_en }}</a>
       {% endfor %}
     </div>
 
@@ -35,12 +38,15 @@
             <div class="book-cover-placeholder"><i class="fas fa-book-open"></i></div>
           {% endif %}
           <div class="book-body">
-            <span class="book-cat-badge">{{ book.category.title_en }}</span>
-            <h6 class="book-title">{{ book.title_en }}</h6>
-            {% if book.title_ar %}<p class="book-title-ar">{{ book.title_ar }}</p>{% endif %}
+            <span class="book-cat-badge"
+                  data-lang-en="{{ book.category.title_en }}" data-lang-ar="{{ book.category.title_ar }}" data-lang-ur="{{ book.category.title_ur }}" data-lang-fa="{{ book.category.title_fa }}">{{ book.category.title_en }}</span>
+            <h6 class="book-title"
+                data-lang-en="{{ book.title_en }}" data-lang-ar="{{ book.title_ar }}" data-lang-ur="{{ book.title_ur }}" data-lang-fa="{{ book.title_fa }}">{{ book.title_en }}</h6>
             {% if book.author %}<p class="book-author"><i class="fas fa-pen-nib me-1"></i>{{ book.author }}</p>{% endif %}
             <div class="d-flex gap-2 mt-2">
-              <a href="{% url 'books:detail' book.pk %}" class="btn btn-sm btn-outline-gold flex-fill">Details</a>
+              <a href="{% url 'books:detail' book.pk %}" class="btn btn-sm btn-outline-gold flex-fill">
+                <span data-lang-en="Details" data-lang-ar="التفاصيل" data-lang-ur="تفصیل" data-lang-fa="جزئیات">Details</span>
+              </a>
               {% if book.is_downloadable and book.pdf_file %}
               <a href="{% url 'books:download' book.pk %}" class="btn btn-sm btn-gold flex-fill"><i class="fas fa-download me-1"></i>PDF</a>
               {% endif %}

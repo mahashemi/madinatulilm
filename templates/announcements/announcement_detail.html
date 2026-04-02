@@ -5,7 +5,11 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">{{ announcement.category.title_en }}</h1>
+    <h1 class="page-header-title"
+        data-lang-en="{{ announcement.category.title_en }}"
+        data-lang-ar="{{ announcement.category.title_ar }}"
+        data-lang-ur="{{ announcement.category.title_ur }}"
+        data-lang-fa="{{ announcement.category.title_fa }}">{{ announcement.category.title_en }}</h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb justify-content-center">
         <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
@@ -25,14 +29,17 @@
             <span class="ann-category me-3">{{ announcement.category.title_en }}</span>
             <span class="text-muted"><i class="fas fa-calendar-alt me-1"></i>{{ announcement.publish_date }}</span>
           </div>
-          <h2 class="detail-title">{{ announcement.title_en }}</h2>
-          {% if announcement.title_ar %}<p class="detail-title-ar">{{ announcement.title_ar }}</p>{% endif %}
+          <h2 class="detail-title"
+              data-lang-en="{{ announcement.title_en }}"
+              data-lang-ar="{{ announcement.title_ar }}"
+              data-lang-ur="{{ announcement.title_ur }}"
+              data-lang-fa="{{ announcement.title_fa }}">{{ announcement.title_en }}</h2>
           {% if announcement.image %}<img src="{{ announcement.image.url }}" class="img-fluid rounded mb-4" alt="">{% endif %}
-          <div class="rich-text">{{ announcement.body_en|safe }}</div>
-          {% if announcement.body_ar %}
-          <hr>
-          <div class="rich-text rtl-text">{{ announcement.body_ar|safe }}</div>
-          {% endif %}
+          <div class="rich-text"
+               data-html-lang-en="{{ announcement.body_en|force_escape }}"
+               data-html-lang-ar="{{ announcement.body_ar|default:''|force_escape }}"
+               data-html-lang-ur="{{ announcement.body_ur|default:''|force_escape }}"
+               data-html-lang-fa="{{ announcement.body_fa|default:''|force_escape }}">{{ announcement.body_en|safe }}</div>
           {% if announcement.attachment %}
           <div class="mt-4">
             <a href="{{ announcement.attachment.url }}" class="btn btn-gold" download>
@@ -41,9 +48,10 @@
           </div>
           {% endif %}
           <div class="mt-5">
-            <a href="{% url 'announcements:home' %}" class="btn btn-outline-gold">
-              <i class="fas fa-arrow-left me-2"></i>Back to Announcements
-            </a>
+          <a href="{% url 'announcements:home' %}" class="btn btn-outline-gold">
+            <i class="fas fa-arrow-left me-2"></i>
+            <span data-lang-en="Back to Announcements" data-lang-ar="العودة للإعلانات" data-lang-ur="اعلانات پر واپس" data-lang-fa="بازگشت به اطلاعیه‌ها">Back to Announcements</span>
+          </a>
           </div>
         </div>
       </div>

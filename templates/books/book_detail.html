@@ -4,7 +4,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">{{ book.title_en }}</h1>
+    <h1 class="page-header-title"
+        data-lang-en="{{ book.title_en }}" data-lang-ar="{{ book.title_ar }}" data-lang-ur="{{ book.title_ur }}" data-lang-fa="{{ book.title_fa }}">{{ book.title_en }}</h1>
     <nav aria-label="breadcrumb"><ol class="breadcrumb justify-content-center">
       <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
       <li class="breadcrumb-item"><a href="{% url 'books:home' %}">Books & Articles</a></li>
@@ -27,17 +28,24 @@
       </div>
       <div class="col-lg-9" data-aos="fade-left">
         <div class="detail-card">
-          <span class="book-cat-badge mb-3 d-inline-block">{{ book.category.title_en }}</span>
-          <h2 class="detail-title">{{ book.title_en }}</h2>
-          {% if book.title_ar %}<p class="detail-title-ar">{{ book.title_ar }}</p>{% endif %}
+          <span class="book-cat-badge mb-3 d-inline-block"
+                data-lang-en="{{ book.category.title_en }}" data-lang-ar="{{ book.category.title_ar }}" data-lang-ur="{{ book.category.title_ur }}" data-lang-fa="{{ book.category.title_fa }}">{{ book.category.title_en }}</span>
+          <h2 class="detail-title"
+              data-lang-en="{{ book.title_en }}" data-lang-ar="{{ book.title_ar }}" data-lang-ur="{{ book.title_ur }}" data-lang-fa="{{ book.title_fa }}">{{ book.title_en }}</h2>
           <table class="table table-sm mt-3">
-            {% if book.author %}<tr><th>Author</th><td>{{ book.author }}</td></tr>{% endif %}
-            {% if book.language %}<tr><th>Language</th><td>{{ book.language }}</td></tr>{% endif %}
-            {% if book.pages %}<tr><th>Pages</th><td>{{ book.pages }}</td></tr>{% endif %}
-            {% if book.published_year %}<tr><th>Year</th><td>{{ book.published_year }}</td></tr>{% endif %}
+            {% if book.author %}<tr><th data-lang-en="Author" data-lang-ar="المؤلف" data-lang-ur="مصنف" data-lang-fa="نویسنده">Author</th><td>{{ book.author }}</td></tr>{% endif %}
+            {% if book.language %}<tr><th data-lang-en="Language" data-lang-ar="اللغة" data-lang-ur="زبان" data-lang-fa="زبان">Language</th><td>{{ book.language }}</td></tr>{% endif %}
+            {% if book.pages %}<tr><th data-lang-en="Pages" data-lang-ar="الصفحات" data-lang-ur="صفحات" data-lang-fa="صفحات">Pages</th><td>{{ book.pages }}</td></tr>{% endif %}
+            {% if book.published_year %}<tr><th data-lang-en="Year" data-lang-ar="السنة" data-lang-ur="سال" data-lang-fa="سال">Year</th><td>{{ book.published_year }}</td></tr>{% endif %}
           </table>
-          {% if book.description_en %}<div class="rich-text mt-4">{{ book.description_en|safe }}</div>{% endif %}
-          <div class="mt-4"><a href="{% url 'books:home' %}" class="btn btn-outline-gold"><i class="fas fa-arrow-left me-2"></i>Back to Library</a></div>
+          {% if book.description_en %}
+          <div class="rich-text mt-4"
+               data-html-lang-en="{{ book.description_en|force_escape }}"
+               data-html-lang-ar="{{ book.description_ar|default:''|force_escape }}"
+               data-html-lang-ur="{{ book.description_ur|default:''|force_escape }}"
+               data-html-lang-fa="{{ book.description_fa|default:''|force_escape }}">{{ book.description_en|safe }}</div>
+          {% endif %}
+          <div class="mt-4"><a href="{% url 'books:home' %}" class="btn btn-outline-gold"><i class="fas fa-arrow-left me-2"></i><span data-lang-en="Back to Library" data-lang-ar="العودة للمكتبة" data-lang-ur="لائبریری پر واپس" data-lang-fa="بازگشت به کتابخانه">Back to Library</span></a></div>
         </div>
       </div>
     </div>

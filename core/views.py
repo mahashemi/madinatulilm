@@ -1,23 +1,54 @@
+import json
 from django.shortcuts import render
 from .models import (
     WelcomeSection, MissionSection, VisionSection, AboutSection,
-    Founder, Ijazah, Trustee, AcademicProgram, MadrasahGallery
+    Founder, Ijazah, Trustee, AcademicProgram, MadrasahGallery,
+    HadithQuote, PartnerPage
 )
 from announcements.models import Announcement
 from lessons.models import Subject, LessonSeries
 from books.models import Book
 
 
+def _section_json(obj, *text_fields):
+    """Serialize a multilingual section object to a dict with en/ar/ur/fa fields."""
+    if obj is None:
+        return {}
+    data = {}
+    for field in text_fields:
+        for lang in ('en', 'ar', 'ur', 'fa'):
+            key = f"{field}_{lang}"
+            data[key] = getattr(obj, key, '') or ''
+    return data
+
+
 def home(request):
+    welcome = WelcomeSection.objects.filter(is_active=True).first()
+    mission = MissionSection.objects.filter(is_active=True).first()
+    vision  = VisionSection.objects.filter(is_active=True).first()
+
+    hadiths = list(HadithQuote.objects.filter(is_active=True).values(
+        "text_ar", "text_en", "text_ur", "text_fa", "source", "narrator"
+    ))
+
+    page_content = {
+        "welcome": _section_json(welcome, "title", "body"),
+        "mission": _section_json(mission, "title", "body"),
+        "vision":  _section_json(vision,  "title", "body"),
+    }
+
     context = {
-        "welcome": WelcomeSection.objects.filter(is_active=True).first(),
-        "mission": MissionSection.objects.filter(is_active=True).first(),
-        "vision": VisionSection.objects.filter(is_active=True).first(),
-        "programs": AcademicProgram.objects.filter(is_active=True)[:8],
+        "welcome":              welcome,
+        "mission":              mission,
+        "vision":               vision,
+        "founder":              Founder.objects.filter(is_active=True).first(),
+        "programs":             AcademicProgram.objects.filter(is_active=True)[:8],
         "latest_announcements": Announcement.objects.filter(is_active=True)[:4],
-        "latest_lessons": LessonSeries.objects.filter(is_active=True)[:4],
-        "latest_books": Book.objects.filter(is_active=True)[:4],
-        "gallery": MadrasahGallery.objects.filter(is_active=True)[:6],
+        "latest_lessons":       LessonSeries.objects.filter(is_active=True)[:4],
+        "latest_books":         Book.objects.filter(is_active=True)[:4],
+        "gallery":              MadrasahGallery.objects.filter(is_active=True)[:6],
+        "hadiths_json":         json.dumps(hadiths,      ensure_ascii=False),
+        "page_content_json":    json.dumps(page_content, ensure_ascii=False),
     }
     return render(request, "core/home.html", context)
 
@@ -55,3 +86,22 @@ def gallery(request):
         "gallery": MadrasahGallery.objects.filter(is_active=True),
     }
     return render(request, "core/gallery.html", context)
+
+
+DONATION_ITEMS = [
+    "Sahme Imam",
+    "Sahme Sadaat",
+    "Radde Mazalim",
+    "Zakaat",
+    "Sadqa",
+    "Remberance for your Marhoomeen",
+    "General Charity",
+]
+
+
+def partner(request):
+    context = {
+        "page": PartnerPage.objects.filter(is_active=True).first(),
+        "donation_items": DONATION_ITEMS,
+    }
+    return render(request, "core/partner.html", context)

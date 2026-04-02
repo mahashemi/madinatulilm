@@ -9,7 +9,7 @@ class ShariaCategory(models.Model):
     CATEGORY_CHOICES = [
         ("kalam", "Kalām & ʿAqīdah (Theology & Creed)"),
         ("akhlaq", "Akhlāq (Ethics)"),
-        ("fiqh", "Fiqh (Jurisprudence)"),
+        ("Fiqh", "Fiqh (Jurisprudence)"),
     ]
     name = models.CharField(max_length=20, choices=CATEGORY_CHOICES, unique=True)
     title_en = models.CharField(max_length=200)

@@ -5,7 +5,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">القرآن الكريم</h1>
+    <h1 class="page-header-title"
+        data-lang-en="The Holy Quran" data-lang-ar="القرآن الكريم" data-lang-ur="قرآن کریم" data-lang-fa="قرآن کریم">القرآن الكريم</h1>
     <p class="page-header-subtitle">Al-Qurʾān al-Karīm</p>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb justify-content-center">
@@ -20,7 +21,8 @@
   <div class="container">
     <!-- Type Filter -->
     <div class="category-filter-bar mb-5" data-aos="fade-up">
-      <a href="{% url 'quran:home' %}" class="filter-btn {% if not resource_type %}active{% endif %}">All</a>
+      <a href="{% url 'quran:home' %}" class="filter-btn {% if not resource_type %}active{% endif %}"
+         data-lang-en="All" data-lang-ar="الكل" data-lang-ur="سب" data-lang-fa="همه">All</a>
       {% for value, label in resource_types %}
       <a href="?type={{ value }}" class="filter-btn {% if resource_type == value %}active{% endif %}">{{ label }}</a>
       {% endfor %}
@@ -31,10 +33,12 @@
       <div class="col-lg-4 col-md-6" data-aos="fade-up">
         <div class="resource-card">
           <div class="resource-type-badge {{ res.resource_type }}">{{ res.get_resource_type_display }}</div>
-          <h6 class="resource-title">{{ res.title }}</h6>
-          {% if res.title_ar %}<p class="resource-title-ar">{{ res.title_ar }}</p>{% endif %}
+          <h6 class="resource-title"
+              data-lang-en="{{ res.title }}" data-lang-ar="{{ res.title_ar }}">{{ res.title }}</h6>
           {% if res.surah_name %}<p class="text-muted small"><i class="fas fa-bookmark me-1"></i>{{ res.surah_name }}</p>{% endif %}
-          <a href="{% url 'quran:detail' res.pk %}" class="btn btn-sm btn-gold mt-2">View</a>
+          <a href="{% url 'quran:detail' res.pk %}" class="btn btn-sm btn-gold mt-2">
+            <span data-lang-en="View" data-lang-ar="عرض" data-lang-ur="دیکھیں" data-lang-fa="مشاهده">View</span>
+          </a>
         </div>
       </div>
       {% empty %}

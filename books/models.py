@@ -9,7 +9,7 @@ class BookCategory(models.Model):
     CATEGORY_CHOICES = [
         ("tafsir_hadith", "Tafsīr & Hadith"),
         ("rijal", "Rijāl (Science of Narrators)"),
-        ("fiqh", "Fiqh (Jurisprudence)"),
+        ("Fiqh", "Fiqh (Jurisprudence)"),
         ("usul", "Usūl al-Fiqh"),
         ("kalam", "Kalām & ʿAqīdah"),
         ("akhlaq", "Akhlāq (Ethics)"),

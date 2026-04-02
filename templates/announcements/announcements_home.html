@@ -5,7 +5,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">Announcements</h1>
+    <h1 class="page-header-title"
+        data-lang-en="Announcements" data-lang-ar="الإعلانات" data-lang-ur="اعلانات" data-lang-fa="اطلاعیه‌ها">Announcements</h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb justify-content-center">
         <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
@@ -19,9 +20,11 @@
   <div class="container">
     <!-- Category tabs -->
     <div class="category-filter-bar mb-5" data-aos="fade-up">
-      <a href="{% url 'announcements:home' %}" class="filter-btn active">All</a>
+      <a href="{% url 'announcements:home' %}" class="filter-btn active"
+         data-lang-en="All" data-lang-ar="الكل" data-lang-ur="سب" data-lang-fa="همه">All</a>
       {% for cat in categories %}
-      <a href="{% url 'announcements:category' cat.slug %}" class="filter-btn">{{ cat.title_en }}</a>
+      <a href="{% url 'announcements:category' cat.slug %}" class="filter-btn"
+         data-lang-en="{{ cat.title_en }}" data-lang-ar="{{ cat.title_ar }}" data-lang-ur="{{ cat.title_ur }}" data-lang-fa="{{ cat.title_fa }}">{{ cat.title_en }}</a>
       {% endfor %}
     </div>
 
@@ -30,10 +33,14 @@
       <div class="col-lg-4 col-md-6" data-aos="fade-up">
         <div class="announcement-card {% if ann.is_pinned %}pinned{% endif %}">
           {% if ann.is_pinned %}<span class="pinned-badge"><i class="fas fa-thumbtack"></i> Pinned</span>{% endif %}
-          <div class="ann-category">{{ ann.category.title_en }}</div>
-          <h6 class="ann-title">{{ ann.title_en }}</h6>
+          <div class="ann-category"
+               data-lang-en="{{ ann.category.title_en }}" data-lang-ar="{{ ann.category.title_ar }}" data-lang-ur="{{ ann.category.title_ur }}" data-lang-fa="{{ ann.category.title_fa }}">{{ ann.category.title_en }}</div>
+          <h6 class="ann-title"
+              data-lang-en="{{ ann.title_en }}" data-lang-ar="{{ ann.title_ar }}" data-lang-ur="{{ ann.title_ur }}" data-lang-fa="{{ ann.title_fa }}">{{ ann.title_en }}</h6>
           <p class="ann-date"><i class="fas fa-calendar-alt me-1"></i>{{ ann.publish_date }}</p>
-          <a href="{% url 'announcements:detail' ann.pk %}" class="ann-read-more">Read more <i class="fas fa-arrow-right ms-1"></i></a>
+          <a href="{% url 'announcements:detail' ann.pk %}" class="ann-read-more">
+            <span data-lang-en="Read more" data-lang-ar="اقرأ المزيد" data-lang-ur="مزید پڑھیں" data-lang-fa="بیشتر بخوانید">Read more</span>
+            <i class="fas fa-arrow-right ms-1"></i></a>
         </div>
       </div>
       {% empty %}

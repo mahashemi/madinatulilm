@@ -11,31 +11,40 @@
   <div class="container h-100">
     <div class="row h-100 align-items-center">
       <div class="col-lg-8" data-aos="fade-up">
-        <p class="hero-bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
-        <h1 class="hero-title-ar">مدرسة مدينة العلم</h1>
-        <h2 class="hero-title-en">Madrasah Madinatul Ilm</h2>
-        <p class="hero-subtitle">Centre of Fiqāhat — Under Muhammadiyah Trust</p>
-        <p class="hero-tagline">
-          {% if welcome %}{{ welcome.body_en|striptags|truncatewords:25 }}{% else %}
-          A premier Shia Islamic Seminary dedicated to advancing the legacy of knowledge, ethics, and Islamic civilisation in India.
-          {% endif %}
-        </p>
+        <h1 class="hero-institution-name" id="mil-hero-name">Madrasah Madinatul Ilm</h1>
+        <p class="hero-subtitle" id="mil-hero-subtitle">Centre of Faqāhat — Under Muhammadiyah Trust</p>
+        <p class="hero-tagline" id="mil-hero-tagline"></p>
         <div class="hero-btns d-flex flex-wrap gap-3 mt-4">
           <a href="{% url 'core:about' %}" class="btn btn-gold btn-lg">
-            <i class="fas fa-info-circle me-2"></i>About Us
+            <i class="fas fa-info-circle me-2"></i><span id="mil-btn-about">About Us</span>
           </a>
-          <a href="{% url 'lessons:home' %}" class="btn btn-outline-light btn-lg">
-            <i class="fas fa-chalkboard-teacher me-2"></i>Explore Lessons
+          <a href="{% url 'core:academics' %}" class="btn btn-outline-light btn-lg">
+            <i class="fas fa-graduation-cap me-2"></i>
+            <span data-lang-en="Explore Academics" data-lang-ar="استعراض الأقسام" data-lang-ur="تعلیمی شعبہ جات دیکھیں" data-lang-fa="مشاهده رشته‌ها">Explore Academics</span>
           </a>
         </div>
       </div>
     </div>
   </div>
-  <!-- Scroll indicator -->
-  <div class="hero-scroll-indicator">
-    <i class="fas fa-chevron-down"></i>
+  <div class="hero-scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+</section>
+
+<!-- ═══════════════ HADITH ROTATOR ═══════════════ -->
+<section class="hadith-section" id="hadith-section">
+  <div class="container">
+    <div class="hadith-rotator" data-aos="fade-up">
+      <div class="hadith-ornament"><i class="fas fa-quote-left"></i></div>
+      <div class="hadith-body">
+        <p class="hadith-arabic" id="hadith-ar">قَالَ رَسُولُ اللَّهِ ﷺ: طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ</p>
+        <p class="hadith-translation" id="hadith-en">"Seeking knowledge is an obligation upon every Muslim."</p>
+        <p class="hadith-source" id="hadith-src">— Prophet Muhammad (ﷺ) · Bihār al-Anwār</p>
+      </div>
+      <div class="hadith-dots" id="hadith-dots"></div>
+    </div>
   </div>
 </section>
+<script id="hadiths-data" type="application/json">{{ hadiths_json|safe }}</script>
+<script id="page-content-data" type="application/json">{{ page_content_json|safe }}</script>
 
 <!-- ═══════════════ WELCOME BANNER ═══════════════ -->
 {% if welcome %}
@@ -44,8 +53,8 @@
     <div class="row justify-content-center">
       <div class="col-lg-9 text-center" data-aos="fade-up">
         <div class="section-ornament">❖</div>
-        <h2 class="section-title">{{ welcome.title_en }}</h2>
-        <div class="welcome-text">{{ welcome.body_en|safe }}</div>
+        <h2 class="section-title" id="mil-welcome-title">{{ welcome.title_en }}</h2>
+        <div class="welcome-text" id="mil-welcome-body"></div>
       </div>
     </div>
   </div>
@@ -80,31 +89,93 @@
   </div>
 </section>
 
-<!-- ═══════════════ MISSION & VISION ═══════════════ -->
-<section class="mission-vision-section py-6">
+<!-- ═══════════════ MISSION (full-width) ═══════════════ -->
+{% if mission %}
+<section class="mission-section py-6">
   <div class="container">
-    <div class="row g-5">
-      {% if mission %}
-      <div class="col-lg-6" data-aos="fade-right">
-        <div class="mv-card mission-card">
-          <div class="mv-icon"><i class="fas fa-bullseye"></i></div>
-          <h3 class="mv-title">{{ mission.title_en }}</h3>
-          <div class="mv-text">{{ mission.body_en|safe }}</div>
-        </div>
+    <div class="row align-items-center g-5">
+      <div class="col-lg-4 text-center" data-aos="fade-right">
+        <div class="mv-icon-wrap mission-icon-wrap"><i class="fas fa-bullseye"></i></div>
+        <div class="section-ornament mt-3">❖</div>
+        <h2 class="section-title" id="mil-mission-title">{{ mission.title_en }}</h2>
       </div>
-      {% endif %}
-      {% if vision %}
-      <div class="col-lg-6" data-aos="fade-left">
-        <div class="mv-card vision-card">
-          <div class="mv-icon"><i class="fas fa-eye"></i></div>
-          <h3 class="mv-title">{{ vision.title_en }}</h3>
-          <div class="mv-text">{{ vision.body_en|safe }}</div>
-        </div>
+      <div class="col-lg-8" data-aos="fade-left">
+        <div class="mv-full-text mission-text" id="mil-mission-body"></div>
       </div>
-      {% endif %}
     </div>
   </div>
 </section>
+{% endif %}
+
+<!-- ═══════════════ VISION (full-width, alternate bg) ═══════════════ -->
+{% if vision %}
+<section class="vision-section py-6 section-bg-light">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-8 order-lg-1 order-2" data-aos="fade-right">
+        <div class="mv-full-text vision-text" id="mil-vision-body"></div>
+      </div>
+      <div class="col-lg-4 text-center order-lg-2 order-1" data-aos="fade-left">
+        <div class="mv-icon-wrap vision-icon-wrap"><i class="fas fa-eye"></i></div>
+        <div class="section-ornament mt-3">❖</div>
+        <h2 class="section-title" id="mil-vision-title">{{ vision.title_en }}</h2>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ═══════════════ FOUNDER INTRO ═══════════════ -->
+{% if founder %}
+<section class="founder-intro-section py-6">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <div class="section-ornament">❖</div>
+      <h2 class="section-title"
+          data-lang-en="Our Founder"
+          data-lang-ar="مؤسسنا"
+          data-lang-ur="ہمارے بانی"
+          data-lang-fa="بنیانگذار ما">Our Founder</h2>
+    </div>
+    <div class="row align-items-center g-5">
+      <div class="col-lg-3 text-center" data-aos="zoom-in">
+        {% if founder.photo %}
+          <img src="{{ founder.photo.url }}" alt="{{ founder.name_en }}" class="founder-home-photo rounded-circle">
+        {% else %}
+          <div class="founder-photo-placeholder mx-auto"><i class="fas fa-user-graduate"></i></div>
+        {% endif %}
+      </div>
+      <div class="col-lg-9" data-aos="fade-left">
+        <h3 class="founder-home-name"
+            data-lang-en="{{ founder.name_en }}"
+            data-lang-ar="{{ founder.name_ar|default:founder.name_en }}"
+            data-lang-ur="{{ founder.name_ur|default:founder.name_en }}"
+            data-lang-fa="{{ founder.name_ur|default:founder.name_en }}">{{ founder.name_en }}</h3>
+        <p class="founder-home-title text-gold mb-3">
+          <i class="fas fa-certificate me-2"></i>
+          <span data-lang-en="{{ founder.title_en }}"
+                data-lang-ar="{{ founder.title_ar|default:founder.title_en }}"
+                data-lang-ur="{{ founder.title_ur|default:founder.title_en }}"
+                data-lang-fa="{{ founder.title_fa|default:founder.title_en }}">{{ founder.title_en }}</span>
+        </p>
+        <!-- Teaser: one sentence per language, switched by JS lang switcher -->
+        <p class="founder-home-teaser mb-3"
+           data-lang-en="Born in Gopalpur, Bihar, Syed Minhal Hussain Rizvi completed advanced studies in Qom, holds Ijāzat from four Grand Ayatollahs, and founded Madrasah Madinatul Ilm in 2026 to establish India as a centre of advanced Islamic jurisprudence."
+           data-lang-ar="وُلد في گوپالپور بالهند، وأتمّ دراساته العليا في قم، ويحمل إجازات من أربعة من كبار المراجع، وأسّس مدرسة مدينة العلم عام ٢٠٢٦ ليجعل الهند مركزاً للفقه الإسلامي المتقدم."
+           data-lang-ur="سید منہال حسین رضوی گوپالپور، بہار میں پیدا ہوئے، قم میں اعلیٰ تعلیم مکمل کی، چار بڑے مراجع سے اجازات حاصل کیں، اور 2026ء میں ہندوستان کو فقاہت کا مرکز بنانے کے لیے مدرسہ مدینۃ العلم کی بنیاد رکھی۔"
+           data-lang-fa="سید منهال حسین رضوی در گوپال‌پور، بیهار متولد شد، تحصیلات عالی خود را در قم به پایان رساند، از چهار مرجع بزرگ اجازه دریافت کرد، و در سال ۲۰۲۶ مدرسه مدینةالعلم را برای تبدیل هند به مرکز فقه اسلامی پیشرفته بنیان‌گذاری کرد.">Born in Gopalpur, Bihar, Syed Minhal Hussain Rizvi completed advanced studies in Qom, holds Ijāzat from four Grand Ayatollahs, and founded Madrasah Madinatul Ilm in 2026 to establish India as a centre of advanced Islamic jurisprudence.</p>
+        <a href="{% url 'core:founder' %}" class="btn btn-gold mt-3">
+          <i class="fas fa-user-graduate me-2"></i>
+          <span data-lang-en="Full Biography"
+                data-lang-ar="السيرة الكاملة"
+                data-lang-ur="مکمل سوانح"
+                data-lang-fa="زندگینامه کامل">Full Biography</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
 
 <!-- ═══════════════ ACADEMIC PROGRAMS ═══════════════ -->
 {% if programs %}
@@ -112,27 +183,38 @@
   <div class="container">
     <div class="text-center mb-5" data-aos="fade-up">
       <div class="section-ornament">❖</div>
-      <h2 class="section-title">Academic Programs</h2>
-      <p class="section-subtitle">Core disciplines offered at Madrasah Madinatul Ilm</p>
+      <h2 class="section-title"
+          data-lang-en="Academic Programs"
+          data-lang-ar="البرامج الأكاديمية"
+          data-lang-ur="تعلیمی پروگرام"
+          data-lang-fa="برنامه‌های آموزشی">Academic Programs</h2>
+      <p class="section-subtitle"
+         data-lang-en="Core disciplines offered at Madrasah Madinatul Ilm"
+         data-lang-ar="التخصصات الأساسية في مدرسة مدينة العلم"
+         data-lang-ur="مدرسہ مدینۃ العلم میں پیش کردہ بنیادی علوم"
+         data-lang-fa="رشته‌های اصلی ارائه‌شده در مدرسه مدینةالعلم">Core disciplines offered at Madrasah Madinatul Ilm</p>
     </div>
     <div class="row g-4">
       {% for program in programs %}
-      <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:"0" }}00">
+      <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
         <div class="program-card">
-          <div class="program-icon">
-            <i class="{{ program.icon_class|default:'fas fa-book' }}"></i>
-          </div>
-          <h5 class="program-title">{{ program.title_en }}</h5>
-          {% if program.title_ar %}
-          <p class="program-title-ar">{{ program.title_ar }}</p>
-          {% endif %}
+          <div class="program-icon"><i class="{{ program.icon_class|default:'fas fa-book' }}"></i></div>
+          <h5 class="program-title"
+              data-lang-en="{{ program.title_en }}"
+              data-lang-ar="{{ program.title_ar|default:program.title_en }}"
+              data-lang-ur="{{ program.title_ur|default:program.title_en }}"
+              data-lang-fa="{{ program.title_fa|default:program.title_en }}">{{ program.title_en }}</h5>
         </div>
       </div>
       {% endfor %}
     </div>
     <div class="text-center mt-5">
       <a href="{% url 'core:academics' %}" class="btn btn-gold">
-        <i class="fas fa-graduation-cap me-2"></i>View Full Curriculum
+        <i class="fas fa-graduation-cap me-2"></i>
+        <span data-lang-en="View Full Curriculum"
+              data-lang-ar="عرض المناهج الكاملة"
+              data-lang-ur="مکمل نصاب دیکھیں"
+              data-lang-fa="مشاهده برنامه کامل">View Full Curriculum</span>
       </a>
     </div>
   </div>
@@ -146,9 +228,15 @@
     <div class="d-flex justify-content-between align-items-center mb-5" data-aos="fade-up">
       <div>
         <div class="section-ornament text-start">❖</div>
-        <h2 class="section-title mb-0">Latest Announcements</h2>
+        <h2 class="section-title mb-0"
+            data-lang-en="Latest Announcements"
+            data-lang-ar="أحدث الإعلانات"
+            data-lang-ur="تازہ اعلانات"
+            data-lang-fa="آخرین اطلاعیه‌ها">Latest Announcements</h2>
       </div>
-      <a href="{% url 'announcements:home' %}" class="btn btn-outline-gold">View All</a>
+      <a href="{% url 'announcements:home' %}" class="btn btn-outline-gold">
+        <span data-lang-en="View All" data-lang-ar="عرض الكل" data-lang-ur="سب دیکھیں" data-lang-fa="مشاهده همه">View All</span>
+      </a>
     </div>
     <div class="row g-4">
       {% for ann in latest_announcements %}
@@ -174,9 +262,15 @@
     <div class="d-flex justify-content-between align-items-center mb-5" data-aos="fade-up">
       <div>
         <div class="section-ornament text-start">❖</div>
-        <h2 class="section-title mb-0">Latest Lessons</h2>
+        <h2 class="section-title mb-0"
+            data-lang-en="Latest Lessons"
+            data-lang-ar="أحدث الدروس"
+            data-lang-ur="تازہ اسباق"
+            data-lang-fa="آخرین درس‌ها">Latest Lessons</h2>
       </div>
-      <a href="{% url 'lessons:home' %}" class="btn btn-outline-gold">View All</a>
+      <a href="{% url 'lessons:home' %}" class="btn btn-outline-gold">
+        <span data-lang-en="View All" data-lang-ar="عرض الكل" data-lang-ur="سب دیکھیں" data-lang-fa="مشاهده همه">View All</span>
+      </a>
     </div>
     <div class="row g-4">
       {% for series in latest_lessons %}
@@ -208,9 +302,15 @@
     <div class="d-flex justify-content-between align-items-center mb-5" data-aos="fade-up">
       <div>
         <div class="section-ornament text-start">❖</div>
-        <h2 class="section-title mb-0">Books & Articles</h2>
+        <h2 class="section-title mb-0"
+            data-lang-en="Books &amp; Articles"
+            data-lang-ar="الكتب والمقالات"
+            data-lang-ur="کتب و مضامین"
+            data-lang-fa="کتاب‌ها و مقالات">Books &amp; Articles</h2>
       </div>
-      <a href="{% url 'books:home' %}" class="btn btn-outline-gold">View Library</a>
+      <a href="{% url 'books:home' %}" class="btn btn-outline-gold">
+        <span data-lang-en="View Library" data-lang-ar="عرض المكتبة" data-lang-ur="لائبریری دیکھیں" data-lang-fa="مشاهده کتابخانه">View Library</span>
+      </a>
     </div>
     <div class="row g-4">
       {% for book in latest_books %}
@@ -247,7 +347,11 @@
   <div class="container">
     <div class="text-center mb-5" data-aos="fade-up">
       <div class="section-ornament text-gold">❖</div>
-      <h2 class="section-title text-white">Gallery</h2>
+      <h2 class="section-title text-white"
+          data-lang-en="Gallery"
+          data-lang-ar="معرض الصور"
+          data-lang-ur="گیلری"
+          data-lang-fa="گالری">Gallery</h2>
     </div>
     <div class="row g-3">
       {% for item in gallery %}
@@ -259,7 +363,9 @@
       {% endfor %}
     </div>
     <div class="text-center mt-4">
-      <a href="{% url 'core:gallery' %}" class="btn btn-gold">View Full Gallery</a>
+      <a href="{% url 'core:gallery' %}" class="btn btn-gold">
+        <span data-lang-en="View Full Gallery" data-lang-ar="عرض المعرض الكامل" data-lang-ur="پوری گیلری دیکھیں" data-lang-fa="مشاهده گالری کامل">View Full Gallery</span>
+      </a>
     </div>
   </div>
 </section>
@@ -269,16 +375,82 @@
 <section class="cta-section py-5">
   <div class="container text-center" data-aos="fade-up">
     <h2 class="cta-title">وَقُل رَّبِّ زِدۡنِي عِلۡمٗا</h2>
-    <p class="cta-translation">"And say: My Lord, increase me in knowledge." — Qurʾān 20:114</p>
+    <p class="cta-translation"
+       data-lang-en='"And say: My Lord, increase me in knowledge." — Qurʾān 20:114'
+       data-lang-ar='"وَقُل رَّبِّ زِدۡنِي عِلۡمٗا" — القرآن الكريم ٢٠:١١٤'
+       data-lang-ur='"اور کہو: میرے رب! مجھے علم میں اضافہ فرما۔" — قرآن ٢٠:١١٤'
+       data-lang-fa='"و بگو: پروردگارا! بر دانشم بیفزا" — قرآن ٢٠:١١٤'>"And say: My Lord, increase me in knowledge." — Qurʾān 20:114</p>
     <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
       <a href="{% url 'contact:contact' %}" class="btn btn-gold btn-lg">
-        <i class="fas fa-envelope me-2"></i>Get In Touch
+        <i class="fas fa-envelope me-2"></i>
+        <span data-lang-en="Get In Touch" data-lang-ar="تواصل معنا" data-lang-ur="رابطہ کریں" data-lang-fa="تماس با ما">Get In Touch</span>
       </a>
-      <a href="{% url 'contact:ask' %}" class="btn btn-outline-light btn-lg">
-        <i class="fas fa-question-circle me-2"></i>Ask a Question
+      <a href="{% url 'core:partner' %}" class="btn btn-outline-light btn-lg">
+        <i class="fas fa-hand-holding-heart me-2"></i>
+        <span data-lang-en="Be A Partner" data-lang-ar="كن شريكاً" data-lang-ur="شراکت دار بنیں" data-lang-fa="شریک باشید">Be A Partner</span>
       </a>
     </div>
   </div>
 </section>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+  const raw = document.getElementById('hadiths-data');
+  if (!raw) return;
+  let hadiths = [];
+  try { hadiths = JSON.parse(raw.textContent); } catch(e) { return; }
+  if (!hadiths.length) return;
+
+  /* activeLang() always reads fresh value — no stale closure */
+  function activeLang() { return localStorage.getItem('mil_lang') || 'en'; }
+
+  let current = 0;
+
+  const elAr  = document.getElementById('hadith-ar');
+  const elEn  = document.getElementById('hadith-en');
+  const elSrc = document.getElementById('hadith-src');
+  const dots  = document.getElementById('hadith-dots');
+
+  function buildDots() {
+    dots.innerHTML = '';
+    hadiths.forEach((_, i) => {
+      const d = document.createElement('span');
+      d.className = 'hdot' + (i === current ? ' active' : '');
+      d.onclick = () => show(i);
+      dots.appendChild(d);
+    });
+  }
+
+  function renderTranslation(h, lang) {
+    const trans = h['text_' + lang] || h.text_en || '';
+    elEn.textContent = trans ? '\u201c' + trans + '\u201d' : '';
+    /* RTL styling for translation line */
+    var isRtl = ['ar','ur','fa'].indexOf(lang) !== -1;
+    elEn.style.direction = isRtl ? 'rtl' : 'ltr';
+    elEn.style.fontFamily = isRtl ? '"Amiri",serif' : '';
+  }
+
+  function show(idx) {
+    current = idx;
+    const h = hadiths[idx];
+    elAr.textContent  = h.text_ar || '';
+    renderTranslation(h, activeLang());
+    const narrator = h.narrator ? h.narrator + ' \u00b7 ' : '';
+    elSrc.textContent = '\u2014 ' + narrator + (h.source || '');
+    dots.querySelectorAll('.hdot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  buildDots();
+  show(0);
+  setInterval(() => show((current + 1) % hadiths.length), 8000);
+
+  /* Re-render translation on language switch — use e.detail, never stale closure */
+  document.addEventListener('milLangChange', function(e) {
+    renderTranslation(hadiths[current], e.detail);
+  });
+})();
+</script>
 {% endblock %}

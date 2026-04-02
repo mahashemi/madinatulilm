@@ -4,7 +4,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">Sharia Matters</h1>
+    <h1 class="page-header-title"
+        data-lang-en="Sharia Matters" data-lang-ar="الشريعة الإسلامية" data-lang-ur="شریعت کے مسائل" data-lang-fa="مسائل شریعت">Sharia Matters</h1>
     <nav aria-label="breadcrumb"><ol class="breadcrumb justify-content-center">
       <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
       <li class="breadcrumb-item active">Sharia Matters</li>
@@ -15,8 +16,10 @@
   <div class="container">
     <div class="text-center mb-5" data-aos="fade-up">
       <div class="section-ornament">❖</div>
-      <h2 class="section-title">Islamic Disciplines</h2>
-      <p class="section-subtitle">Browse content by discipline</p>
+      <h2 class="section-title"
+          data-lang-en="Islamic Disciplines" data-lang-ar="التخصصات الإسلامية" data-lang-ur="اسلامی شعبہ جات" data-lang-fa="رشته‌های اسلامی">Islamic Disciplines</h2>
+      <p class="section-subtitle"
+         data-lang-en="Browse content by discipline" data-lang-ar="تصفح المحتوى حسب التخصص" data-lang-ur="شعبے کے مطابق مواد دیکھیں" data-lang-fa="محتوا را بر اساس رشته مرور کنید">Browse content by discipline</p>
     </div>
     <div class="row g-4 justify-content-center">
       {% for cat in categories %}
@@ -24,8 +27,8 @@
         <a href="{% url 'sharia:category' cat.name %}" class="subject-card-link">
           <div class="subject-card text-center">
             <div class="subject-icon"><i class="{{ cat.icon_class|default:'fas fa-star-and-crescent' }}"></i></div>
-            <h5 class="subject-title">{{ cat.title_en }}</h5>
-            {% if cat.title_ar %}<p class="subject-title-ar">{{ cat.title_ar }}</p>{% endif %}
+            <h5 class="subject-title"
+                data-lang-en="{{ cat.title_en }}" data-lang-ar="{{ cat.title_ar }}" data-lang-ur="{{ cat.title_ur }}" data-lang-fa="{{ cat.title_fa }}">{{ cat.title_en }}</h5>
           </div>
         </a>
       </div>

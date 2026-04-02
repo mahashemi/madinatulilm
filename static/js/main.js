@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
       document.body.style.overflow = '';
     }
 
-    // Keyboard close
     document.addEventListener('keydown', function escClose(e) {
       if (e.key === 'Escape') { closeLightbox(); document.removeEventListener('keydown', escClose); }
     });
@@ -119,4 +118,183 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   `;
   document.head.appendChild(style);
+})();
+
+/* ══════════════════════════════════════
+   LANGUAGE SWITCHER
+   Custom pure-JS toggle — no Bootstrap dropdown required
+══════════════════════════════════════ */
+(function () {
+  var LANGS    = { en: 'EN', ar: 'AR', ur: 'UR', fa: 'FA' };
+  var RTL_LANGS = ['ar', 'ur', 'fa'];
+  var htmlEl   = document.getElementById('html-root');
+  var labelEl  = document.getElementById('lang-label');
+  var switcher = document.getElementById('langSwitcher');
+  var btn      = document.getElementById('langBtn');
+
+  /* Toggle open/close */
+  if (btn && switcher) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      switcher.classList.toggle('open');
+      btn.setAttribute('aria-expanded', switcher.classList.contains('open') ? 'true' : 'false');
+    });
+    document.addEventListener('click', function () {
+      if (switcher.classList.contains('open')) {
+        switcher.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* Apply a language */
+  function applyLang(lang) {
+    if (!LANGS[lang]) lang = 'en';
+    localStorage.setItem('mil_lang', lang);
+    if (labelEl) labelEl.textContent = LANGS[lang];
+
+    if (RTL_LANGS.indexOf(lang) !== -1) {
+      htmlEl && htmlEl.setAttribute('dir', 'rtl');
+      htmlEl && htmlEl.setAttribute('lang', lang);
+    } else {
+      htmlEl && htmlEl.setAttribute('dir', 'ltr');
+      htmlEl && htmlEl.setAttribute('lang', 'en');
+    }
+
+    document.querySelectorAll('.lang-option').forEach(function (el) {
+      el.classList.toggle('active-lang', el.dataset.lang === lang);
+    });
+
+    if (switcher) {
+      switcher.classList.remove('open');
+      btn && btn.setAttribute('aria-expanded', 'false');
+    }
+
+    /* ── Render JSON-driven page content (home page sections) ── */
+    renderPageContent(lang);
+
+    document.dispatchEvent(new CustomEvent('milLangChange', { detail: lang }));
+  }
+
+    /* ══════════════════════════════════════════════════════
+     UNIVERSAL PAGE LANGUAGE RENDERER
+     Handles EVERY page. Two mechanisms work together:
+
+     1. data-lang-* attributes on any element:
+        <h2 data-lang-en="About Us" data-lang-ar="من نحن" ...>About Us</h2>
+        → textContent is swapped to the active language.
+
+     2. data-html-lang-* attributes for rich HTML bodies:
+        <div data-html-lang-en="<p>…</p>" data-html-lang-ar="<p>…</p>">…</div>
+        → innerHTML is swapped.
+
+     3. Explicit mil-* id elements on the home page (existing behaviour).
+  ══════════════════════════════════════════════════════ */
+  function renderPageContent(lang) {
+    var RTL = ['ar', 'ur', 'fa'];
+    var isRtl = RTL.indexOf(lang) !== -1;
+    var rtlBodyStyle = isRtl
+      ? 'font-family:"Amiri",serif;direction:rtl;text-align:right;font-size:1.05rem;line-height:2;'
+      : '';
+    var rtlInlineStyle = isRtl ? 'font-family:"Amiri",serif;direction:rtl;' : '';
+
+    /* ── 1. Plain-text lang swap: data-lang-en / data-lang-ar / … ── */
+    document.querySelectorAll('[data-lang-en]').forEach(function(el) {
+      var val = el.getAttribute('data-lang-' + lang) || el.getAttribute('data-lang-en') || '';
+      el.textContent = val;
+      /* apply RTL style only to elements that have an RTL variant */
+      if (el.getAttribute('data-lang-ar') || el.getAttribute('data-lang-ur') || el.getAttribute('data-lang-fa')) {
+        el.style.cssText = isRtl ? rtlInlineStyle : '';
+      }
+    });
+
+    /* ── 2. Rich HTML lang swap: data-html-lang-en / data-html-lang-ar / … ── */
+    document.querySelectorAll('[data-html-lang-en]').forEach(function(el) {
+      var html = el.getAttribute('data-html-lang-' + lang) || el.getAttribute('data-html-lang-en') || '';
+      el.innerHTML = html;
+      el.style.cssText = isRtl ? rtlBodyStyle : '';
+    });
+
+    /* ── 3. Home page explicit elements (page-content-data JSON) ── */
+    var scriptEl = document.getElementById('page-content-data');
+    if (scriptEl) {
+      var data;
+      try { data = JSON.parse(scriptEl.textContent); } catch(e) { data = null; }
+      if (data) {
+        function pick(obj, field) {
+          return (obj && (obj[field + '_' + lang] || obj[field + '_en'])) || '';
+        }
+
+        /* Hero name */
+        var heroName = document.getElementById('mil-hero-name');
+        if (heroName) {
+          var nameMap = { en:'Madrasah Madinatul Ilm', ar:'مدرسة مدينة العلم', ur:'مدرسہ مدینۃ العلم', fa:'مدرسه مدینةالعلم' };
+          heroName.textContent = nameMap[lang] || nameMap.en;
+          heroName.style.cssText = isRtl ? 'font-family:"Amiri",serif;direction:rtl;font-size:2.6rem;' : '';
+        }
+
+        /* Hero subtitle */
+        var subtitleMap = { en:'Centre of Faqāhat — Under Muhammadiyah Trust', ar:'مركز الفقاهة — تحت إشراف المحمدية تراست', ur:'مرکزِ فقاہت — محمدیہ ٹرسٹ کے زیرِ نگرانی', fa:'مرکز فقاهت — زیر نظر محمدیه تراست' };
+        var heroSub = document.getElementById('mil-hero-subtitle');
+        if (heroSub) { heroSub.textContent = subtitleMap[lang] || subtitleMap.en; heroSub.style.cssText = rtlInlineStyle; }
+
+        /* Hero tagline */
+        var heroTagline = document.getElementById('mil-hero-tagline');
+        if (heroTagline) {
+          var tmp = document.createElement('div'); tmp.innerHTML = pick(data.welcome, 'body');
+          var words = (tmp.textContent || '').replace(/\s+/g,' ').trim().split(' ');
+          heroTagline.textContent = words.slice(0,25).join(' ') + (words.length>25?'…':'');
+          heroTagline.style.cssText = rtlInlineStyle;
+        }
+
+        /* Hero buttons */
+        var btnLabels = { about:{en:'About Us',ar:'من نحن',ur:'ہمارے بارے میں',fa:'درباره ما'}, lessons:{en:'Explore Lessons',ar:'استكشف الدروس',ur:'اسباق دیکھیں',fa:'بررسی درس‌ها'} };
+        var btnA = document.getElementById('mil-btn-about');    if (btnA) btnA.textContent = btnLabels.about[lang]   || btnLabels.about.en;
+        var btnL = document.getElementById('mil-btn-lessons');  if (btnL) btnL.textContent = btnLabels.lessons[lang] || btnLabels.lessons.en;
+
+        /* Welcome / Mission / Vision (mil-* ids) */
+        function setId(id, text, html) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          if (html !== undefined) { el.innerHTML = html; el.style.cssText = html ? rtlBodyStyle : ''; }
+          else                    { el.textContent = text; el.style.cssText = text ? rtlInlineStyle : ''; }
+        }
+        setId('mil-welcome-title', pick(data.welcome, 'title'));
+        setId('mil-welcome-body',  undefined, pick(data.welcome, 'body'));
+        setId('mil-mission-title', pick(data.mission, 'title'));
+        setId('mil-mission-body',  undefined, pick(data.mission, 'body'));
+        setId('mil-vision-title',  pick(data.vision, 'title'));
+        setId('mil-vision-body',   undefined, pick(data.vision, 'body'));
+      }
+    }
+
+    /* ── 4. Navbar universal labels ── */
+    var NAV = {
+      'nav-home':          { en:'Introduction', ar:'مقدمة',        ur:'تعارف',         fa:'مقدمه' },
+      'nav-quran':         { en:'Quran',         ar:'القرآن',       ur:'قرآن',           fa:'قرآن' },
+      'nav-sharia':        { en:'Sharia Matters',ar:'الشريعة',     ur:'شریعت',          fa:'شریعت' },
+      'nav-announcements': { en:'Announcements', ar:'الإعلانات',   ur:'اعلانات',        fa:'اطلاعیه‌ها' },
+      'nav-lessons':       { en:'Lessons',       ar:'الدروس',      ur:'اسباق',          fa:'درس‌ها' },
+      'nav-books':         { en:'Books & Articles',ar:'الكتب',    ur:'کتب',             fa:'کتاب‌ها' },
+      'nav-ask':           { en:'Ask a Scholar', ar:'اسأل عالماً', ur:'عالم سے پوچھیں', fa:'از عالم بپرسید' },
+      'nav-partner':       { en:'Be A Partner',  ar:'كن شريكاً',   ur:'شراکت دار بنیں', fa:'شریک باشید' },
+      'nav-contact':       { en:'Contact Us',    ar:'اتصل بنا',    ur:'رابطہ کریں',      fa:'تماس' }
+    };
+    Object.keys(NAV).forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = NAV[id][lang] || NAV[id].en;
+    });
+  }
+
+  /* Restore saved preference on load */
+  applyLang(localStorage.getItem('mil_lang') || 'en');
+
+  /* Option click handlers */
+  document.querySelectorAll('.lang-option').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      applyLang(this.dataset.lang);
+    });
+  });
 })();

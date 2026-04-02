@@ -5,8 +5,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">{{ category.title_en }}</h1>
-    {% if category.title_ar %}<p class="page-header-subtitle">{{ category.title_ar }}</p>{% endif %}
+    <h1 class="page-header-title"
+        data-lang-en="{{ category.title_en }}" data-lang-ar="{{ category.title_ar }}" data-lang-ur="{{ category.title_ur }}" data-lang-fa="{{ category.title_fa }}">{{ category.title_en }}</h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb justify-content-center">
         <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
@@ -34,12 +34,14 @@
           </div>
           {% endif %}
           <div class="resource-type-badge {{ book.content_type }}">{{ book.get_content_type_display }}</div>
-          <h6 class="resource-title mt-2">{{ book.title_en }}</h6>
-          {% if book.title_ar %}<p class="resource-title-ar">{{ book.title_ar }}</p>{% endif %}
+          <h6 class="resource-title mt-2"
+              data-lang-en="{{ book.title_en }}" data-lang-ar="{{ book.title_ar }}" data-lang-ur="{{ book.title_ur }}" data-lang-fa="{{ book.title_fa }}">{{ book.title_en }}</h6>
           {% if book.author %}<p class="text-muted small"><i class="fas fa-user-edit me-1"></i>{{ book.author }}</p>{% endif %}
           {% if book.language %}<p class="text-muted small"><i class="fas fa-language me-1"></i>{{ book.language }}</p>{% endif %}
           <div class="d-flex gap-2 mt-auto pt-3">
-            <a href="{% url 'books:detail' book.pk %}" class="btn btn-sm btn-gold flex-fill">View</a>
+            <a href="{% url 'books:detail' book.pk %}" class="btn btn-sm btn-gold flex-fill">
+              <span data-lang-en="View" data-lang-ar="عرض" data-lang-ur="دیکھیں" data-lang-fa="مشاهده">View</span>
+            </a>
             {% if book.is_downloadable and book.pdf_file %}
             <a href="{% url 'books:download' book.pk %}" class="btn btn-sm btn-outline-gold flex-fill">
               <i class="fas fa-download me-1"></i>PDF

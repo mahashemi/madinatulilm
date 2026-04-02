@@ -1,54 +1,80 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block title %}Contact Us{% endblock %}
+{% block meta_description %}Contact Madrasah Madinatul Ilm — send us a message, ask a question, or find us at Gopalpur, Siwan, Bihar.{% endblock %}
+
 {% block content %}
-
-<div class="page-header">
-  <div class="page-header-overlay"></div>
+<section class="page-hero-sm">
   <div class="container text-center">
-    <h1 class="page-header-title">Contact Us</h1>
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb justify-content-center">
-        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
-        <li class="breadcrumb-item active">Contact</li>
-      </ol>
-    </nav>
+    <h1 class="page-hero-title" data-lang-en="Contact Us" data-lang-ar="تواصل معنا" data-lang-ur="ہم سے رابطہ کریں" data-lang-fa="تماس با ما">Contact Us</h1>
+    <p class="page-hero-sub" data-lang-en="We'd love to hear from you" data-lang-ar="يسعدنا التواصل معكم" data-lang-ur="ہم آپ سے سننا چاہتے ہیں" data-lang-fa="خوشحال می‌شویم از شما بشنویم">We'd love to hear from you</p>
   </div>
-</div>
+</section>
 
-<section class="py-6">
+<section class="section-pad">
   <div class="container">
     <div class="row g-5">
-      <!-- Contact Form -->
-      <div class="col-lg-7" data-aos="fade-right">
-        <div class="contact-form-card">
-          <div class="section-ornament">❖</div>
-          <h2 class="section-title">Send a Message</h2>
-          <form method="post" class="mt-4">
+
+      <!-- FORM -->
+      <div class="col-lg-7">
+        <div class="contact-card">
+          <h2 class="section-title-sm mb-4"
+              data-lang-en="Send a Message"
+              data-lang-ar="أرسل رسالة"
+              data-lang-ur="پیغام بھیجیں"
+              data-lang-fa="ارسال پیام">
+            Send a Message
+          </h2>
+
+          {% if messages %}
+            {% for msg in messages %}
+              <div class="alert alert-{{ msg.tags|default:'info' }} alert-dismissible fade show">
+                {{ msg }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="post" novalidate>
             {% csrf_token %}
+
             <div class="row g-3">
               <div class="col-md-6">
-                <label class="form-label">Full Name *</label>
+                <label class="form-label" data-lang-en="Full Name *" data-lang-ar="الاسم الكامل *" data-lang-ur="پورا نام *" data-lang-fa="نام کامل *">Full Name *</label>
                 {{ form.full_name }}
+                {% if form.full_name.errors %}<div class="invalid-feedback d-block">{{ form.full_name.errors }}</div>{% endif %}
               </div>
               <div class="col-md-6">
-                <label class="form-label">Email *</label>
+                <label class="form-label" data-lang-en="Email *" data-lang-ar="البريد الإلكتروني *" data-lang-ur="ای میل *" data-lang-fa="ایمیل *">Email *</label>
                 {{ form.email }}
+                {% if form.email.errors %}<div class="invalid-feedback d-block">{{ form.email.errors }}</div>{% endif %}
               </div>
               <div class="col-md-6">
-                <label class="form-label">Phone</label>
+                <label class="form-label" data-lang-en="Phone" data-lang-ar="الهاتف" data-lang-ur="فون" data-lang-fa="تلفن">Phone</label>
                 {{ form.phone }}
               </div>
-              <div class="col-md-6">
-                <label class="form-label">Subject *</label>
+              <div class="col-md-3">
+                <label class="form-label" data-lang-en="Gender" data-lang-ar="الجنس" data-lang-ur="جنس" data-lang-fa="جنسیت">Gender</label>
+                {{ form.gender }}
+              </div>
+              <div class="col-md-3">
+                <label class="form-label" data-lang-en="Country" data-lang-ar="الدولة" data-lang-ur="ملک" data-lang-fa="کشور">Country</label>
+                {{ form.country }}
+              </div>
+              <div class="col-12">
+                <label class="form-label" data-lang-en="Subject *" data-lang-ar="الموضوع *" data-lang-ur="موضوع *" data-lang-fa="موضوع *">Subject *</label>
                 {{ form.subject }}
+                {% if form.subject.errors %}<div class="invalid-feedback d-block">{{ form.subject.errors }}</div>{% endif %}
               </div>
               <div class="col-12">
-                <label class="form-label">Message *</label>
+                <label class="form-label" data-lang-en="Message *" data-lang-ar="الرسالة *" data-lang-ur="پیغام *" data-lang-fa="پیام *">Message *</label>
                 {{ form.message }}
+                {% if form.message.errors %}<div class="invalid-feedback d-block">{{ form.message.errors }}</div>{% endif %}
               </div>
               <div class="col-12">
-                <button type="submit" class="btn btn-gold px-5">
-                  <i class="fas fa-paper-plane me-2"></i>Send Message
+                <button type="submit" class="btn btn-gold w-100 py-3">
+                  <i class="fas fa-paper-plane me-2"></i>
+                  <span data-lang-en="Send Message" data-lang-ar="إرسال الرسالة" data-lang-ur="پیغام بھیجیں" data-lang-fa="ارسال پیام">Send Message</span>
                 </button>
               </div>
             </div>
@@ -56,43 +82,48 @@
         </div>
       </div>
 
-      <!-- Contact Info -->
-      <div class="col-lg-5" data-aos="fade-left">
-        <div class="contact-info-card">
-          <h4 class="contact-info-title">Reach Us</h4>
-          <ul class="contact-detail-list">
-            <li>
-              <i class="fas fa-map-marker-alt"></i>
-              <div>
-                <strong>Address</strong><br>
-                Madrasa Madinatul Ilm, Gopal Pur,<br>
-                Post: Baqir Ganj, Thana: Hussain Ganj,<br>
-                District: Siwan, Bihar — 841286
-              </div>
+      <!-- CONTACT INFO -->
+      <div class="col-lg-5">
+        <div class="contact-info-block">
+          <h3 class="section-title-sm mb-4"
+              data-lang-en="Find Us"
+              data-lang-ar="موقعنا"
+              data-lang-ur="ہمارا پتہ"
+              data-lang-fa="آدرس ما">Find Us</h3>
+          <ul class="contact-info-list">
+            <li><i class="fas fa-map-marker-alt"></i>
+              <span data-lang-en="Gopalpur, Siwan, Bihar — 841286, India"
+                    data-lang-ar="جوبالبور، سيوان، بيهار ٨٤١٢٨٦، الهند"
+                    data-lang-ur="گوپال پور، سیوان، بہار ۸۴۱۲۸۶، ہندوستان"
+                    data-lang-fa="گوپال‌پور، سیوان، بیهار ۸۴۱۲۸۶، هند">
+                Gopalpur, Siwan, Bihar — 841286, India
+              </span>
             </li>
-            <li>
-              <i class="fas fa-user-tie"></i>
-              <div>
-                <strong>Principal & Founder</strong><br>
-                Syed Minhal Hussain Rizvi<br>
-                <a href="tel:+918828073319">+91 8828073319</a><br>
-                <a href="tel:+989055171993">+98 9055171993</a>
-              </div>
+            {% if site and site.phone_primary %}
+            <li><i class="fas fa-phone-alt"></i><a href="tel:{{ site.phone_primary }}">{{ site.phone_primary }}</a></li>
+            {% endif %}
+            {% if site and site.phone_secondary %}
+            <li><i class="fas fa-phone-alt"></i><a href="tel:{{ site.phone_secondary }}">{{ site.phone_secondary }}</a></li>
+            {% endif %}
+            {% if site and site.email %}
+            <li><i class="fas fa-envelope"></i><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+            {% endif %}
+            {% if site and site.whatsapp_number %}
+            <li><i class="fab fa-whatsapp"></i>
+              <a href="https://wa.me/{{ site.whatsapp_number }}" target="_blank">WhatsApp Us</a>
             </li>
-            <li>
-              <i class="fas fa-user"></i>
-              <div>
-                <strong>Vice Principal</strong><br>
-                Maulana Syed Javed Akhtar<br>
-                <a href="tel:+919973559812">+91 9973559812</a>
-              </div>
-            </li>
+            {% endif %}
           </ul>
-          <a href="{% url 'contact:ask' %}" class="btn btn-gold w-100 mt-4">
-            <i class="fas fa-question-circle me-2"></i>Ask a Sharia Question
-          </a>
+
+          <div class="mt-4">
+            <a href="{% url 'contact:ask' %}" class="btn btn-gold-outline w-100">
+              <i class="fas fa-question-circle me-2"></i>
+              <span data-lang-en="Ask a Scholar" data-lang-ar="اسأل عالماً" data-lang-ur="عالم سے سوال کریں" data-lang-fa="از عالم بپرسید">Ask a Scholar</span>
+            </a>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>

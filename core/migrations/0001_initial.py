@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
             name='AcademicProgram',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('subject', models.CharField(choices=[('quran', 'Qurʾān'), ('hadith', 'Hadith'), ('fiqh', 'Fiqh'), ('usul', 'Usūl al-Fiqh'), ('kalam', 'Kalām & ʿAqīdah'), ('akhlaq', 'Akhlāq'), ('rational', 'Rational Sciences'), ('language', 'Language & Literature')], max_length=20)),
+                ('subject', models.CharField(choices=[('quran', 'Qurʾān'), ('hadith', 'Hadith'), ('Fiqh', 'Fiqh'), ('usul', 'Usūl al-Fiqh'), ('kalam', 'Kalām & ʿAqīdah'), ('akhlaq', 'Akhlāq'), ('rational', 'Rational Sciences'), ('language', 'Language & Literature')], max_length=20)),
                 ('title_en', models.CharField(max_length=200)),
                 ('title_ar', models.CharField(blank=True, max_length=200)),
                 ('description_en', ckeditor.fields.RichTextField(blank=True)),
@@ -113,7 +113,7 @@ class Migration(migrations.Migration):
                 ('site_name_en', models.CharField(default='Madrasah Madinatul Ilm', max_length=200)),
                 ('site_name_ar', models.CharField(default='مدرسة مدينة العلم', max_length=200)),
                 ('site_name_ur', models.CharField(default='مدرسہ مدینۃ العلم', max_length=200)),
-                ('tagline_en', models.CharField(default='Centre of Fiqāhat', max_length=300)),
+                ('tagline_en', models.CharField(default='Centre of Faqāhat', max_length=300)),
                 ('trust_name', models.CharField(default='Muhammadiyah Trust', max_length=200)),
                 ('established', models.DateField(blank=True, null=True)),
                 ('logo', models.ImageField(blank=True, null=True, upload_to='site/')),

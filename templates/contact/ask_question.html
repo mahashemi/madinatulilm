@@ -1,86 +1,129 @@
 {% extends "base.html" %}
-{% block title %}Ask a Question{% endblock %}
+{% load static %}
+
+{% block title %}Ask a Scholar{% endblock %}
+{% block meta_description %}Submit your Islamic question to Madrasah Madinatul Ilm — Fiqh, ʿAqīdah, Akhlāq, Qurʾān and more.{% endblock %}
+
 {% block content %}
-
-<div class="page-header">
-  <div class="page-header-overlay"></div>
+<section class="page-hero-sm">
   <div class="container text-center">
-    <h1 class="page-header-title">Ask a Question</h1>
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb justify-content-center">
-        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
-        <li class="breadcrumb-item active">Ask a Question</li>
-      </ol>
-    </nav>
+    <h1 class="page-hero-title"
+        data-lang-en="Ask a Scholar"
+        data-lang-ar="اسأل عالماً"
+        data-lang-ur="عالم سے سوال کریں"
+        data-lang-fa="از عالم بپرسید">Ask a Scholar</h1>
+    <p class="page-hero-sub"
+       data-lang-en="Submit your Islamic question — our scholars will respond"
+       data-lang-ar="أرسل سؤالك الشرعي — سيرد علماؤنا"
+       data-lang-ur="اپنا دینی سوال بھیجیں — ہمارے علما جواب دیں گے"
+       data-lang-fa="سؤال دینی خود را ارسال کنید — علمای ما پاسخ خواهند داد">
+      Submit your Islamic question — our scholars will respond
+    </p>
   </div>
-</div>
+</section>
 
-<section class="py-6">
+<section class="section-pad">
   <div class="container">
-    <div class="row g-5">
-      <div class="col-lg-6" data-aos="fade-right">
-        <div class="contact-form-card">
-          <div class="section-ornament">❖</div>
-          <h2 class="section-title">Submit Your Question</h2>
-          <p class="text-muted mb-4">Our scholars will respond to your Islamic question, in sha Allah.</p>
-          <form method="post">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="contact-card">
+
+          {% if messages %}
+            {% for msg in messages %}
+              <div class="alert alert-{{ msg.tags|default:'success' }} alert-dismissible fade show">
+                {{ msg }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="post" novalidate>
             {% csrf_token %}
+
             <div class="row g-3">
               <div class="col-md-6">
-                <label class="form-label">Full Name *</label>
+                <label class="form-label"
+                       data-lang-en="Full Name *"
+                       data-lang-ar="الاسم الكامل *"
+                       data-lang-ur="پورا نام *"
+                       data-lang-fa="نام کامل *">Full Name *</label>
                 {{ form.full_name }}
+                {% if form.full_name.errors %}<div class="invalid-feedback d-block">{{ form.full_name.errors }}</div>{% endif %}
               </div>
               <div class="col-md-6">
-                <label class="form-label">Email *</label>
+                <label class="form-label"
+                       data-lang-en="Email *"
+                       data-lang-ar="البريد الإلكتروني *"
+                       data-lang-ur="ای میل *"
+                       data-lang-fa="ایمیل *">Email *</label>
                 {{ form.email }}
+                {% if form.email.errors %}<div class="invalid-feedback d-block">{{ form.email.errors }}</div>{% endif %}
               </div>
-              <div class="col-md-6">
-                <label class="form-label">Phone</label>
+              <div class="col-md-4">
+                <label class="form-label"
+                       data-lang-en="Phone"
+                       data-lang-ar="الهاتف"
+                       data-lang-ur="فون"
+                       data-lang-fa="تلفن">Phone</label>
                 {{ form.phone }}
               </div>
-              <div class="col-md-6">
-                <label class="form-label">Category *</label>
+              <div class="col-md-4">
+                <label class="form-label"
+                       data-lang-en="Gender"
+                       data-lang-ar="الجنس"
+                       data-lang-ur="جنس"
+                       data-lang-fa="جنسیت">Gender</label>
+                {{ form.gender }}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label"
+                       data-lang-en="Country"
+                       data-lang-ar="الدولة"
+                       data-lang-ur="ملک"
+                       data-lang-fa="کشور">Country</label>
+                {{ form.country }}
+              </div>
+              <div class="col-12">
+                <label class="form-label"
+                       data-lang-en="Category"
+                       data-lang-ar="التصنيف"
+                       data-lang-ur="موضوع"
+                       data-lang-fa="دسته‌بندی">Category</label>
                 {{ form.category }}
               </div>
               <div class="col-12">
-                <label class="form-label">Your Question *</label>
+                <label class="form-label"
+                       data-lang-en="Your Question *"
+                       data-lang-ar="سؤالك *"
+                       data-lang-ur="آپ کا سوال *"
+                       data-lang-fa="سؤال شما *">Your Question *</label>
                 {{ form.question }}
+                {% if form.question.errors %}<div class="invalid-feedback d-block">{{ form.question.errors }}</div>{% endif %}
               </div>
               <div class="col-12">
                 <div class="form-check">
                   {{ form.is_anonymous }}
-                  <label class="form-check-label" for="{{ form.is_anonymous.id_for_label }}">
-                    Submit anonymously
+                  <label class="form-check-label"
+                         data-lang-en="Submit anonymously (name will not be shown publicly)"
+                         data-lang-ar="إرسال بصورة مجهولة (لن يُظهر الاسم للعموم)"
+                         data-lang-ur="گمنام طور پر بھیجیں (نام عوامی طور پر نہیں دکھایا جائے گا)"
+                         data-lang-fa="ارسال ناشناس (نام عمومی نخواهد شد)">
+                    Submit anonymously (name will not be shown publicly)
                   </label>
                 </div>
               </div>
               <div class="col-12">
-                <button type="submit" class="btn btn-gold px-5">
-                  <i class="fas fa-paper-plane me-2"></i>Submit Question
+                <button type="submit" class="btn btn-gold w-100 py-3">
+                  <i class="fas fa-paper-plane me-2"></i>
+                  <span data-lang-en="Submit Question"
+                        data-lang-ar="إرسال السؤال"
+                        data-lang-ur="سوال بھیجیں"
+                        data-lang-fa="ارسال سؤال">Submit Question</span>
                 </button>
               </div>
             </div>
           </form>
-        </div>
-      </div>
 
-      <!-- Public Q&A -->
-      <div class="col-lg-6" data-aos="fade-left">
-        <div class="section-ornament">❖</div>
-        <h2 class="section-title">Recent Answers</h2>
-        {% if public_qas %}
-          {% for qa in public_qas %}
-          <div class="qa-item mb-4">
-            <div class="qa-question"><i class="fas fa-question-circle me-2 text-gold"></i>{{ qa.question }}</div>
-            {% if qa.answer %}
-            <div class="qa-answer mt-2"><i class="fas fa-check-circle me-2 text-success"></i>{{ qa.answer|truncatewords:50 }}</div>
-            {% if qa.answered_by %}<small class="text-muted">— {{ qa.answered_by }}</small>{% endif %}
-            {% endif %}
-          </div>
-          {% endfor %}
-        {% else %}
-          <p class="text-muted">No public answers yet. Be the first to ask!</p>
-        {% endif %}
+        </div>
       </div>
     </div>
   </div>

@@ -4,8 +4,8 @@
 <div class="page-header">
   <div class="page-header-overlay"></div>
   <div class="container text-center">
-    <h1 class="page-header-title">{{ subject.title_en }}</h1>
-    {% if subject.title_ar %}<p class="page-header-subtitle">{{ subject.title_ar }}</p>{% endif %}
+    <h1 class="page-header-title"
+        data-lang-en="{{ subject.title_en }}" data-lang-ar="{{ subject.title_ar }}" data-lang-ur="{{ subject.title_ur }}" data-lang-fa="{{ subject.title_fa }}">{{ subject.title_en }}</h1>
     <nav aria-label="breadcrumb"><ol class="breadcrumb justify-content-center">
       <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
       <li class="breadcrumb-item"><a href="{% url 'lessons:home' %}">Lessons</a></li>
@@ -23,10 +23,14 @@
           {% if series.thumbnail %}<div class="lesson-thumb"><img src="{{ series.thumbnail.url }}" alt="{{ series.title_en }}"></div>
           {% else %}<div class="lesson-thumb-placeholder"><i class="{{ subject.icon_class|default:'fas fa-book' }}"></i></div>{% endif %}
           <div class="lesson-body">
-            <span class="lesson-subject-badge">{{ subject.title_en }}</span>
-            <h6 class="lesson-title mt-2">{{ series.title_en }}</h6>
+            <span class="lesson-subject-badge"
+                  data-lang-en="{{ subject.title_en }}" data-lang-ar="{{ subject.title_ar }}" data-lang-ur="{{ subject.title_ur }}" data-lang-fa="{{ subject.title_fa }}">{{ subject.title_en }}</span>
+            <h6 class="lesson-title mt-2"
+                data-lang-en="{{ series.title_en }}" data-lang-ar="{{ series.title_ar }}" data-lang-ur="{{ series.title_ur }}" data-lang-fa="{{ series.title_fa }}">{{ series.title_en }}</h6>
             {% if series.instructor %}<p class="lesson-instructor"><i class="fas fa-chalkboard-teacher me-1"></i>{{ series.instructor }}</p>{% endif %}
-            <a href="{% url 'lessons:series' series.pk %}" class="btn btn-sm btn-gold mt-2">View Series</a>
+            <a href="{% url 'lessons:series' series.pk %}" class="btn btn-sm btn-gold mt-2">
+              <span data-lang-en="View Series" data-lang-ar="عرض السلسلة" data-lang-ur="سیریز دیکھیں" data-lang-fa="مشاهده سری">View Series</span>
+            </a>
           </div>
         </div>
       </div>
