@@ -133,7 +133,17 @@
         <div class="row g-4 justify-content-center">
           {% for trustee in trustees %}
           <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}0">
-            <div class="trustee-card text-center">
+            {# Wrap the founder's trustee card in a link to their biography page #}
+            {% if trustee.is_founder %}
+            <a href="{% url 'core:founder' %}" class="trustee-card-link" style="text-decoration:none;display:block;">
+            {% endif %}
+            <div class="trustee-card text-center {% if trustee.is_founder %}trustee-card--founder{% endif %}">
+              {% if trustee.is_founder %}
+              <span class="trustee-founder-badge">
+                <i class="fas fa-user-graduate me-1"></i>
+                <span data-lang-en="Founder" data-lang-ar="المؤسس" data-lang-ur="بانی" data-lang-fa="بنیانگذار">Founder</span>
+              </span>
+              {% endif %}
               {% if trustee.photo %}
               <div class="trustee-photo-wrap">
                 <img src="{{ trustee.photo.url }}" alt="{{ trustee.name }}" class="trustee-photo">
@@ -144,11 +154,31 @@
               </div>
               {% endif %}
               <h6 class="trustee-name mt-3">{{ trustee.name }}</h6>
+              <!-- Al Faqeeh subtitle — all languages -->
+              {% if trustee.is_founder %}
+              <p class="founder-home-subtitle mb-1"
+                 data-lang-en="Al-Faqīh ul-Muḥaddith and Wakīl-e-Marājiʿ"
+                 data-lang-ar="الفقيه المحدّث ووكيل المراجع"
+                 data-lang-ur="الفقیہ المحدّث و وکیلِ مراجع"
+                 data-lang-fa="الفقیه المحدّث و وکیل مراجع">
+                Al-Faqīh ul-Muḥaddith and Wakīl-e-Marājiʿ
+              </p>
+              {% endif %}
               <p class="trustee-designation">{{ trustee.designation }}</p>
               {% if trustee.phone %}
               <p class="trustee-phone"><i class="fas fa-phone me-1 text-gold"></i>{{ trustee.phone }}</p>
               {% endif %}
+              {% if trustee.is_founder %}
+              <p class="trustee-bio-link mt-2">
+                <i class="fas fa-book-open me-1 text-gold"></i>
+                <span data-lang-en="View Biography" data-lang-ar="عرض السيرة" data-lang-ur="سوانح دیکھیں" data-lang-fa="مشاهده زندگینامه">View Biography</span>
+                <i class="fas fa-arrow-right ms-1 text-gold"></i>
+              </p>
+              {% endif %}
             </div>
+            {% if trustee.is_founder %}
+            </a>
+            {% endif %}
           </div>
           {% empty %}
           <div class="col-12 text-center text-muted py-5">

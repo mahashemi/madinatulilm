@@ -29,14 +29,33 @@
         {% else %}
           <div class="founder-photo-placeholder"><i class="fas fa-user-graduate"></i></div>
         {% endif %}
-        <h4 class="founder-name mt-3">{{ founder.name_en }}</h4>
-        {% if founder.name_ur %}<p class="founder-name-ur">{{ founder.name_ur }}</p>{% endif %}
+        <h4 class="founder-name mt-3"
+            data-lang-en="{{ founder.name_en }}"
+            data-lang-ar="{{ founder.name_ar|default:founder.name_en }}"
+            data-lang-ur="{{ founder.name_ur|default:founder.name_en }}"
+            data-lang-fa="{{ founder.name_ur|default:founder.name_en }}">{{ founder.name_en }}</h4>
+
+        <!-- Al Faqeeh ul Muhaddis & Wakeel-e-Maraje — all 4 languages -->
+        <p class="founder-home-subtitle mt-1 mb-1"
+           data-lang-en="Al-Faqīh ul-Muḥaddith and Wakīl-e-Marājiʿ"
+           data-lang-ar="الفقيه المحدّث ووكيل المراجع"
+           data-lang-ur="الفقیہ المحدّث و وکیلِ مراجع"
+           data-lang-fa="الفقیه المحدّث و وکیل مراجع">
+          Al-Faqīh ul-Muḥaddith and Wakīl-e-Marājiʿ
+        </p>
+
+        <!-- Urdu/Arabic name — shown only when a non-English language is active (hidden by JS on EN) -->
+        {% if founder.name_ur %}
+        <p class="founder-name-ur js-lang-hide-en"
+           data-lang-ar="{{ founder.name_ar|default:founder.name_ur }}"
+           data-lang-ur="{{ founder.name_ur }}"
+           data-lang-fa="{{ founder.name_ur }}">{{ founder.name_ur }}</p>
+        {% endif %}
         {% if founder.title_en %}<p class="founder-title">{{ founder.title_en }}</p>{% endif %}
         {% if founder.phone %}<p><i class="fas fa-phone-alt me-1 text-gold"></i><a href="tel:{{ founder.phone }}">{{ founder.phone }}</a></p>{% endif %}
       </div>
       <div class="col-lg-9">
         <div class="section-ornament">❖</div>
-        <h2 class="section-title" style="font-family:'Amiri',serif;direction:rtl;">باسمہ تعالی</h2>
         {% if founder.biography_en or founder.biography_ur %}
         <div class="rich-text"
              data-html-lang-en="{{ founder.biography_en|default:''|force_escape }}"
@@ -52,10 +71,10 @@
     <div class="text-center mb-5" data-aos="fade-up">
       <div class="section-ornament">❖</div>
     <h2 class="section-title"
-        data-lang-en="Ijazāt (Scholarly Certifications)"
+        data-lang-en="Ijazāh (Scholarly Certifications)"
         data-lang-ar="الإجازات العلمية"
         data-lang-ur="علمی اجازات"
-        data-lang-fa="اجازه‌نامه‌های علمی">Ijazāt (Scholarly Certifications)</h2>
+        data-lang-fa="اجازه‌نامه‌های علمی">Ijazāh (Scholarly Certifications)</h2>
     <p class="section-subtitle"
        data-lang-en="Certifications received from Grand Ayatollahs"
        data-lang-ar="إجازات من كبار المراجع والأيات العظام"
@@ -65,10 +84,10 @@
 
     <!-- Riwayat -->
     <h4 class="ijazah-type-heading mb-4"
-        data-lang-en="Ijazāt Naql Riwayat"
+        data-lang-en="Ijazāh Naql Riwayat"
         data-lang-ar="إجازات نقل الرواية"
         data-lang-ur="اجازات نقل روایت"
-        data-lang-fa="اجازه نقل روایت">Ijazāt Naql Riwayat</h4>
+        data-lang-fa="اجازه نقل روایت">Ijazāh Naql Riwayat</h4>
     <div class="row g-4 mb-5">
       {% for ijazah in ijazat %}{% if ijazah.ijazah_type == 'riwayat' %}
       <div class="col-lg-3 col-md-4 col-6" data-aos="zoom-in">
@@ -84,10 +103,10 @@
 
     <!-- Wakalat -->
     <h4 class="ijazah-type-heading mb-4"
-        data-lang-en="Ijazāt Wakalat &amp; Sahm Imam"
+        data-lang-en="Ijazāh Wakalat &amp; Sahm Imam"
         data-lang-ar="إجازات الوكالة وسهم الإمام"
         data-lang-ur="اجازات وکالت و سہم امام"
-        data-lang-fa="اجازه وکالت و سهم امام">Ijazāt Wakalat &amp; Sahm Imam</h4>
+        data-lang-fa="اجازه وکالت و سهم امام">Ijazāh Wakalat &amp; Sahm Imam</h4>
     <div class="row g-4">
       {% for ijazah in ijazat %}{% if ijazah.ijazah_type != 'riwayat' %}
       <div class="col-lg-3 col-md-4 col-6" data-aos="zoom-in">

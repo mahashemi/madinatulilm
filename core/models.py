@@ -151,6 +151,11 @@ class Trustee(models.Model):
     phone = models.CharField(max_length=30, blank=True)
     sort_order = models.PositiveSmallIntegerField(default=0)
     is_active = models.BooleanField(default=True)
+    is_founder = models.BooleanField(
+        default=False,
+        verbose_name="Is Founder",
+        help_text="Mark this trustee as the founder. Their card on the Trustees tab will link to the Founder biography page."
+    )
 
     class Meta:
         ordering = ["sort_order", "name"]

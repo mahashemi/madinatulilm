@@ -173,7 +173,8 @@ class IjazahAdmin(admin.ModelAdmin):
 
 @admin.register(Trustee)
 class TrusteeAdmin(admin.ModelAdmin):
-    list_display  = ("name", "designation", "phone", "is_active", "sort_order")
+    list_display  = ("name", "designation", "phone", "is_founder", "is_active", "sort_order")
+    list_filter   = ("is_founder", "is_active")
     list_editable = ("sort_order", "is_active")
 
 

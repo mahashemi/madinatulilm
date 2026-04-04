@@ -208,6 +208,25 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
+    /* ── 1b. js-lang-hide-en: visible only when language ≠ EN ──────
+       Used for Arabic/Urdu script names that should not appear when
+       English is the active language.
+       Also switches text content via data-lang-* if present.
+    ── */
+    document.querySelectorAll('.js-lang-hide-en').forEach(function(el) {
+      if (lang === 'en') {
+        el.style.display = 'none';
+      } else {
+        el.style.display = '';
+        /* Swap text if the element carries data-lang-* attributes */
+        var val = el.getAttribute('data-lang-' + lang) || el.getAttribute('data-lang-ur') || '';
+        if (val) {
+          el.textContent = val;
+          el.style.cssText = 'font-family:"Amiri",serif;direction:rtl;';
+        }
+      }
+    });
+
     /* ── 2. Rich HTML lang swap: data-html-lang-en / data-html-lang-ar / … ── */
     document.querySelectorAll('[data-html-lang-en]').forEach(function(el) {
       var html = el.getAttribute('data-html-lang-' + lang) || el.getAttribute('data-html-lang-en') || '';
