@@ -11,17 +11,14 @@ from core.models import HadithQuote, PartnerPage
 HADITHS = [
     {
         # ── The namesake hadith — always first (sort_order=0) ──────────────
-        "text_ar":  "قَالَ رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَآلِهِ: "
-                    "أَنَا مَدِينَةُ الْعِلْمِ وَعَلِيٌّ بَابُهَا، "
+        # text_ar: pure hadith body only — no "qala..." prefix
+        "text_ar":  "أَنَا مَدِينَةُ الْعِلْمِ وَعَلِيٌّ بَابُهَا، "
                     "فَمَنْ أَرَادَ الْمَدِينَةَ فَلْيَأْتِ الْبَابَ",
-        "text_en":  "The Messenger of Allah (S) said: "
-                    "I am the city of knowledge and ʿAlī is its gate — "
+        "text_en":  "I am the city of knowledge and ʿAlī is its gate — "
                     "whoever wishes to enter the city must come through the gate.",
-        "text_ur":  "رسول اللہ (ص) نے فرمایا: "
-                    "میں علم کا شہر ہوں اور علی اس کا دروازہ ہیں — "
+        "text_ur":  "میں علم کا شہر ہوں اور علی اس کا دروازہ ہیں — "
                     "جو بھی اس شہر میں آنا چاہے وہ دروازے سے آئے۔",
-        "text_fa":  "پیامبر اکرم (ص) فرمودند: "
-                    "من شهر علمم و علی دروازه آن است — "
+        "text_fa":  "من شهر علمم و علی دروازه آن است — "
                     "هر کس خواهد وارد شهر شود باید از دروازه بیاید.",
         "source":   "Al-Mustadrak ʿalā al-Ṣaḥīḥayn, Vol. 3 p. 126 | "
                     "Biḥār al-Anwār, Vol. 40 p. 201",
@@ -29,59 +26,55 @@ HADITHS = [
         "sort_order": 0,
     },
     {
-        "text_ar":  "قَالَ أَمِيرُ الْمُؤْمِنِينَ عَلَيْهِ السَّلَامُ: الْعِلْمُ أَصْلُ كُلِّ خَيْرٍ",
-        "text_en":  "Imam ʿAlī (AS) said: Knowledge is the root of every good.",
-        "text_ur":  "امام علی (ع) نے فرمایا: علم ہر بھلائی کی جڑ ہے۔",
-        "text_fa":  "امام علی (ع) فرمودند: علم ریشه هر خیری است.",
+        "text_ar":  "الْعِلْمُ أَصْلُ كُلِّ خَيْرٍ",
+        "text_en":  "Knowledge is the root of every good.",
+        "text_ur":  "علم ہر بھلائی کی جڑ ہے۔",
+        "text_fa":  "علم ریشه هر خیری است.",
         "source":   "Ghurar al-Ḥikam, No. 1611",
         "narrator": "Imam ʿAlī ibn Abī Ṭālib (AS)",
         "sort_order": 1,
     },
     {
-        "text_ar":  "قَالَ النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَآلِهِ: "
-                    "طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ",
-        "text_en":  "The Prophet (S) said: Seeking knowledge is an obligation upon every Muslim.",
-        "text_ur":  "نبی اکرم (ص) نے فرمایا: علم حاصل کرنا ہر مسلمان پر فرض ہے۔",
-        "text_fa":  "پیامبر (ص) فرمودند: طلب علم بر هر مسلمانی واجب است.",
+        "text_ar":  "طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ",
+        "text_en":  "Seeking knowledge is an obligation upon every Muslim.",
+        "text_ur":  "علم حاصل کرنا ہر مسلمان پر فرض ہے۔",
+        "text_fa":  "طلب علم بر هر مسلمانی واجب است.",
         "source":   "Biḥār al-Anwār, Vol. 1 p. 177",
         "narrator": "Prophet Muḥammad (S)",
         "sort_order": 2,
     },
     {
-        "text_ar":  "قَالَ الإِمَامُ جَعْفَرٌ الصَّادِقُ عَلَيْهِ السَّلَامُ: "
-                    "اعْرِفْ مَنَازِلَ الشِّيعَةِ عَلَى قَدْرِ رِوَايَتِهِمْ وَعِلْمِهِمْ",
-        "text_en":  "Imam al-Ṣādiq (AS): Recognise the station of the Shīʿa by "
-                    "the degree of their narration and knowledge.",
-        "text_ur":  "امام صادق (ع) نے فرمایا: شیعوں کے مراتب کو ان کی روایت اور علم کی مقدار سے پہچانو۔",
-        "text_fa":  "امام صادق (ع): منزلت شیعیان را به اندازه روایت و دانش آنان بشناسید.",
+        "text_ar":  "اعْرِفْ مَنَازِلَ الشِّيعَةِ عَلَى قَدْرِ رِوَايَتِهِمْ وَعِلْمِهِمْ",
+        "text_en":  "Recognise the station of the Shīʿa by the degree of their narration and knowledge.",
+        "text_ur":  "شیعوں کے مراتب کو ان کی روایت اور علم کی مقدار سے پہچانو۔",
+        "text_fa":  "منزلت شیعیان را به اندازه روایت و دانش آنان بشناسید.",
         "source":   "Al-Kāfī, Vol. 1 p. 50",
         "narrator": "Imam Jaʿfar al-Ṣādiq (AS)",
         "sort_order": 3,
     },
     {
-        "text_ar":  "قَالَ الإِمَامُ عَلِيٌّ عَلَيْهِ السَّلَامُ: قِيمَةُ كُلِّ امْرِئٍ مَا يُحْسِنُهُ",
-        "text_en":  "Imam ʿAlī (AS): The value of every person lies in what they know and do well.",
-        "text_ur":  "امام علی (ع): ہر انسان کی قدر و قیمت وہی ہے جو وہ اچھی طرح جانتا ہے۔",
-        "text_fa":  "امام علی (ع): ارزش هر کس به چیزی است که بدان تسلط دارد.",
+        "text_ar":  "قِيمَةُ كُلِّ امْرِئٍ مَا يُحْسِنُهُ",
+        "text_en":  "The value of every person lies in what they master.",
+        "text_ur":  "ہر انسان کی قدر و قیمت وہی ہے جو وہ اچھی طرح جانتا ہے۔",
+        "text_fa":  "ارزش هر کس به چیزی است که بدان تسلط دارد.",
         "source":   "Nahj al-Balāgha, Ḥikma 81",
         "narrator": "Imam ʿAlī ibn Abī Ṭālib (AS)",
         "sort_order": 4,
     },
     {
-        "text_ar":  "قَالَ الإِمَامُ مُحَمَّدٌ الْبَاقِرُ عَلَيْهِ السَّلَامُ: "
-                    "تَذَاكَرُ الْعِلْمِ دِرَاسَةٌ وَالدِّرَاسَةُ صَلَاةٌ حَسَنَةٌ",
-        "text_en":  "Imam al-Bāqir (AS): Discussing knowledge is study, and study is a virtuous act of worship.",
-        "text_ur":  "امام باقر (ع): علم کا تذکرہ مطالعہ ہے اور مطالعہ بہترین عبادت ہے۔",
-        "text_fa":  "امام باقر (ع): مذاکره علم درس است و درس نمازی نیکو است.",
+        "text_ar":  "تَذَاكَرُ الْعِلْمِ دِرَاسَةٌ وَالدِّرَاسَةُ صَلَاةٌ حَسَنَةٌ",
+        "text_en":  "Discussing knowledge is study, and study is a virtuous act of worship.",
+        "text_ur":  "علم کا تذکرہ مطالعہ ہے اور مطالعہ بہترین عبادت ہے۔",
+        "text_fa":  "مذاکره علم درس است و درس نمازی نیکو است.",
         "source":   "Al-Kāfī, Vol. 1 p. 41",
         "narrator": "Imam Muḥammad al-Bāqir (AS)",
         "sort_order": 5,
     },
     {
-        "text_ar":  "قَالَ الإِمَامُ عَلِيٌّ عَلَيْهِ السَّلَامُ: لَا كَنْزَ أَنْفَعُ مِنَ الْعِلْمِ",
-        "text_en":  "Imam ʿAlī (AS): There is no treasure more beneficial than knowledge.",
-        "text_ur":  "امام علی (ع): علم سے زیادہ نفع بخش کوئی خزانہ نہیں۔",
-        "text_fa":  "امام علی (ع): هیچ گنجی سودمندتر از علم نیست.",
+        "text_ar":  "لَا كَنْزَ أَنْفَعُ مِنَ الْعِلْمِ",
+        "text_en":  "There is no treasure more beneficial than knowledge.",
+        "text_ur":  "علم سے زیادہ نفع بخش کوئی خزانہ نہیں۔",
+        "text_fa":  "هیچ گنجی سودمندتر از علم نیست.",
         "source":   "Ghurar al-Ḥikam, No. 10704",
         "narrator": "Imam ʿAlī ibn Abī Ṭālib (AS)",
         "sort_order": 6,

@@ -5,40 +5,213 @@
 
 {% block content %}
 
-<!-- ═══════════════ HERO ═══════════════ -->
-<section class="hero-section">
-  <div class="hero-overlay"></div>
-  <div class="container h-100">
-    <div class="row h-100 align-items-center">
-      <div class="col-lg-8" data-aos="fade-up">
-        <h1 class="hero-institution-name" id="mil-hero-name">Madrasah Madinatul Ilm</h1>
-        <p class="hero-subtitle" id="mil-hero-subtitle">Centre of Faqāhat — Under Muhammadiyah Trust</p>
-        <p class="hero-tagline" id="mil-hero-tagline"></p>
-        <div class="hero-btns d-flex flex-wrap gap-3 mt-4">
+<!-- ═══════════════════════════════════════════════════════════
+     UNIFIED HERO — Madrasah identity + Maraji portrait merged
+     ─────────────────────────────────────────────────────────
+     One full-viewport section.
+     Background: madrasah building photo (blurred) + multi-layer
+     gradient.  Left col: institution name + tagline + CTAs +
+     gold divider + Maraji info.  Right col: circular portrait
+     with glow rings + Arabic nameplate.
+     Responsive: portrait stacks ABOVE text on tablet/mobile.
+     ═══════════════════════════════════════════════════════════ -->
+<section class="unified-hero" aria-label="Madrasah Madinatul Ilm — Home">
+
+  <!-- ── bg layer 1: rotating madrasah photos (JS-driven crossfade) ── -->
+  <!-- Fallback static image set in CSS; JS overrides with DB images   -->
+  <div class="uhero-bg" id="uhero-bg"></div>
+
+  <!-- Hero images JSON — read by crossfade JS below -->
+  <script id="hero-images-data" type="application/json">{{ hero_images_json|safe }}</script>
+
+  <!-- ── bg layer 2: directional gradient for legibility ── -->
+  <div class="uhero-overlay"></div>
+
+  <!-- ── bg layer 3: subtle arabesque texture ── -->
+  <div class="uhero-pattern"></div>
+
+  <!-- ── scroll indicator ── -->
+  <div class="hero-scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+
+  <div class="container uhero-container">
+    <div class="row align-items-center g-0 uhero-row">
+
+      <!-- ════════════════════════════════════════════════
+           LEFT  col-lg-6  — Institution identity
+           (Empty space below CTAs reserved for madrasah
+           images / gallery to be added later)
+           ════════════════════════════════════════════════ -->
+      <div class="col-lg-6 uhero-text-col" data-aos="fade-right">
+
+        <!-- Institution name — JS language-switched -->
+        <h1 class="uhero-name" id="mil-hero-name"
+            data-lang-en="Madrasah Madinatul Ilm"
+            data-lang-ar="مدرسة مدينة العلم"
+            data-lang-ur="مدرسہ مدینۃ العلم"
+            data-lang-fa="مدرسه مدینةالعلم">
+          Madrasah Madinatul Ilm
+        </h1>
+
+        <!-- Tagline -->
+        <p class="uhero-tagline" id="mil-hero-subtitle"
+           data-lang-en="Centre of Faqāhat · Muhammadiyah Trust · Gopalpur, Bihar"
+           data-lang-ar="مركز الفقاهة · المؤسسة المحمدية · گوپالپور، بيهار"
+           data-lang-ur="مرکزِ فقاہت · محمدیہ ٹرسٹ · گوپالپور، بہار"
+           data-lang-fa="مرکز فقاهت · موقوفه محمدیه · گوپال‌پور، بیهار">
+          Centre of Faqāhat · Muhammadiyah Trust · Gopalpur, Bihar
+        </p>
+
+        <!-- CTAs -->
+        <div class="uhero-btns d-flex flex-wrap gap-3">
           <a href="{% url 'core:about' %}" class="btn btn-gold btn-lg">
-            <i class="fas fa-info-circle me-2"></i><span id="mil-btn-about">About Us</span>
+            <i class="fas fa-info-circle me-2"></i>
+            <span data-lang-en="About Us"
+                  data-lang-ar="من نحن"
+                  data-lang-ur="ہمارے بارے میں"
+                  data-lang-fa="درباره ما">About Us</span>
           </a>
           <a href="{% url 'core:academics' %}" class="btn btn-outline-light btn-lg">
             <i class="fas fa-graduation-cap me-2"></i>
-            <span data-lang-en="Explore Academics" data-lang-ar="استعراض الأقسام" data-lang-ur="تعلیمی شعبہ جات دیکھیں" data-lang-fa="مشاهده رشته‌ها">Explore Academics</span>
+            <span data-lang-en="Explore Academics"
+                  data-lang-ar="استعراض الأقسام"
+                  data-lang-ur="تعلیمی شعبہ جات دیکھیں"
+                  data-lang-fa="مشاهده رشته‌ها">Explore Academics</span>
           </a>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="hero-scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+
+        <!-- ── Reserved space for future madrasah images ──
+             This area is intentionally left open. When you add
+             a gallery / image grid here, it will fill naturally. -->
+        <div class="uhero-img-placeholder"><!-- future madrasah images --></div>
+
+      </div><!-- /left col -->
+
+      <!-- ════════════════════════════════════════════════
+           RIGHT  col-lg-6  — Portrait  +  Maraji info
+           Portrait at top; all info (language-switched) below.
+           ════════════════════════════════════════════════ -->
+      {% if maraji %}
+      <div class="col-lg-6 uhero-portrait-col" data-aos="fade-left" data-aos-delay="150">
+
+        <!-- Portrait + rings -->
+        <div class="uhero-portrait-wrap">
+          <div class="uhero-ring uhero-ring--3"></div>
+          <div class="uhero-ring uhero-ring--2"></div>
+          <div class="uhero-ring uhero-ring--1"></div>
+
+          <div class="uhero-portrait-frame">
+            {% if maraji.photo %}
+              <img src="{{ maraji.photo.url }}"
+                   alt="{{ maraji.name_en }}"
+                   class="uhero-portrait-img"
+                   loading="eager">
+            {% else %}
+              <div class="uhero-portrait-placeholder"><i class="fas fa-user-tie"></i></div>
+            {% endif %}
+          </div>
+        </div><!-- /portrait-wrap -->
+
+        <!-- ── Maraji info — all language-switched ── -->
+        <div class="uhero-maraji-info" data-aos="fade-up" data-aos-delay="200">
+
+          <!-- Gold divider -->
+          <div class="uhero-divider">
+            <span class="uhero-div-line"></span>
+            <span class="uhero-div-icon"><i class="fas fa-star-and-crescent"></i></span>
+            <span class="uhero-div-line"></span>
+          </div>
+
+          <!-- "Under the spiritual guidance of" label -->
+          <p class="uhero-maraji-label"
+             data-lang-en="Under the Spiritual Guidance of"
+             data-lang-ar="تحت الإشراف الروحاني لـ"
+             data-lang-ur="روحانی سرپرستی میں"
+             data-lang-fa="زیر نظر روحانی">
+            Under the Spiritual Guidance of
+          </p>
+
+          <!-- Maraji name — language-switched -->
+          <h3 class="uhero-maraji-name-local"
+              data-lang-en="{{ maraji.name_en }}"
+              data-lang-ar="{{ maraji.name_ar|default:maraji.name_en }}"
+              data-lang-ur="{{ maraji.name_ur|default:maraji.name_en }}"
+              data-lang-fa="{{ maraji.name_fa|default:maraji.name_en }}">
+            {{ maraji.name_en }}
+          </h3>
+
+          <!-- Badges: title + role + honorific — all language-switched -->
+          <div class="uhero-badges">
+            {% if maraji.title_en %}
+            <span class="maraji-badge maraji-badge--primary"
+                  data-lang-en="{{ maraji.title_en }}"
+                  data-lang-ar="{{ maraji.title_ar|default:maraji.title_en }}"
+                  data-lang-ur="{{ maraji.title_ur|default:maraji.title_en }}"
+                  data-lang-fa="{{ maraji.title_fa|default:maraji.title_en }}">
+              <i class="fas fa-star-and-crescent me-1"></i>{{ maraji.title_en }}
+            </span>
+            {% endif %}
+
+            {% if maraji.role_en %}
+            <span class="maraji-badge maraji-badge--role"
+                  data-lang-en="{{ maraji.role_en }}"
+                  data-lang-ar="{{ maraji.role_ar|default:maraji.role_en }}"
+                  data-lang-ur="{{ maraji.role_ur|default:maraji.role_en }}"
+                  data-lang-fa="{{ maraji.role_fa|default:maraji.role_en }}">
+              <i class="fas fa-mosque me-1"></i>{{ maraji.role_en }}
+            </span>
+            {% endif %}
+
+            <!-- Honorific badge — text language-switched; icon set server-side -->
+            <span class="maraji-badge {% if maraji.is_deceased %}maraji-badge--deceased{% else %}maraji-badge--alive{% endif %}"
+                  data-lang-en="{{ maraji.honorific_en }}"
+                  data-lang-ar="{{ maraji.honorific_ar }}"
+                  data-lang-ur="{{ maraji.honorific_ur }}"
+                  data-lang-fa="{{ maraji.honorific_fa }}">
+              {% if maraji.is_deceased %}<i class="fas fa-moon me-1"></i>
+              {% else %}<i class="fas fa-sun me-1"></i>{% endif %}
+              {{ maraji.honorific_en }}
+            </span>
+          </div>
+
+          <!-- Deceased Rahmat notice — language-switched -->
+          {% if maraji.is_deceased %}
+          <div class="uhero-rahmat"
+               data-lang-en="May Allah (SWT) elevate his blessed soul — Āmīn"
+               data-lang-ar="اللهم ارفع درجاته في الجنة وتغمده بواسع رحمتك — آمين"
+               data-lang-ur="اللہ تعالیٰ ان کے درجات بلند فرمائے — آمین"
+               data-lang-fa="خداوند روحش را قرین رحمت فرماید — آمین">
+            <i class="fas fa-heart me-1"></i>
+            May Allah (SWT) elevate his blessed soul — Āmīn
+          </div>
+          {% endif %}
+
+        </div><!-- /maraji-info -->
+
+      </div><!-- /right col -->
+      {% endif %}
+
+    </div><!-- /row -->
+  </div><!-- /container -->
+
 </section>
+<!-- ═══════════════ END UNIFIED HERO ═══════════════ -->
 
 <!-- ═══════════════ HADITH ROTATOR ═══════════════ -->
 <section class="hadith-section" id="hadith-section">
   <div class="container">
     <div class="hadith-rotator" data-aos="fade-up">
-      <div class="hadith-ornament"><i class="fas fa-quote-left"></i></div>
-      <div class="hadith-body">
-        <p class="hadith-arabic" id="hadith-ar">قَالَ رَسُولُ اللَّهِ ﷺ: طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ</p>
-        <p class="hadith-translation" id="hadith-en">"Seeking knowledge is an obligation upon every Muslim."</p>
-        <p class="hadith-source" id="hadith-src">— Prophet Muhammad (ﷺ) · Bihār al-Anwār</p>
+
+      <!-- Quote block: opening mark top-centre, closing mark bottom-centre via CSS ::before/::after -->
+      <div class="hadith-quote-block">
+        <p class="hadith-arabic" id="hadith-ar">طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ</p>
       </div>
+
+      <!-- Translation sits below the quote -->
+      <p class="hadith-translation" id="hadith-en">"Seeking knowledge is an obligation upon every Muslim."</p>
+
+      <!-- Source line -->
+      <p class="hadith-source" id="hadith-src">— Prophet Muhammad (ﷺ) · Bihār al-Anwār</p>
+
       <div class="hadith-dots" id="hadith-dots"></div>
     </div>
   </div>
@@ -396,6 +569,59 @@
 {% endblock %}
 
 {% block extra_js %}
+<!-- ── Hero Banner Background Crossfade ───────────────────────────────── -->
+<script>
+(function () {
+  var wrap = document.getElementById('uhero-bg');
+  if (!wrap) return;
+
+  var dataEl = document.getElementById('hero-images-data');
+  var images = [];
+  try { images = JSON.parse(dataEl ? dataEl.textContent : '[]'); } catch (e) {}
+
+  /* No DB images → keep CSS ::before fallback; bail early */
+  if (!images.length) return;
+
+  /* ── Pre-load all images, then start the slideshow ── */
+  var loaded = 0;
+  var slides = [];
+
+  images.forEach(function (url, i) {
+    var slab = document.createElement('div');
+    slab.className = 'uhero-bg-slide';
+    wrap.appendChild(slab);
+    slides.push(slab);
+
+    var img = new Image();
+    img.onload = img.onerror = function () {
+      slab.style.backgroundImage = 'url(' + url + ')';
+      loaded++;
+      /* Once ALL images are loaded (or errored), start rotation */
+      if (loaded === images.length) startRotation();
+    };
+    img.src = url;
+  });
+
+  var current = 0;
+
+  function startRotation() {
+    /* Mark wrapper so CSS hides the ::before fallback */
+    wrap.classList.add('js-ready');
+    /* Show first slide immediately */
+    slides[0].classList.add('active');
+
+    if (slides.length < 2) return;   /* nothing to rotate */
+
+    setInterval(function () {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 30000);   /* change slide every 30 s */
+  }
+})();
+</script>
+
+<!-- ── Hadith Rotator ─────────────────────────────────────────────────── -->
 <script>
 (function() {
   const raw = document.getElementById('hadiths-data');
@@ -427,16 +653,16 @@
   function renderTranslation(h, lang) {
     const trans = h['text_' + lang] || h.text_en || '';
     elEn.textContent = trans ? '\u201c' + trans + '\u201d' : '';
-    /* RTL styling for translation line */
     var isRtl = ['ar','ur','fa'].indexOf(lang) !== -1;
     elEn.style.direction = isRtl ? 'rtl' : 'ltr';
     elEn.style.fontFamily = isRtl ? '"Amiri",serif' : '';
+    elEn.style.fontSize   = isRtl ? '1.35rem' : '';
   }
 
   function show(idx) {
     current = idx;
     const h = hadiths[idx];
-    elAr.textContent  = h.text_ar || '';
+    elAr.textContent = h.text_ar || '';
     renderTranslation(h, activeLang());
     const narrator = h.narrator ? h.narrator + ' \u00b7 ' : '';
     elSrc.textContent = '\u2014 ' + narrator + (h.source || '');
@@ -445,7 +671,7 @@
 
   buildDots();
   show(0);
-  setInterval(() => show((current + 1) % hadiths.length), 8000);
+  setInterval(() => show((current + 1) % hadiths.length), 30000);
 
   /* Re-render translation on language switch — use e.detail, never stale closure */
   document.addEventListener('milLangChange', function(e) {

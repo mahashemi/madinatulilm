@@ -4,7 +4,7 @@ from django.utils.html import format_html
 from .models import (
     SiteSettings, WelcomeSection, MissionSection, VisionSection,
     AboutSection, Founder, Ijazah, Trustee, AcademicProgram,
-    MadrasahGallery, HadithQuote, PartnerPage
+    MadrasahGallery, HadithQuote, PartnerPage, Maraji, HeroBannerImage
 )
 
 # ── Custom Admin Site Branding ─────────────────────────────────────────────
@@ -220,6 +220,117 @@ class HadithQuoteAdmin(admin.ModelAdmin):
             "fields": ("text_fa",),
         }),
         ("Display Settings", {
+            "fields": ("is_active", "sort_order"),
+        }),
+    )
+
+
+@admin.register(Maraji)
+class MarajiAdmin(admin.ModelAdmin):
+    """
+    Admin for Marājiʿ (Shia Spiritual Authorities) displayed on the homepage banner.
+    The banner automatically shows رحمة الله عليه when is_deceased is checked,
+    or دام ظله الوارف when unchecked.
+    """
+    list_display  = ("name_en", "name_ar", "photo_preview", "is_deceased", "is_active", "sort_order", "updated_at")
+    list_editable = ("is_active", "is_deceased", "sort_order")
+    list_filter   = ("is_active", "is_deceased")
+    readonly_fields = ("photo_preview", "honorific_preview")
+
+    def photo_preview(self, obj):
+        if obj.photo:
+            return format_html(
+                '<img src="{}" height="80" style="border-radius:50%;object-fit:cover;'
+                'border:3px solid #c9a84c;" />',
+                obj.photo.url
+            )
+        return "— No photo uploaded —"
+    photo_preview.short_description = "Portrait Preview"
+
+    def honorific_preview(self, obj):
+        """Live preview of the honorific that will appear on the banner."""
+        color = "#c0392b" if obj.is_deceased else "#2d8a4e"
+        ar    = obj.honorific_ar
+        en    = obj.honorific_en
+        return format_html(
+            '<span style="font-family:Amiri,serif;font-size:1.2rem;color:{};direction:rtl;">{}</span>'
+            '&nbsp;&nbsp;<span style="color:{};">— {}</span>',
+            color, ar, color, en
+        )
+    honorific_preview.short_description = "Honorific shown on banner"
+
+    fieldsets = (
+        # ── Photo ──────────────────────────────────────────────────────────
+        ("Portrait Photo", {
+            "description": (
+                "Upload the scholar's portrait photograph. It will appear in the homepage "
+                "hero banner on the right side. Recommended: high-quality PNG/JPG, min 400×500px."
+            ),
+            "fields": ("photo", "photo_preview"),
+        }),
+        # ── Deceased / Status ──────────────────────────────────────────────
+        ("Status & Honorific", {
+            "description": (
+                "⚠️  If the scholar has passed away, check 'Deceased'. The banner will "
+                "automatically display  رحمة الله عليه  (Rahmatullāhi ʿAlayh) instead of "
+                "دام ظله الوارف  (Dāma Ẓilluhū)."
+            ),
+            "fields": ("is_deceased", "date_of_passing", "honorific_preview", "is_active", "sort_order"),
+        }),
+        # ── English ────────────────────────────────────────────────────────
+        ("English — shown when site language = English", {
+            "fields": ("name_en", "title_en", "role_en", "description_en", "affiliation_en"),
+        }),
+        # ── Arabic ─────────────────────────────────────────────────────────
+        ("Arabic (العربية) — shown when site language = Arabic", {
+            "classes": ("collapse",),
+            "description": "Fill all Arabic fields using Arabic script (right-to-left).",
+            "fields": ("name_ar", "title_ar", "role_ar", "description_ar", "affiliation_ar"),
+        }),
+        # ── Urdu ───────────────────────────────────────────────────────────
+        ("Urdu (اردو) — shown when site language = Urdu", {
+            "classes": ("collapse",),
+            "description": "Fill all Urdu fields using Urdu/Nastaliq script (right-to-left).",
+            "fields": ("name_ur", "title_ur", "role_ur", "description_ur", "affiliation_ur"),
+        }),
+        # ── Persian ────────────────────────────────────────────────────────
+        ("Persian / Farsi (فارسی) — shown when site language = Persian", {
+            "classes": ("collapse",),
+            "description": "Fill all Farsi fields using Persian script (right-to-left).",
+            "fields": ("name_fa", "title_fa", "role_fa", "description_fa", "affiliation_fa"),
+        }),
+    )
+
+
+@admin.register(HeroBannerImage)
+class HeroBannerImageAdmin(admin.ModelAdmin):
+    """
+    Manage the rotating background images shown in the homepage hero banner.
+    Images are displayed as a crossfade slideshow — add/remove/reorder here.
+    """
+    list_display  = ("__str__", "image_preview", "is_active", "sort_order", "uploaded_at")
+    list_editable = ("is_active", "sort_order")
+    ordering      = ("sort_order", "uploaded_at")
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" height="60" style="object-fit:cover;border-radius:4px;'
+                'border:1px solid #c9a84c;max-width:120px;" />',
+                obj.image.url
+            )
+        return "—"
+    image_preview.short_description = "Preview"
+
+    fieldsets = (
+        ("Image", {
+            "description": (
+                "Upload a landscape-orientation photo of the Madrasah building / grounds. "
+                "Recommended size: 1600×900 px or larger. JPEG/WebP gives best compression."
+            ),
+            "fields": ("image", "caption"),
+        }),
+        ("Display", {
             "fields": ("is_active", "sort_order"),
         }),
     )

@@ -3,7 +3,7 @@ from django.shortcuts import render
 from .models import (
     WelcomeSection, MissionSection, VisionSection, AboutSection,
     Founder, Ijazah, Trustee, AcademicProgram, MadrasahGallery,
-    HadithQuote, PartnerPage
+    HadithQuote, PartnerPage, Maraji, HeroBannerImage
 )
 from announcements.models import Announcement
 from lessons.models import Subject, LessonSeries
@@ -37,10 +37,21 @@ def home(request):
         "vision":  _section_json(vision,  "title", "body"),
     }
 
+    # Hero banner background images — serialised for JS crossfade.
+    # Falls back to static/img/banner.jpeg when queryset is empty.
+    hero_images = list(
+        HeroBannerImage.objects.filter(is_active=True).values_list("image", flat=True)
+    )
+
     context = {
+        "hero_images_json": json.dumps(
+            [f"/media/{url}" for url in hero_images],
+            ensure_ascii=False
+        ),
         "welcome":              welcome,
         "mission":              mission,
         "vision":               vision,
+        "maraji":               Maraji.objects.filter(is_active=True).first(),
         "founder":              Founder.objects.filter(is_active=True).first(),
         "programs":             AcademicProgram.objects.filter(is_active=True)[:8],
         "latest_announcements": Announcement.objects.filter(is_active=True)[:4],

@@ -235,6 +235,137 @@ class PartnerPage(models.Model):
         return "Be A Partner Page"
 
 
+class Maraji(models.Model):
+    """
+    A Shia Marja-e-Taqlid (Source of Emulation) whose spiritual authority
+    is recognised by Madrasah Madinatul Ilm.
+
+    Displayed as a full-bleed hero banner on the homepage.
+    All text fields have 4-language variants (EN / AR / UR / FA) so the
+    front-end language switcher can render the correct script and direction.
+
+    is_deceased  : If True the banner renders the scholar's name with
+                   "Rahmatullahi ʿAlayh" / رحمة الله عليه  rather than
+                   the honourifics used for living maraji (dāma ẓilluhū).
+    is_active    : Controls visibility on the homepage.
+    sort_order   : When multiple maraji are active the one with the lowest
+                   sort_order is displayed first (future-proof for a list).
+    """
+
+    # ── Photo ──────────────────────────────────────────────────────────────
+    photo = models.ImageField(
+        upload_to="maraji/",
+        null=True, blank=True,
+        help_text="Portrait photograph of the Marja — uploaded via admin. "
+                  "Appears in the homepage hero banner."
+    )
+
+    # ── Names (4 languages) ────────────────────────────────────────────────
+    name_en = models.CharField(max_length=200, help_text="English / transliterated name")
+    name_ar = models.CharField(max_length=200, blank=True, help_text="Full Arabic name (calligraphic form)")
+    name_ur = models.CharField(max_length=200, blank=True, help_text="Urdu name")
+    name_fa = models.CharField(max_length=200, blank=True, help_text="Persian / Farsi name")
+
+    # ── Primary honorific title (4 languages) ─────────────────────────────
+    # e.g. "Hujjat ul-Islām wal Muslimīn" / "حجة الإسلام والمسلمين"
+    title_en = models.CharField(max_length=300, blank=True)
+    title_ar = models.CharField(max_length=300, blank=True)
+    title_ur = models.CharField(max_length=300, blank=True)
+    title_fa = models.CharField(max_length=300, blank=True)
+
+    # ── Secondary title / role (4 languages) ──────────────────────────────
+    # e.g. "Marjaʿ-e-Taqlīd · India" / "مرجع التقليد — الهند"
+    role_en = models.CharField(max_length=300, blank=True)
+    role_ar = models.CharField(max_length=300, blank=True)
+    role_ur = models.CharField(max_length=300, blank=True)
+    role_fa = models.CharField(max_length=300, blank=True)
+
+    # ── Short description shown on homepage banner (4 languages) ──────────
+    description_en = models.TextField(blank=True)
+    description_ar = models.TextField(blank=True)
+    description_ur = models.TextField(blank=True)
+    description_fa = models.TextField(blank=True)
+
+    # ── Affiliation note (4 languages) ────────────────────────────────────
+    # e.g. "Madrasah Madinatul Ilm operates under the spiritual guidance of…"
+    affiliation_en = models.TextField(blank=True)
+    affiliation_ar = models.TextField(blank=True)
+    affiliation_ur = models.TextField(blank=True)
+    affiliation_fa = models.TextField(blank=True)
+
+    # ── Deceased flag ──────────────────────────────────────────────────────
+    # When True: show "Rahmatullahi ʿAlayh" (رحمة الله عليه) instead of
+    # the living honorific "Dāma Ẓilluhū" (دام ظله الوارف).
+    is_deceased = models.BooleanField(
+        default=False,
+        verbose_name="Deceased (Rahmatullahi ʿAlayh)",
+        help_text="Check this if the scholar has passed away. The banner will "
+                  "display رحمة الله عليه instead of دام ظله الوارف."
+    )
+    date_of_passing = models.DateField(
+        null=True, blank=True,
+        help_text="Optional — date of passing, displayed if deceased."
+    )
+
+    # ── Display controls ───────────────────────────────────────────────────
+    is_active  = models.BooleanField(default=True)
+    sort_order = models.PositiveSmallIntegerField(default=0)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name        = "Marjaʿ"
+        verbose_name_plural = "Marājiʿ (Spiritual Authorities)"
+        ordering            = ["sort_order", "name_en"]
+
+    def __str__(self):
+        suffix = " (رحمة الله عليه)" if self.is_deceased else " (دام ظله)"
+        return self.name_en + suffix
+
+    @property
+    def honorific_ar(self):
+        """Returns the correct Arabic honorific based on deceased status."""
+        return "رحمة الله عليه" if self.is_deceased else "دام ظله الوارف"
+
+    @property
+    def honorific_en(self):
+        return "Rahmatullāhi ʿAlayh" if self.is_deceased else "Dāma Ẓilluhū l-ʿĀlī"
+
+    @property
+    def honorific_ur(self):
+        return "رحمۃ اللہ علیہ" if self.is_deceased else "دام ظلہ العالی"
+
+    @property
+    def honorific_fa(self):
+        return "رحمت‌الله علیه" if self.is_deceased else "دام ظله العالی"
+
+
+class HeroBannerImage(models.Model):
+    """
+    Images that rotate in the hero banner background.
+    Add/remove/reorder from Admin → Core → Hero Banner Images.
+    At least one active image should always be present; the static
+    banner.jpeg is used as a CSS fallback if no images are available.
+    """
+    image      = models.ImageField(
+        upload_to="hero_banner/",
+        help_text="Landscape image works best (min 1600×900 px). JPEG/WebP recommended."
+    )
+    caption    = models.CharField(max_length=200, blank=True,
+                                  help_text="Optional internal caption (not shown on site).")
+    is_active  = models.BooleanField(default=True)
+    sort_order = models.PositiveSmallIntegerField(default=0,
+                                                  help_text="Lower number = shown first.")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name        = "Hero Banner Image"
+        verbose_name_plural = "Hero Banner Images"
+        ordering            = ["sort_order", "uploaded_at"]
+
+    def __str__(self):
+        return self.caption or f"Hero image #{self.pk}"
+
+
 class MadrasahGallery(models.Model):
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to="gallery/")

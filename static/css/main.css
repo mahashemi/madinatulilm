@@ -96,9 +96,9 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
 /* ── Top Bar ────────────────────────────────────────────── */
 .topbar {
   background: var(--green-dark);
-  padding: 0.45rem 0;
-  font-size: 0.82rem;
-  border-bottom: 1px solid rgba(var(--color-gold-rgb), 0.3);
+  /* padding: 0.45rem 0; */
+  /* font-size: 0.82rem; */
+  border-bottom: 5px solid var(--gold);
 }
 .basmala-text {
   font-family: var(--font-arabic);
@@ -170,6 +170,37 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
   background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
 }
 .page-header-overlay { position: absolute; inset: 0; background: rgba(26,58,42,0.6); }
+
+/* ── Simple hero banner for contact / lightweight pages ── */
+.page-hero-sm {
+  background: var(--green-dark);
+  padding: 4rem 0 3rem;
+  text-align: center;
+  position: relative;
+}
+.page-hero-sm::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/static/img/arabesque_pattern.png') center/cover no-repeat;
+  opacity: 0.06;
+  pointer-events: none;
+}
+.page-hero-sm .container { position: relative; z-index: 1; }
+.page-hero-title {
+  font-family: var(--font-head);
+  color: var(--white);
+  font-size: 2.4rem;
+  margin-bottom: 0.5rem;
+}
+.page-hero-sub {
+  color: var(--gold-light);
+  font-size: 1.05rem;
+  margin-bottom: 0;
+}
+.section-pad {
+  padding: 24px 0px;
+}
 .page-header .container { position: relative; z-index: 1; }
 .page-header-title { font-family: var(--font-head); color: var(--white); font-size: 2.5rem; }
 .page-header-subtitle { color: var(--gold-light); font-family: var(--font-arabic); font-size: 1.2rem; }
@@ -591,6 +622,494 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
   .hero-scroll-indicator { display: none; }
 }
 
+/* ══════════════════════════════════════════════════════════
+   UNIFIED HERO  (institution identity + Maraji merged)
+   ──────────────────────────────────────────────────────────
+   Single full-viewport <section class="unified-hero">.
+   Background: madrasah building photo (blurred) beneath a
+   multi-stop gradient that keeps the left text readable while
+   leaving the right side atmospheric for the portrait.
+
+   Grid:
+     col-lg-7 text  |  col-lg-5 portrait
+   On html[dir=rtl] Bootstrap mirrors these automatically.
+
+   Responsive:
+     ≤991px — portrait stacks ABOVE text (order: -1), centred.
+     ≤767px — portrait smaller; text fully centred.
+     ≤575px — outermost ring hidden; basmala smaller.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Section shell ────────────────────────────────────────── */
+.unified-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  /* Fallback before image loads */
+  background: linear-gradient(135deg, #071410 0%, var(--green-dark) 100%);
+  padding: 6rem 0 4rem;  /* top pad clears sticky header; bottom gives breathing room */
+}
+
+/* ── bg layer 1: rotating madrasah photos (JS-driven crossfade) ────────
+   The static banner.jpeg is the CSS fallback; JS replaces it with DB
+   images from the HeroBannerImage model.  Two <div> children are created
+   by JS — .uhero-bg-slide (inactive) and .uhero-bg-slide.active (visible).
+   Crossfade is achieved by toggling the .active class.
+   ──────────────────────────────────────────────────────────────────── */
+.uhero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;           /* clip the scale(1.07) child slabs */
+}
+
+/* Each slide slab — absolutely fills .uhero-bg */
+.uhero-bg-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 35%;
+  background-repeat: no-repeat;
+  filter: blur(5px) brightness(0.28) saturate(0.5);
+  transform: scale(1.07);     /* hides blur halos at edges */
+  opacity: 0;
+  transition: opacity 1.8s ease-in-out;
+}
+.uhero-bg-slide.active {
+  opacity: 1;
+}
+
+/* CSS fallback — shown when JS has not run yet / no DB images */
+#uhero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/static/img/banner.jpeg');
+  background-size: cover;
+  background-position: center 35%;
+  filter: blur(5px) brightness(0.28) saturate(0.5);
+  transform: scale(1.07);
+  z-index: 0;
+}
+/* Once JS injects slides, hide the CSS fallback */
+#uhero-bg.js-ready::before { display: none; }
+
+/* ── bg layer 2: deep directional gradient ────────────────── */
+.uhero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    rgba(10, 28, 18, 0.30) 0%,
+    rgba(10, 28, 18, 0.5) 45%,
+    rgba(10, 28, 18, 0.55) 75%,
+    rgba(10, 28, 18, 0.30) 100%
+  );
+  z-index: 1;
+}
+
+/* ── bg layer 3: subtle arabesque dot pattern ─────────────── */
+.uhero-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── container + row sit above all bg layers ──────────────── */
+.uhero-container { position: relative; z-index: 2; width: 100%; }
+.uhero-row       { min-height: calc(100vh - 10rem); align-content: center; }
+
+/* ══════════════════════════════════════════════════════════
+   TEXT COLUMN  (col-lg-7)
+   ══════════════════════════════════════════════════════════ */
+.uhero-text-col {
+  padding-right: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+[dir="rtl"] .uhero-text-col { padding-right: 0; padding-left: 2.5rem; }
+
+/* ── Institution identity block ────────────────────────────── */
+.uhero-institution { margin-bottom: 0; }
+
+/* Bismillah in gold Arabic script above the madrasah name */
+.uhero-basmala {
+  font-family: var(--font-arabic);
+  font-size: 1.15rem;
+  color: var(--gold-light);
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
+  opacity: 0.88;
+}
+
+/* Main institution name — large, serif, white */
+.uhero-name {
+  font-family: var(--font-head);
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.5);
+}
+
+/* Arabic calligraphic subtitle — always visible, smaller than main name */
+.uhero-name-ar {
+  font-family: var(--font-arabic);
+  font-size: 1.5rem;
+  color: var(--gold-light);
+  line-height: 1.8;
+  margin-bottom: 0.5rem;
+  opacity: 0.85;
+}
+
+/* Tagline */
+.uhero-tagline {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.72);
+  letter-spacing: 0.04em;
+  margin-bottom: 1.75rem;
+  line-height: 1.6;
+}
+
+/* CTA buttons row */
+.uhero-btns { margin-bottom: 0; }
+
+/* ── Gold ornament divider between institution and Maraji ─── */
+.uhero-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 1.6rem 0 1.25rem;
+}
+.uhero-div-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--color-gold-rgb), 0.6), transparent);
+}
+.uhero-div-icon {
+  color: var(--gold);
+  font-size: 1rem;
+  opacity: 0.75;
+  flex-shrink: 0;
+}
+
+/* ── Maraji sub-block ─────────────────────────────────────── */
+.uhero-maraji { /* inherits column flex */ }
+
+/* "Under the Spiritual Guidance of" label */
+.uhero-maraji-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  opacity: 0.85;
+}
+
+/* Maraji Arabic calligraphic name — large */
+.uhero-maraji-name-ar {
+  font-family: var(--font-arabic);
+  font-size: 2.2rem;
+  color: #fff;
+  line-height: 1.55;
+  margin-bottom: 0.15rem;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.45);
+}
+
+/* Localised name */
+.uhero-maraji-name-local {
+  font-family: var(--font-head);
+  font-size: 1.2rem;
+  color: var(--gold-light);
+  font-weight: 600;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+/* Badges row — reuses .maraji-badge variants defined below */
+.uhero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.85rem;
+}
+[dir="rtl"] .uhero-badges { flex-direction: row-reverse; justify-content: flex-end; }
+
+/* Deceased Rahmat notice — inline, compact */
+.uhero-rahmat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: #c9984a;
+  font-style: italic;
+  background: rgba(180,130,60,0.1);
+  border: 1px solid rgba(180,130,60,0.3);
+  border-left: 3px solid #c9984a;
+  border-radius: var(--radius);
+  padding: 0.4rem 0.85rem;
+  margin-top: 0.25rem;
+}
+[dir="rtl"] .uhero-rahmat { border-left: none; border-right: 3px solid #c9984a; }
+
+/* ══════════════════════════════════════════════════════════
+   RIGHT COLUMN  (col-lg-6)
+   Portrait at top, maraji-info block below — all centred
+   ══════════════════════════════════════════════════════════ */
+.uhero-portrait-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.uhero-portrait-wrap {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* ── Maraji info block (below portrait) ───────────────────── */
+.uhero-maraji-info {
+  width: 100%;
+  text-align: center;
+}
+.uhero-maraji-info .uhero-divider  { justify-content: center; }
+.uhero-maraji-info .uhero-maraji-label { text-align: center; }
+.uhero-maraji-info .uhero-maraji-name-local { text-align: center; }
+.uhero-maraji-info .uhero-badges   { justify-content: center; }
+.uhero-maraji-info .uhero-rahmat   { margin: 0.5rem auto 0; display: inline-flex; }
+
+/* Concentric glow rings — centred on the portrait frame */
+.uhero-ring {
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% - 55px)); /* shift up = centre on frame, not nameplate */
+  pointer-events: none;
+}
+.uhero-ring--1 {
+  width: 310px; height: 310px;
+  border: 2px solid rgba(var(--color-gold-rgb), 0.35);
+}
+.uhero-ring--2 {
+  width: 355px; height: 355px;
+  border: 1px solid rgba(var(--color-gold-rgb), 0.18);
+}
+.uhero-ring--3 {
+  width: 400px; height: 400px;
+  border: 1px solid rgba(var(--color-gold-rgb), 0.08);
+}
+
+/* Portrait frame — perfect circle with gold border + outer glow */
+.uhero-portrait-frame {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid var(--gold);
+  box-shadow:
+    0 0 0 7px rgba(var(--color-gold-rgb), 0.14),
+    0 12px 50px rgba(0,0,0,0.6),
+    0 0 80px rgba(var(--color-gold-rgb), 0.12);
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.uhero-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.uhero-portrait-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, var(--green-dark), var(--green-mid));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5.5rem;
+  color: rgba(var(--color-gold-rgb), 0.35);
+}
+
+/* ── Nameplate beneath portrait ───────────────────────────── */
+.uhero-nameplate {
+  margin-top: 1.15rem;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    rgba(7, 20, 14, 0.92) 0%,
+    rgba(26, 58, 42, 0.88) 100%
+  );
+  border: 1px solid rgba(var(--color-gold-rgb), 0.38);
+  border-radius: var(--radius);
+  padding: 0.8rem 1.4rem;
+  box-shadow: 0 4px 22px rgba(0,0,0,0.4);
+  min-width: 240px;
+  max-width: 290px;
+  direction: rtl;
+  position: relative;
+  z-index: 2;
+}
+
+.uhero-nameplate-title {
+  display: block;
+  font-family: var(--font-arabic);
+  font-size: 0.76rem;
+  color: var(--gold-light);
+  margin-bottom: 0.25rem;
+  opacity: 0.88;
+}
+.uhero-nameplate-name {
+  display: block;
+  font-family: var(--font-arabic);
+  font-size: 1.1rem;
+  color: #fff;
+  line-height: 1.65;
+  font-weight: 600;
+}
+.uhero-nameplate-honorific {
+  display: block;
+  font-family: var(--font-arabic);
+  font-size: 0.78rem;
+  color: var(--gold-light);
+  margin-top: 0.2rem;
+  opacity: 0.88;
+}
+.uhero-nameplate-honorific--deceased { color: #c9984a; }
+
+/* ── Shared badge variants (used by both hero blocks) ──────── */
+.maraji-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.32rem 0.85rem;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  border: 1px solid transparent;
+  transition: transform 0.2s;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+.maraji-badge:hover { transform: translateY(-1px); }
+
+.maraji-badge--primary {
+  background: rgba(var(--color-gold-rgb), 0.18);
+  border-color: rgba(var(--color-gold-rgb), 0.5);
+  color: var(--gold-light);
+}
+.maraji-badge--role {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.22);
+  color: #d0e8da;
+}
+.maraji-badge--alive {
+  background: rgba(var(--color-gold-rgb), 0.12);
+  border-color: var(--gold-dark);
+  color: var(--gold-light);
+  font-family: var(--font-arabic);
+  font-size: 0.86rem;
+}
+.maraji-badge--deceased {
+  background: rgba(180, 130, 60, 0.15);
+  border-color: rgba(180, 130, 60, 0.45);
+  color: #d4aa6e;
+  font-family: var(--font-arabic);
+  font-size: 0.86rem;
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — UNIFIED HERO
+   ══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1199px) {
+  .uhero-name            { font-size: 2.7rem; }
+  .uhero-maraji-name-ar  { font-size: 1.9rem; }
+  .uhero-ring--1         { width: 270px; height: 270px; }
+  .uhero-ring--2         { width: 308px; height: 308px; }
+  .uhero-ring--3         { width: 345px; height: 345px; }
+  .uhero-portrait-frame  { width: 240px; height: 240px; }  /* circle */
+}
+
+@media (max-width: 991px) {
+  .unified-hero          { padding: 4.5rem 0 3rem; min-height: auto; }
+  .uhero-text-col,
+  [dir="rtl"] .uhero-text-col { padding-right: 0; padding-left: 0; text-align: center; }
+
+  /* Portrait column moves ABOVE text on tablet */
+  .uhero-portrait-col    { order: -1; margin-bottom: 2rem; }
+
+  .uhero-portrait-frame  { width: 200px; height: 200px; border-width: 3px; }  /* circle */
+  .uhero-ring--1         { width: 215px; height: 215px; transform: translate(-50%, calc(-50% - 40px)); }
+  .uhero-ring--2         { width: 248px; height: 248px; transform: translate(-50%, calc(-50% - 40px)); }
+  .uhero-ring--3         { width: 280px; height: 280px; transform: translate(-50%, calc(-50% - 40px)); }
+
+  .uhero-name            { font-size: 2.3rem; }
+  .uhero-name-ar         { font-size: 1.3rem; }
+  .uhero-maraji-name-ar  { font-size: 1.7rem; }
+  .uhero-maraji-name-local { font-size: 1.05rem; }
+
+  .uhero-btns            { justify-content: center; }
+  .uhero-divider         { justify-content: center; }
+  .uhero-maraji-label    { text-align: center; }
+  .uhero-badges          { justify-content: center; }
+  [dir="rtl"] .uhero-badges { justify-content: center; flex-direction: row; }
+  .uhero-rahmat          { margin: 0.5rem auto 0; }
+  .uhero-nameplate       { min-width: 200px; max-width: 245px; }
+}
+
+@media (max-width: 767px) {
+  .unified-hero          { padding: 3.5rem 0 2.5rem; }
+  .uhero-name            { font-size: 2rem; }
+  .uhero-maraji-name-ar  { font-size: 1.5rem; }
+  .uhero-portrait-frame  { width: 170px; height: 170px; }  /* circle */
+  .uhero-ring--1         { width: 185px; height: 185px; }
+  .uhero-ring--2         { width: 212px; height: 212px; }
+  .uhero-ring--3         { width: 238px; height: 238px; }
+  .maraji-badge          { font-size: 0.73rem; padding: 0.28rem 0.7rem; }
+}
+
+@media (max-width: 575px) {
+  .unified-hero          { padding: 3rem 0 2rem; }
+  .uhero-basmala         { font-size: 0.95rem; }
+  .uhero-name            { font-size: 1.7rem; }
+  .uhero-name-ar         { font-size: 1.1rem; }
+  .uhero-tagline         { font-size: 0.88rem; }
+  .uhero-maraji-name-ar  { font-size: 1.3rem; }
+  .uhero-maraji-name-local { font-size: 0.95rem; }
+  .uhero-portrait-frame  { width: 150px; height: 150px; }  /* circle */
+  .uhero-ring--1         { width: 163px; height: 163px; }
+  .uhero-ring--2         { width: 188px; height: 188px; }
+  .uhero-ring--3         { display: none; }
+  .uhero-nameplate       { padding: 0.6rem 0.9rem; min-width: 170px; }
+  .uhero-nameplate-name  { font-size: 0.95rem; }
+}
+
+@media (max-width: 380px) {
+  .uhero-name            { font-size: 1.45rem; }
+  .uhero-maraji-name-ar  { font-size: 1.15rem; }
+  .uhero-portrait-frame  { width: 130px; height: 130px; }  /* circle */
+  .uhero-ring--1         { width: 142px; height: 142px; }
+  .uhero-ring--2         { display: none; }
+}
+
 /* ── Print ──────────────────────────────────────────────── */
 @media print {
   .topbar, .main-navbar, .site-footer, .hero-scroll-indicator,
@@ -608,7 +1127,7 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
 .basmala-bar {
   background: var(--color-navy);
   text-align: center;
-  padding: 7px 0;
+  padding: 9px 0;
   position: relative;
 }
 .basmala-bar .basmala-text {
@@ -632,6 +1151,17 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
   transition: all 0.2s;
 }
 .topbar-lang-btn:hover { border-color: var(--color-gold); color: var(--color-gold); }
+
+/* Navbar variant — sits inside the green navbar bar */
+.navbar-lang-btn {
+  border-color: rgba(var(--color-gold-rgb), 0.5);
+  color: #e8e8e8;
+  padding: 4px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.navbar-lang-btn:hover { border-color: var(--gold-light); color: var(--gold-light); }
 /* Lang switcher z-index fix — must sit above sticky navbar */
 .topbar { position: relative; z-index: 1100; }
 .lang-switcher { position: relative; display: inline-block; }
@@ -665,6 +1195,38 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
 .nav-partner { color: var(--color-gold) !important; }
 .nav-partner:hover { color: #fff !important; }
 
+/* ── Mobile Language Strip (inside hamburger menu, hidden on desktop) ── */
+.mobile-lang-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  flex-wrap: wrap;
+}
+.mobile-lang-label {
+  color: var(--gold-light);
+  font-size: 0.82rem;
+  margin-right: 4px;
+}
+.mobile-lang-btn {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid rgba(var(--color-gold-rgb), 0.4);
+  border-radius: 20px;
+  color: #ddd;
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-family: var(--font-arabic);
+}
+.mobile-lang-btn:hover,
+.mobile-lang-btn.active-lang {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: #fff;
+}
+
 /* ══════════════════════════════════════════════════════
    HADITH ROTATOR SECTION
 ══════════════════════════════════════════════════════ */
@@ -690,37 +1252,100 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
   background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 .hadith-rotator {
-  max-width: 860px;
+  max-width: 900px;
   margin: 0 auto;
   text-align: center;
   position: relative;
-  min-height: 160px;
 }
-.hadith-ornament {
+
+/* Narrator phrase — sits ABOVE the quote, in gold, RTL */
+.hadith-narrator {
+  font-family: 'Amiri', serif;
+  font-size: 1.5rem;
+  color: var(--color-gold);
+  direction: rtl;
+  line-height: 1.8;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.02em;
+  display: none; /* shown by JS when narrator exists */
+}
+
+/* Quote block: opening mark centred at top, closing mark centred at bottom */
+.hadith-quote-block {
+  position: relative;
+  display: block;
+  max-width: 820px;
+  margin: 0 auto 1rem;
+  padding: 2rem 1rem;   /* vertical padding gives space for the marks */
+}
+/* Opening quote — top-centre */
+.hadith-quote-block::before {
+  content: '\f10d';              /* fa-quote-left */
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  top: -0.2rem;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 2rem;
   color: var(--color-gold);
-  opacity: 0.5;
-  margin-bottom: 18px;
+  opacity: 0.55;
+  line-height: 1;
 }
+/* Closing quote — bottom-centre */
+.hadith-quote-block::after {
+  content: '\f10e';              /* fa-quote-right */
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  bottom: -0.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: var(--color-gold);
+  opacity: 0.55;
+  line-height: 1;
+}
+
+/* ── Small variant — for partner page / cards / inline use ── */
+.hadith-quote-block--sm {
+  padding: 1.4rem 0.5rem;
+}
+.hadith-quote-block--sm::before,
+.hadith-quote-block--sm::after {
+  font-size: 1.3rem;
+}
+.hadith-quote-block--sm .hadith-arabic {
+  font-size: 2.5rem;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+
+/* Main Arabic text — large and bold */
 .hadith-arabic {
   font-family: 'Amiri', serif;
-  font-size: 1.6rem;
+  font-size: 2.8rem;
   color: #fff;
-  line-height: 1.9;
-  margin-bottom: 14px;
+  line-height: 2;
+  margin-bottom: 0.75rem;
   direction: rtl;
+  text-align: center;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.4);
 }
+
 .hadith-translation {
-  font-size: 1.05rem;
-  color: rgba(255,255,255,0.78);
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.82);
   font-style: italic;
-  margin-bottom: 8px;
+  margin-bottom: 0;
+  text-align: center;
+  line-height: 1.7;
 }
 .hadith-source {
-  font-size: 0.87rem;
+  font-size: 0.9rem;
   color: var(--color-gold);
   letter-spacing: 0.04em;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 .hadith-dots { display: flex; justify-content: center; gap: 8px; }
 .hdot {
@@ -731,6 +1356,44 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
   transition: background 0.3s, transform 0.3s;
 }
 .hdot.active { background: var(--color-gold); transform: scale(1.3); }
+
+/* ── Responsive: hadith Arabic text (applies to ALL pages via shared CSS) ── */
+@media (max-width: 991px) {
+  .hadith-arabic                        { font-size: 2.2rem; }
+  .hadith-narrator                      { font-size: 1.3rem; }
+  .hadith-quote-block::before,
+  .hadith-quote-block::after            { font-size: 1.6rem; }
+  /* sm variant: keep readable but not oversized */
+  .hadith-quote-block--sm .hadith-arabic { font-size: 1.4rem; }
+  .hadith-quote-block--sm::before,
+  .hadith-quote-block--sm::after        { font-size: 1.1rem; }
+}
+@media (max-width: 767px) {
+  .hadith-arabic                        { font-size: 2rem; line-height: 1.9; }
+  .hadith-narrator                      { font-size: 1.15rem; }
+  .hadith-translation                   { font-size: 1rem; }
+  .hadith-quote-block::before,
+  .hadith-quote-block::after            { font-size: 1.4rem; }
+  .hadith-quote-block--sm .hadith-arabic { font-size: 1.3rem; }
+  .hadith-quote-block--sm::before,
+  .hadith-quote-block--sm::after        { font-size: 1rem; }
+}
+@media (max-width: 575px) {
+  .hadith-arabic                        { font-size: 1.8rem; line-height: 1.85; }
+  .hadith-narrator                      { font-size: 1rem; }
+  .hadith-quote-block                   { padding: 1.6rem 0.5rem; }
+  .hadith-quote-block::before,
+  .hadith-quote-block::after            { font-size: 1.2rem; }
+  .hadith-quote-block--sm .hadith-arabic { font-size: 1.2rem; }
+  .hadith-quote-block--sm::before,
+  .hadith-quote-block--sm::after        { font-size: 0.9rem; }
+}
+@media (max-width: 380px) {
+  .hadith-arabic                        { font-size: 1.5rem; }
+  .hadith-quote-block::before,
+  .hadith-quote-block::after            { font-size: 1rem; }
+  .hadith-quote-block--sm .hadith-arabic { font-size: 1.1rem; }
+}
 
 /* ══════════════════════════════════════════════════════
    MISSION / VISION FULL-WIDTH SECTIONS

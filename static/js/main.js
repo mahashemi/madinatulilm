@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /* ── 4. Navbar universal labels ── */
     var NAV = {
-      'nav-home':          { en:'Introduction', ar:'مقدمة',        ur:'تعارف',         fa:'مقدمه' },
+      'nav-home':          { en:'Home',         ar:'الرئيسية',     ur:'ہوم',           fa:'خانه' },
       'nav-quran':         { en:'Quran',         ar:'القرآن',       ur:'قرآن',           fa:'قرآن' },
       'nav-sharia':        { en:'Sharia Matters',ar:'الشريعة',     ur:'شریعت',          fa:'شریعت' },
       'nav-announcements': { en:'Announcements', ar:'الإعلانات',   ur:'اعلانات',        fa:'اطلاعیه‌ها' },
