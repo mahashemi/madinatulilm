@@ -108,7 +108,7 @@ class Founder(models.Model):
     biography_ur = RichTextField(blank=True)
     biography_ar = RichTextField(blank=True)
     biography_fa = RichTextField(blank=True)
-    phone = models.CharField(max_length=30, blank=True)
+    phone = models.CharField(max_length=60, blank=True)
     email = models.EmailField(blank=True)
     is_active = models.BooleanField(default=True)
     sort_order = models.PositiveSmallIntegerField(default=0)

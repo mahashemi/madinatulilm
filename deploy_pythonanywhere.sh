@@ -50,10 +50,12 @@ PROJECT_DIR="$(pwd)"
 info "Project root: $PROJECT_DIR"
 
 # ── 2. PythonAnywhere username & domain ───────────────────────────────────────
-PA_USER="madrasahmadinatu"
-PA_DOMAIN="madrasahmadinatu.pythonanywhere.com"
+PA_USER="madrasahmadinatulilm"
+PA_DOMAIN="madrasahmadinatulilm.pythonanywhere.com"
+CUSTOM_DOMAIN="muhammadiyyahtrust.org"
 info "PythonAnywhere user : $PA_USER"
-info "Expected site domain: $PA_DOMAIN"
+info "PythonAnywhere domain: $PA_DOMAIN"
+info "Custom domain       : $CUSTOM_DOMAIN (www.$CUSTOM_DOMAIN)"
 
 # ── 3. Virtual environment ────────────────────────────────────────────────────
 # PythonAnywhere provides Python 3.13 — Django 5.1.3 requires >= 3.10
@@ -105,7 +107,7 @@ cat > "$ENV_FILE" <<EOF
 
 DEBUG=False
 SECRET_KEY=${SECRET}
-ALLOWED_HOSTS=${PA_DOMAIN},www.${PA_DOMAIN},127.0.0.1,localhost
+ALLOWED_HOSTS=${PA_DOMAIN},www.${PA_DOMAIN},${CUSTOM_DOMAIN},www.${CUSTOM_DOMAIN},127.0.0.1,localhost
 
 # ── Database: MySQL (PythonAnywhere) ──────────────────────────────────────────
 DB_ENGINE=django.db.backends.mysql
@@ -121,7 +123,7 @@ success ".env written to $ENV_FILE"
 # ── 6. Export env vars for this session ──────────────────────────────────────
 export DEBUG=False
 export SECRET_KEY="$SECRET"
-export ALLOWED_HOSTS="${PA_DOMAIN},www.${PA_DOMAIN},127.0.0.1,localhost"
+export ALLOWED_HOSTS="${PA_DOMAIN},www.${PA_DOMAIN},${CUSTOM_DOMAIN},www.${CUSTOM_DOMAIN},127.0.0.1,localhost"
 export DB_ENGINE=django.db.backends.mysql
 export DB_NAME='madrasahmadinatu$muhammadiyyah_db'
 export DB_USER=madrasahmadinatu
