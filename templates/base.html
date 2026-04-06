@@ -60,14 +60,14 @@
 
 <!-- ══════════════════════ IMAM AL-ASR BAR ══════════════════════ -->
 {% if not site or site.show_imamasr_bar %}
-<div class="imamasr-bar"
-     data-lang-en="{{ site.imamasr_bar_en|default:'Under the Guardianship of Imām al-ʿAsr (ʿAJ)' }}"
-     data-lang-ar="{{ site.imamasr_bar_ar|default:'تحت ولاية الإمام صاحب العصر والزمان (عج)' }}"
-     data-lang-ur="{{ site.imamasr_bar_ur|default:'امام العصر (عج) کی سرپرستی میں' }}"
-     data-lang-fa="{{ site.imamasr_bar_fa|default:'زیر نظر امام عصر (عج)' }}">
+<div class="imamasr-bar">
   <span class="imamasr-icon">☽</span>
-  <span class="imamasr-text">{{ site.imamasr_bar_en|default:"Under the Guardianship of Imām al-ʿAsr (ʿAJ)" }}</span>
-  <span class="imamasr-icon">☽</span>
+  <span class="imamasr-text"
+        data-lang-en="{{ site.imamasr_bar_en|default:'Under the Guardianship of Imām al-ʿAsr (ʿAJ)' }}"
+        data-lang-ar="{{ site.imamasr_bar_ar|default:'تحت ولاية الإمام صاحب العصر والزمان (عج)' }}"
+        data-lang-ur="{{ site.imamasr_bar_ur|default:'امام العصر (عج) کی سرپرستی میں' }}"
+        data-lang-fa="{{ site.imamasr_bar_fa|default:'زیر نظر امام عصر (عج)' }}">{{ site.imamasr_bar_en|default:"Under the Guardianship of Imām al-ʿAsr (ʿAJ)" }}</span>
+  <span class="imamasr-icon">☾</span>
 </div>
 {% endif %}
 
