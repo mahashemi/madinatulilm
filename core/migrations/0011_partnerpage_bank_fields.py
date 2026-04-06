@@ -4,7 +4,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0009_trustee_member_type'),
+        ('core', '0010_founder_phone_max_length_60'),
     ]
 
     operations = [
