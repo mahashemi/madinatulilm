@@ -121,13 +121,13 @@
             <span class="uhero-div-line"></span>
           </div>
 
-          <!-- "Under the spiritual guidance of" label -->
+          <!-- Maraji label — editable via Admin → Site Settings → Marājiʿ Panel Label -->
           <p class="uhero-maraji-label"
-             data-lang-en="Under the Spiritual Guidance of"
-             data-lang-ar="تحت الإشراف الروحاني لـ"
-             data-lang-ur="روحانی سرپرستی میں"
-             data-lang-fa="زیر نظر روحانی">
-            Under the Spiritual Guidance of
+             data-lang-en="{{ site.maraji_label_en|default:'In Memoriam — Our Revered Marjiʿ al-Taqlīd' }}"
+             data-lang-ar="{{ site.maraji_label_ar|default:'رحمه الله — مرجعنا الأعلى' }}"
+             data-lang-ur="{{ site.maraji_label_ur|default:'رحمۃ اللہ علیہ — ہمارے مرجع تقلید' }}"
+             data-lang-fa="{{ site.maraji_label_fa|default:'رحمة‌الله علیه — مرجع تقلید ما' }}">
+            {{ site.maraji_label_en|default:"In Memoriam — Our Revered Marjiʿ al-Taqlīd" }}
           </p>
 
           <!-- Maraji name — language-switched -->

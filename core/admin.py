@@ -57,6 +57,20 @@ class SiteSettingsAdmin(admin.ModelAdmin):
         ("Maps", {
             "fields": ("google_maps_embed",),
         }),
+        ("Imam al-ʿAsr Bar (below Bismillah — site-wide)", {
+            "fields": (
+                "show_imamasr_bar",
+                "imamasr_bar_en", "imamasr_bar_ar",
+                "imamasr_bar_ur", "imamasr_bar_fa",
+            ),
+        }),
+        ("Marājiʿ Panel Label (Homepage Hero)", {
+            "description": "Label shown above the Marja's name in the homepage hero (e.g. 'In Memoriam…').",
+            "fields": (
+                "maraji_label_en", "maraji_label_ar",
+                "maraji_label_ur", "maraji_label_fa",
+            ),
+        }),
     )
 
 

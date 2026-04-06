@@ -26,6 +26,28 @@ class SiteSettings(models.Model):
     whatsapp_number = models.CharField(max_length=30, blank=True)
     google_maps_embed = models.TextField(blank=True)
 
+    # ── Imam al-Asr bar (below bismillah) ─────────────────────────────────────
+    show_imamasr_bar    = models.BooleanField(default=True,
+        help_text="Show the 'Imam al-Asr guardianship' bar below the Bismillah")
+    imamasr_bar_en = models.CharField(max_length=300, blank=True,
+        default="Under the Guardianship of Imām al-ʿAsr (ʿAJ)")
+    imamasr_bar_ar = models.CharField(max_length=300, blank=True,
+        default="تحت ولاية الإمام صاحب العصر والزمان (عج)")
+    imamasr_bar_ur = models.CharField(max_length=300, blank=True,
+        default="امام العصر (عج) کی سرپرستی میں")
+    imamasr_bar_fa = models.CharField(max_length=300, blank=True,
+        default="زیر نظر امام عصر (عج)")
+
+    # ── Maraji panel label (home hero) ────────────────────────────────────────
+    maraji_label_en = models.CharField(max_length=200, blank=True,
+        default="In Memoriam — Our Revered Marjiʿ al-Taqlīd")
+    maraji_label_ar = models.CharField(max_length=200, blank=True,
+        default="رحمه الله — مرجعنا الأعلى")
+    maraji_label_ur = models.CharField(max_length=200, blank=True,
+        default="رحمۃ اللہ علیہ — ہمارے مرجع تقلید")
+    maraji_label_fa = models.CharField(max_length=200, blank=True,
+        default="رحمة‌الله علیه — مرجع تقلید ما")
+
     class Meta:
         verbose_name = "Site Settings"
         verbose_name_plural = "Site Settings"
