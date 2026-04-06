@@ -21,10 +21,12 @@
   {% load static %}
   <!-- Favicons -->
   <link rel="icon" type="image/x-icon"       href="{% static 'favicon/favicon.ico' %}">
-  <link rel="icon" type="image/svg+xml"      href="{% static 'favicon/favicon.svg' %}">
+  <!-- <link rel="icon" type="image/svg+xml"      href="{% static 'favicon/favicon.svg' %}"> -->
   <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
   <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
   <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+
+  
   <meta name="theme-color" content="#1a3a2a">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
   {% block extra_css %}{% endblock %}
@@ -249,9 +251,16 @@
         <div class="col-lg-4 col-md-6">
           <div class="footer-brand mb-3">
             <div class="footer-logo-text d-flex align-items-center gap-3">
+              {% if site and site.logo %}
+                <img src="{{ site.logo.url }}" alt="Madrasah Madinatul Ilm"
+                   height="70" class="footer-logo-img"
+                   onerror="this.style.display='none'">
+              {% else %}
+
               <img src="{% static 'img/madrasah_logo.png' %}" alt="Madrasah Madinatul Ilm"
                    height="70" class="footer-logo-img"
                    onerror="this.style.display='none'">
+              {% endif %}
               <div>
                 <!-- Single language-switched madrasah name — no duplicate -->
                 <span class="footer-en"
@@ -265,6 +274,7 @@
                       data-lang-ur="محمدیہ ٹرسٹ کے زیر نگرانی"
                       data-lang-fa="زیر نظر موقوفه محمدیه">Governed by Muhammadiyah Trust</span>
               </div>
+              
             </div>
           </div>
           <p class="footer-text"
