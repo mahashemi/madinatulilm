@@ -366,10 +366,25 @@ class PartnerPageAdmin(admin.ModelAdmin):
             "classes": ("collapse",),
             "fields": ("intro_fa",),
         }),
-        ("Bank Details & QR Codes", {
-            "fields": ("bank_details", "qr_code_1", "qr_code_2"),
+        ("🏦 Bank 1 Details", {
+            "description": "These fields are displayed in the Bank Details section on the Be A Partner page.",
+            "fields": (
+                "bank1_name", "bank1_beneficiary", "bank1_branch",
+                "bank1_account_no", "bank1_ifsc",
+            ),
         }),
-        ("Other", {
-            "fields": ("tax_note", "is_active"),
+        ("🏦 Bank 2 Details", {
+            "description": "Second bank account details (e.g. SBI).",
+            "fields": (
+                "bank2_name", "bank2_beneficiary", "bank2_branch",
+                "bank2_account_no", "bank2_ifsc",
+            ),
+        }),
+        ("📷 QR Codes", {
+            "description": "Upload QR code images for each bank. Shown in the 'Scan to Pay' section.",
+            "fields": ("qr_code_1", "qr_code_2"),
+        }),
+        ("📋 Other", {
+            "fields": ("cheque_name", "tax_note", "is_active"),
         }),
     )

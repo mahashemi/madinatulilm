@@ -338,3 +338,125 @@ sudo systemctl restart madinatulilm           # restart Gunicorn
 ---
 
 *Generated for Madrasah Madinatul Ilm — Muhammadiyah Trust, Gopalpur, Siwan, Bihar*
+
+---
+
+## 9. Issues Fixed & How — Runbook
+
+A living log of significant bugs and how they were resolved. Use this as a reference for future maintenance.
+
+---
+
+### 9.1 Trustee / Team Photos Not Showing (April 2026)
+
+**Symptom:** Photos uploaded via the Admin panel were not displayed on the About page (team section). The file existed on disk but the `<img>` src returned 404.
+
+**Root cause (two parts):**
+
+1. **DB path mismatch** — Photos were uploaded to `trustees/` or `media/trustees/` but the `Trustee.photo` field had `upload_to="team/"`. Old rows still held old paths like `trustees/minhal_61FpnKT.jpg` while the `MEDIA_URL` mapping expected `team/`.
+2. **Missing nginx `/media/` mapping** — On PythonAnywhere the `/media/` URL was not mapped to the `media/` directory in the Web tab → Static files section.
+
+**Fix applied:**
+
+```bash
+# SSH into PythonAnywhere and run in Django shell:
+source ~/venv_madinatulilm/bin/activate
+cd ~/madinatulilm
+python manage.py shell
+
+# Then in the shell:
+from core.models import Trustee
+mapping = {
+    "Minhal":    "team/minhal_61FpnKT.jpg",
+    "Javed":     "team/javed_akhtar_2VLSk8h.jpg",
+    "Hashemi":   "team/mohammad_feroz_hashemi_zPn7Mxn.jpg",
+    "Zahid":     "team/syed_md_zahid_A0qcmxf.jpg",
+    "Ali Abbas": "team/syed_ali_abbas_EVA9n0j.jpg",
+    "Ibrahim":   "team/ibrahim_chacha_I8qYaT0.jpg",
+    "Mohammad Abbas": "team/md_abbas_6xxVX1n.jpeg",
+    "Abul Qasim": "team/syed_abulqasim_WX5aq95.jpg",
+    "Rizvi":     "team/syed_md_rizvi_woDE0tk.jpg",
+    "Ehtesham":  "team/syed_ehtesham_NlMurOC.jpg",
+}
+for keyword, path in mapping.items():
+    t = Trustee.objects.filter(name__icontains=keyword).first()
+    if t:
+        t.photo = path
+        t.save()
+        print(f"Fixed: {t.name}")
+```
+
+**Then in PythonAnywhere Web tab → Static files — add:**
+
+| URL | Directory |
+|-----|-----------|
+| `/media/` | `/home/madrasahmadinatulilm/madinatulilm/media/` |
+
+Click **Reload**.
+
+---
+
+### 9.2 Maraji (Spiritual Authority) Banner Not Showing Photo (April 2026)
+
+**Symptom:** The Maraji hero banner on the homepage showed no photo.
+
+**Root cause:** The `Maraji` DB record existed but `photo` was blank (the static file `maraje_rahat_hussain.png` was never linked to the DB record).
+
+**Fix applied:**
+
+```bash
+python manage.py shell
+from core.models import Maraji
+m = Maraji.objects.first()
+m.photo = "maraji/maraje_rahat_hussain_AntcsVV.png"
+m.save()
+```
+
+> The file must exist at `media/maraji/maraje_rahat_hussain_AntcsVV.png` on the server.
+
+---
+
+### 9.3 Be A Partner — Bank Details Not Configurable (April 2026)
+
+**Symptom:** Bank account numbers, IFSC codes, and bank names were hard-coded in `partner.html` with placeholder `000000000` values.
+
+**Fix applied:**
+
+- Added structured fields to `PartnerPage` model (`bank1_name`, `bank1_account_no`, `bank1_ifsc`, `bank2_name`, `bank2_account_no`, `bank2_ifsc`, etc.)
+- Created migration `0010_partnerpage_bank_fields.py`
+- Updated `core/admin.py` with dedicated fieldsets for each bank
+- Updated `templates/core/partner.html` to render fields from DB with fallback to "Add bank details in Admin →" link
+
+**How to update bank details going forward:**
+
+1. Go to `/admin/core/partnerpage/`
+2. Fill in `🏦 Bank 1 Details` and `🏦 Bank 2 Details` fieldsets
+3. Click Save — changes appear instantly on the live site
+
+---
+
+### 9.4 Contact Us — Email / Phone Configurable from Admin (April 2026)
+
+**How it works:**
+The Contact page already pulls phone, email, and WhatsApp from the `SiteSettings` model (single-row config):
+
+1. Go to `/admin/core/sitesettings/`
+2. Update `Email`, `Phone Primary`, `Phone Secondary`, `WhatsApp Number`, `Address`
+3. Click Save — changes appear on Contact Us page immediately
+
+No code changes needed. The `contact.html` template already uses `{{ site.email }}`, `{{ site.phone_primary }}`, etc. via the `site` context processor.
+
+---
+
+### 9.5 Ijazah Upload Directory Changed (April 2026)
+
+**Symptom:** Ijazah images uploaded to `media/ijazat/` but the model used `upload_to="ijazah/"`.
+
+**Fix applied:** Renamed all references from `ijazat` → `ijazah` in models, views, seed commands, and API URLs.
+
+```bash
+# On PythonAnywhere — move any files that landed in old path
+mv ~/madinatulilm/media/ijazat/* ~/madinatulilm/media/ijazah/ 2>/dev/null || true
+```
+
+---

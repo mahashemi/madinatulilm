@@ -178,91 +178,117 @@
                   data-lang-fa="مشخصات بانک">Bank Details</span>
           </h3>
 
-          <!-- ICICI Bank -->
+          <!-- Bank 1 (dynamic from admin) -->
+          {% if page and page.bank1_name %}
+          <div class="bank-block mb-4">
+            <div class="bank-name-badge"><i class="fas fa-landmark me-1"></i>{{ page.bank1_name }}</div>
+            <table class="bank-table w-100">
+              {% if page.bank1_beneficiary %}
+              <tr>
+                <td class="bank-td-label"
+                    data-lang-en="Beneficiary"
+                    data-lang-ar="المستفيد"
+                    data-lang-ur="مستفید"
+                    data-lang-fa="ذینفع">Beneficiary</td>
+                <td class="bank-td-val">{{ page.bank1_beneficiary }}</td>
+              </tr>
+              {% endif %}
+              {% if page.bank1_branch %}
+              <tr>
+                <td class="bank-td-label"
+                    data-lang-en="Branch"
+                    data-lang-ar="الفرع"
+                    data-lang-ur="برانچ"
+                    data-lang-fa="شعبه">Branch</td>
+                <td class="bank-td-val">{{ page.bank1_branch }}</td>
+              </tr>
+              {% endif %}
+              {% if page.bank1_account_no %}
+              <tr>
+                <td class="bank-td-label"
+                    data-lang-en="Account No."
+                    data-lang-ar="رقم الحساب"
+                    data-lang-ur="اکاؤنٹ نمبر"
+                    data-lang-fa="شماره حساب">Account No.</td>
+                <td class="bank-td-val"><strong>{{ page.bank1_account_no }}</strong></td>
+              </tr>
+              {% endif %}
+              {% if page.bank1_ifsc %}
+              <tr>
+                <td class="bank-td-label"
+                    data-lang-en="IFSC Code"
+                    data-lang-ar="رمز IFSC"
+                    data-lang-ur="IFSC کوڈ"
+                    data-lang-fa="کد IFSC">IFSC Code</td>
+                <td class="bank-td-val"><strong>{{ page.bank1_ifsc }}</strong></td>
+              </tr>
+              {% endif %}
+            </table>
+          </div>
+          {% else %}
           <div class="bank-block mb-4">
             <div class="bank-name-badge"><i class="fas fa-landmark me-1"></i>ICICI Bank</div>
+            <p class="small text-muted mt-2">
+              <a href="/admin/core/partnerpage/" class="text-gold">Add bank details in Admin →</a>
+            </p>
+          </div>
+          {% endif %}
+
+          <!-- Bank 2 (dynamic from admin) -->
+          {% if page and page.bank2_name %}
+          <div class="bank-block">
+            <div class="bank-name-badge"><i class="fas fa-landmark me-1"></i>{{ page.bank2_name }}</div>
             <table class="bank-table w-100">
+              {% if page.bank2_beneficiary %}
               <tr>
                 <td class="bank-td-label"
                     data-lang-en="Beneficiary"
                     data-lang-ar="المستفيد"
                     data-lang-ur="مستفید"
                     data-lang-fa="ذینفع">Beneficiary</td>
-                <td class="bank-td-val">Muhammadiyyah Educational &amp; Social Welfare Trust</td>
+                <td class="bank-td-val">{{ page.bank2_beneficiary }}</td>
               </tr>
+              {% endif %}
+              {% if page.bank2_branch %}
               <tr>
                 <td class="bank-td-label"
                     data-lang-en="Branch"
                     data-lang-ar="الفرع"
                     data-lang-ur="برانچ"
                     data-lang-fa="شعبه">Branch</td>
-                <td class="bank-td-val"
-                    data-lang-en="Siwan, Bihar"
-                    data-lang-ar="سيوان، بيهار"
-                    data-lang-ur="سیوان، بہار"
-                    data-lang-fa="سیوان، بیهار">Siwan, Bihar</td>
+                <td class="bank-td-val">{{ page.bank2_branch }}</td>
               </tr>
+              {% endif %}
+              {% if page.bank2_account_no %}
               <tr>
                 <td class="bank-td-label"
                     data-lang-en="Account No."
                     data-lang-ar="رقم الحساب"
                     data-lang-ur="اکاؤنٹ نمبر"
                     data-lang-fa="شماره حساب">Account No.</td>
-                <td class="bank-td-val"><span class="placeholder-val">000000000</span></td>
+                <td class="bank-td-val"><strong>{{ page.bank2_account_no }}</strong></td>
               </tr>
+              {% endif %}
+              {% if page.bank2_ifsc %}
               <tr>
                 <td class="bank-td-label"
                     data-lang-en="IFSC Code"
                     data-lang-ar="رمز IFSC"
                     data-lang-ur="IFSC کوڈ"
                     data-lang-fa="کد IFSC">IFSC Code</td>
-                <td class="bank-td-val"><span class="placeholder-val">000000000</span></td>
+                <td class="bank-td-val"><strong>{{ page.bank2_ifsc }}</strong></td>
               </tr>
+              {% endif %}
             </table>
           </div>
-
-          <!-- SBI -->
+          {% else %}
           <div class="bank-block">
             <div class="bank-name-badge"><i class="fas fa-landmark me-1"></i>State Bank of India</div>
-            <table class="bank-table w-100">
-              <tr>
-                <td class="bank-td-label"
-                    data-lang-en="Beneficiary"
-                    data-lang-ar="المستفيد"
-                    data-lang-ur="مستفید"
-                    data-lang-fa="ذینفع">Beneficiary</td>
-                <td class="bank-td-val">Muhammadiyyah Educational &amp; Social Welfare Trust</td>
-              </tr>
-              <tr>
-                <td class="bank-td-label"
-                    data-lang-en="Branch"
-                    data-lang-ar="الفرع"
-                    data-lang-ur="برانچ"
-                    data-lang-fa="شعبه">Branch</td>
-                <td class="bank-td-val"
-                    data-lang-en="Gopal Pur, Bihar"
-                    data-lang-ar="گوپال‌پور، بيهار"
-                    data-lang-ur="گوپالپور، بہار"
-                    data-lang-fa="گوپال‌پور، بیهار">Gopal Pur, Bihar</td>
-              </tr>
-              <tr>
-                <td class="bank-td-label"
-                    data-lang-en="Account No."
-                    data-lang-ar="رقم الحساب"
-                    data-lang-ur="اکاؤنٹ نمبر"
-                    data-lang-fa="شماره حساب">Account No.</td>
-                <td class="bank-td-val"><span class="placeholder-val">000000000</span></td>
-              </tr>
-              <tr>
-                <td class="bank-td-label"
-                    data-lang-en="IFSC Code"
-                    data-lang-ar="رمز IFSC"
-                    data-lang-ur="IFSC کوڈ"
-                    data-lang-fa="کد IFSC">IFSC Code</td>
-                <td class="bank-td-val"><span class="placeholder-val">000000000</span></td>
-              </tr>
-            </table>
+            <p class="small text-muted mt-2">
+              <a href="/admin/core/partnerpage/" class="text-gold">Add bank details in Admin →</a>
+            </p>
           </div>
+          {% endif %}
         </div>
 
         <!-- Notes -->

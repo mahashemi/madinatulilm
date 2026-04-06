@@ -230,18 +230,40 @@ class HadithQuote(models.Model):
 
 
 class PartnerPage(models.Model):
-    """Be A Partner / donation page content."""
+    """Be A Partner / donation page content — all fields editable from Admin."""
     intro_en   = models.TextField(blank=True)
     intro_ar   = models.TextField(blank=True)
     intro_ur   = models.TextField(blank=True)
     intro_fa   = models.TextField(blank=True)
-    # Bank details stored as simple text blocks (admin-editable)
-    bank_details = models.TextField(
-        blank=True,
-        help_text="Full bank details text (will be rendered as preformatted text)"
-    )
-    qr_code_1  = models.ImageField(upload_to="partner/", null=True, blank=True, help_text="QR Code 1 (e.g. ICICI)")
-    qr_code_2  = models.ImageField(upload_to="partner/", null=True, blank=True, help_text="QR Code 2 (e.g. SBI)")
+
+    # ── Bank 1 (e.g. ICICI) ────────────────────────────────────────────────
+    bank1_name        = models.CharField(max_length=200, blank=True, default="ICICI Bank",
+                                         help_text="Display name, e.g. ICICI Bank")
+    bank1_beneficiary = models.CharField(max_length=300, blank=True,
+                                         default="Muhammadiyyah Educational & Social Welfare Trust")
+    bank1_branch      = models.CharField(max_length=200, blank=True, default="Siwan, Bihar")
+    bank1_account_no  = models.CharField(max_length=50, blank=True, help_text="Account number")
+    bank1_ifsc        = models.CharField(max_length=20, blank=True, help_text="IFSC / Swift code")
+
+    # ── Bank 2 (e.g. SBI) ──────────────────────────────────────────────────
+    bank2_name        = models.CharField(max_length=200, blank=True, default="State Bank of India",
+                                         help_text="Display name, e.g. State Bank of India")
+    bank2_beneficiary = models.CharField(max_length=300, blank=True,
+                                         default="Muhammadiyyah Educational & Social Welfare Trust")
+    bank2_branch      = models.CharField(max_length=200, blank=True, default="Gopal Pur, Bihar")
+    bank2_account_no  = models.CharField(max_length=50, blank=True, help_text="Account number")
+    bank2_ifsc        = models.CharField(max_length=20, blank=True, help_text="IFSC / Swift code")
+
+    # ── QR codes ───────────────────────────────────────────────────────────
+    qr_code_1  = models.ImageField(upload_to="partner/", null=True, blank=True,
+                                   help_text="QR Code for Bank 1 (e.g. ICICI)")
+    qr_code_2  = models.ImageField(upload_to="partner/", null=True, blank=True,
+                                   help_text="QR Code for Bank 2 (e.g. SBI)")
+
+    # ── Misc ───────────────────────────────────────────────────────────────
+    cheque_name = models.CharField(max_length=300, blank=True,
+                                   default="Muhammadiyyah Educational & Social Welfare Trust",
+                                   help_text="Name to write on cheques")
     tax_note   = models.CharField(max_length=300, blank=True, default="Tax Benefit: Applied For")
     is_active  = models.BooleanField(default=True)
     updated_at = models.DateTimeField(auto_now=True)
