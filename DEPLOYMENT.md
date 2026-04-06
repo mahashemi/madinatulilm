@@ -34,44 +34,42 @@ http://127.0.0.1:8000/admin/
 
 ---
 
-## 3. Updating an Existing Deployment (git pull)
+## 3. Updating an Existing Deployment (PythonAnywhere)
 
-> Use this when the site is already live and you just want to push code changes.
-> **Do NOT re-run `deploy_pythonanywhere.sh`** — that is for fresh installs only.
+> Use this when the site is already live and you want to push new code changes.
+> **Do NOT re-run `deploy_pythonanywhere.sh`** — that script is for fresh installs only.
 
 Open a **PythonAnywhere Bash console** and run:
 
 ```bash
-# Navigate to project root
-cd /home/madrasahmadinatu/mohammadiyyahtrust
-
-# 1. Pull latest code
-git pull
-
-# 2. Activate virtualenv
+# 1. Activate virtualenv
 source ~/venv_madinatulilm/bin/activate
 
-# 3. Apply any new migrations
+# 2. Back up .env and media folder first
+cp ~/madinatulilm/.env ~/env_backup
+cp -r ~/madinatulilm/media ~/media_backup
+
+# 3. Remove old code and re-clone latest
+cd ~
+rm -rf madinatulilm
+git clone https://github.com/mahashemi/madinatulilm.git
+cd madinatulilm
+
+# 4. Restore .env and media
+cp ~/env_backup .env
+cp -r ~/media_backup/* media/
+
+# 5. Install/update dependencies
+pip install -r requirements.txt
+
+# 6. Apply any new migrations
 python manage.py migrate --noinput
 
-# 4. Collect static files (picks up CSS/JS changes)
+# 7. Collect static files (picks up CSS/JS/template changes)
 python manage.py collectstatic --noinput
 
-# 5. Reload the web app
+# 8. Reload the web app
 touch /var/www/madrasahmadinatu_pythonanywhere_com_wsgi.py
-```
-
-### One-time: media/trustees → media/team rename
-If deploying after the April 2026 "Our Team" rename, run these **once** after `git pull`:
-
-```bash
-# Rename the folder on disk
-mv media/trustees media/team
-
-# Fix DB photo paths
-python manage.py dbshell << 'EOF'
-UPDATE core_trustee SET photo = REPLACE(photo, 'trustees/', 'team/') WHERE photo LIKE 'trustees/%';
-EOF
 ```
 
 ---

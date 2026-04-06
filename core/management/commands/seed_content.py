@@ -9,7 +9,7 @@ import datetime
 
 from core.models import (
     SiteSettings, WelcomeSection, MissionSection, VisionSection,
-    AboutSection, Founder, Trustee, AcademicProgram
+    AboutSection, Founder, Trustee, AcademicProgram, Maraji
 )
 from announcements.models import AnnouncementCategory
 from lessons.models import Subject
@@ -29,6 +29,7 @@ class Command(BaseCommand):
         self._seed_vision()
         self._seed_about()
         self._seed_founder()
+        self._seed_maraji()
         self._seed_trustees()
         self._seed_ijazah()
         self._seed_academic_programs()
@@ -452,6 +453,93 @@ class Command(BaseCommand):
             )
         )
         self._log("Founder (Syed Minhal Hussain Rizvi)", created)
+
+    # ── Maraji (Spiritual Authority) ───────────────────────────────────────
+    def _seed_maraji(self):
+        from django.core.files import File
+        import os
+
+        # ── Titles / honorifics for Āyatullāh al-ʿUẓmā Syed Rahat Hussain Rizvi ──
+        # He holds the rank of Āyatullāh al-ʿUẓmā (Grand Ayatollah) and is
+        # recognised as Marjaʿ-e-Taqlīd.  He is the father of the founder.
+        obj, created = Maraji.objects.update_or_create(
+            name_en="Āyatullāh al-ʿUẓmā Syed Rahat Hussain Hindi Gopalpuri",
+            defaults=dict(
+                # ── Names (4 languages) ────────────────────────────────────
+                name_ar="آية الله العظمى السيد راحت حسين الهندي الگوپالپوري",
+                name_ur="آیۃ اللہ العظمی السید راحت حسین ہندی گوپالپوری",
+                name_fa="آیت‌الله العظمی سید راحت حسین هندی گوپال‌پوری",
+
+                # ── Primary honorific title ────────────────────────────────
+                # Āyatullāh al-ʿUẓmā = Grand Ayatollah — the highest Shia clerical rank
+                title_en="Āyatullāh al-ʿUẓmā · Grand Ayatollah · Marjaʿ-e-Taqlīd",
+                title_ar="آية الله العظمى · المرجع الأعلى · مرجع التقليد",
+                title_ur="آیۃ اللہ العظمی · مرجعِ تقلید",
+                title_fa="آیت‌الله العظمی · مرجع تقلید",
+
+                # ── Role / affiliation ─────────────────────────────────────
+                role_en="Marjaʿ-e-Taqlīd · Gopalpur, Bihar, India",
+                role_ar="مرجع التقليد · گوپالپور، بيهار، الهند",
+                role_ur="مرجعِ تقلید · گوپالپور، بہار، ہندوستان",
+                role_fa="مرجع تقلید · گوپال‌پور، بیهار، هند",
+
+                # ── Short description ──────────────────────────────────────
+                description_en=(
+                    "Āyatullāh al-ʿUẓmā Syed Rahat Hussain Hindi Gopalpuri is a Grand Ayatollah "
+                    "and Marjaʿ-e-Taqlīd residing in Gopalpur, Bihar, India. He is the spiritual "
+                    "authority under whose blessed guidance Madrasah Madinatul Ilm was established."
+                ),
+                description_ar=(
+                    "آية الله العظمى السيد راحت حسين الهندي الگوپالپوري مرجع تقليد يقيم في "
+                    "گوپالپور، بيهار، الهند. وهو المرجعية الروحانية التي تأسست مدرسة مدينة العلم "
+                    "تحت إشرافها الكريم."
+                ),
+                description_ur=(
+                    "آیۃ اللہ العظمی السید راحت حسین ہندی گوپالپوری، گوپالپور، بہار، ہندوستان میں "
+                    "مقیم مرجعِ تقلید ہیں۔ مدرسہ مدینۃ العلم انہی کی مبارک روحانی سرپرستی میں "
+                    "قائم کیا گیا ہے۔"
+                ),
+                description_fa=(
+                    "آیت‌الله العظمی سید راحت حسین هندی گوپال‌پوری، مرجع تقلید ساکن گوپال‌پور، "
+                    "بیهار، هند هستند. مدرسه مدینةالعلم زیر نظر روحانی ایشان تأسیس شده است."
+                ),
+
+                # ── Affiliation note ───────────────────────────────────────
+                affiliation_en=(
+                    "Madrasah Madinatul Ilm — Centre of Faqāhat operates under the "
+                    "spiritual guidance and blessings of Āyatullāh al-ʿUẓmā Syed Rahat Hussain "
+                    "Hindi Gopalpuri."
+                ),
+                affiliation_ur=(
+                    "مدرسہ مدینۃ العلم — مرکزِ فقاہت، آیۃ اللہ العظمی السید راحت حسین ہندی "
+                    "گوپالپوری کی روحانی سرپرستی اور برکات کے تحت کام کرتا ہے۔"
+                ),
+
+                # ── Status ─────────────────────────────────────────────────
+                is_deceased=False,   # Living Marja — دام ظله الوارف
+                is_active=True,
+                sort_order=1,
+            )
+        )
+
+        # ── Attach photo if not already uploaded ───────────────────────────
+        if not obj.photo:
+            photo_path = os.path.join(
+                os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
+                    os.path.abspath(__file__)
+                )))),
+                "media", "maraji", "maraje_rahat_hussain.png"
+            )
+            if os.path.exists(photo_path):
+                with open(photo_path, "rb") as f:
+                    obj.photo.save("maraje_rahat_hussain.png", File(f), save=True)
+                self.stdout.write(self.style.SUCCESS("    → Photo attached to Maraji record"))
+            else:
+                self.stdout.write(self.style.WARNING(
+                    f"    ⚠ Photo not found at {photo_path} — upload manually via admin"
+                ))
+
+        self._log("Maraji: Āyatullāh al-ʿUẓmā Syed Rahat Hussain Hindi Gopalpuri", created)
 
     # ── Trustees ───────────────────────────────────────────────────────────
     def _seed_trustees(self):
