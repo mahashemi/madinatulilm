@@ -89,13 +89,16 @@
         data-lang-ur="اجازات نقل روایت"
         data-lang-fa="اجازه نقل روایت">Ijazāh Naql Riwayat</h4>
     <div class="row g-4 mb-5">
-      {% for ij in ijazah %}{% if ijazah.ijazah_type == 'riwayat' %}
+      {% for ij in ijazah %}{% if ij.ijazah_type == 'riwayat' %}
       <div class="col-lg-3 col-md-4 col-6" data-aos="zoom-in">
         <div class="ijazah-card">
-          <a href="{{ ijazah.image.url }}" target="_blank">
-            <img src="{{ ijazah.image.url }}" alt="{{ ijazah.title }}" class="img-fluid rounded">
+          {% if ij.image %}
+          <a href="{{ ij.image.url }}" target="_blank">
+            <img src="{{ ij.image.url }}" alt="{{ ij.title }}" class="img-fluid rounded">
           </a>
-          <p class="ijazah-from mt-2">{{ ijazah.from_scholar }}</p>
+          {% endif %}
+          <p class="ijazah-title mt-2 fw-semibold small">{{ ij.title }}</p>
+          {% if ij.from_scholar %}<p class="ijazah-from small text-muted">{{ ij.from_scholar }}</p>{% endif %}
         </div>
       </div>
       {% endif %}{% endfor %}
@@ -108,13 +111,16 @@
         data-lang-ur="اجازات وکالت و سہم امام"
         data-lang-fa="اجازه وکالت و سهم امام">Ijazāh Wakalat &amp; Sahm Imam</h4>
     <div class="row g-4">
-      {% for ij in ijazah %}{% if ijazah.ijazah_type != 'riwayat' %}
+      {% for ij in ijazah %}{% if ij.ijazah_type != 'riwayat' %}
       <div class="col-lg-3 col-md-4 col-6" data-aos="zoom-in">
         <div class="ijazah-card">
-          <a href="{{ ijazah.image.url }}" target="_blank">
-            <img src="{{ ijazah.image.url }}" alt="{{ ijazah.title }}" class="img-fluid rounded">
+          {% if ij.image %}
+          <a href="{{ ij.image.url }}" target="_blank">
+            <img src="{{ ij.image.url }}" alt="{{ ij.title }}" class="img-fluid rounded">
           </a>
-          <p class="ijazah-from mt-2">{{ ijazah.from_scholar }}</p>
+          {% endif %}
+          <p class="ijazah-title mt-2 fw-semibold small">{{ ij.title }}</p>
+          {% if ij.from_scholar %}<p class="ijazah-from small text-muted">{{ ij.from_scholar }}</p>{% endif %}
         </div>
       </div>
       {% endif %}{% endfor %}
