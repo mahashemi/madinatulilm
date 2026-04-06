@@ -173,9 +173,20 @@ class IjazahAdmin(admin.ModelAdmin):
 
 @admin.register(Trustee)
 class TrusteeAdmin(admin.ModelAdmin):
-    list_display  = ("name", "designation", "phone", "is_founder", "is_active", "sort_order")
-    list_filter   = ("is_founder", "is_active")
-    list_editable = ("sort_order", "is_active")
+    list_display  = ("name", "member_type", "designation", "phone", "is_founder", "is_active", "sort_order")
+    list_filter   = ("member_type", "is_founder", "is_active")
+    list_editable = ("member_type", "sort_order", "is_active")
+    fieldsets = (
+        ("Identity", {
+            "fields": ("name", "designation", "member_type", "photo"),
+        }),
+        ("Contact", {
+            "fields": ("phone", "bio"),
+        }),
+        ("Display", {
+            "fields": ("is_founder", "is_active", "sort_order"),
+        }),
+    )
 
 
 @admin.register(AcademicProgram)

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import AnnouncementCategory, Announcement
+from .models import AnnouncementCategory, Announcement, Testimonial
 
 
 def announcements_home(request):
@@ -18,3 +18,8 @@ def announcements_by_category(request, slug):
 def announcement_detail(request, pk):
     announcement = get_object_or_404(Announcement, pk=pk, is_active=True)
     return render(request, "announcements/announcement_detail.html", {"announcement": announcement})
+
+
+def testimonials_list(request):
+    testimonials = Testimonial.objects.filter(is_active=True)
+    return render(request, "announcements/testimonials_list.html", {"testimonials": testimonials})

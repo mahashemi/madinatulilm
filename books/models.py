@@ -63,3 +63,33 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title_en
+
+
+class UsefulLink(models.Model):
+    """Curated external Islamic resource links shown on the Useful Links page."""
+    CATEGORY_CHOICES = [
+        ("maraji",    "Marājiʿ Offices"),
+        ("quran",     "Qurʾān & Tafsīr"),
+        ("hadith",    "Hadith & Rijāl"),
+        ("dua",       "Duʿāʾ & Ziyārat"),
+        ("sharia",    "Fiqh & Fatāwā"),
+        ("education", "Islamic Education"),
+        ("library",   "Digital Libraries"),
+        ("other",     "Other Resources"),
+    ]
+    title       = models.CharField(max_length=200)
+    url         = models.URLField()
+    description = models.CharField(max_length=400, blank=True)
+    category    = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default="other")
+    icon_class  = models.CharField(max_length=100, blank=True,
+                                   help_text="Font Awesome icon class e.g. fas fa-globe")
+    sort_order  = models.PositiveSmallIntegerField(default=0)
+    is_active   = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["category", "sort_order", "title"]
+        verbose_name = "Useful Link"
+        verbose_name_plural = "Useful Links"
+
+    def __str__(self):
+        return f"{self.title} ({self.url})"

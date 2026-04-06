@@ -1,7 +1,7 @@
-django>=5.2
+django==5.1.3
 djangorestframework>=3.17
-pillow>=10.0
+pillow>=11.0
 python-dotenv>=1.0
 django-ckeditor>=6.7
-mysqlclient>=2.2; sys_platform != "darwin"   # For Linux/prod MySQL
-# For macOS dev, use: pip install mysqlclient or PyMySQL
+mysqlclient>=2.2; sys_platform != "darwin"   # For Linux/prod MySQL (Python 3.13 compatible)
+# For macOS dev: pip install mysqlclient or PyMySQL

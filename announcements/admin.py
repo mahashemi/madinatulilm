@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AnnouncementCategory, Announcement
+from .models import AnnouncementCategory, Announcement, Testimonial
 
 
 @admin.register(AnnouncementCategory)
@@ -49,5 +49,43 @@ class AnnouncementAdmin(admin.ModelAdmin):
         }),
         ("Visibility", {
             "fields": ("is_pinned", "is_active"),
+        }),
+    )
+
+
+@admin.register(Testimonial)
+class TestimonialAdmin(admin.ModelAdmin):
+    list_display   = ("author_name_en", "author_title_en", "is_featured", "is_active", "sort_order", "created_at")
+    list_filter    = ("is_featured", "is_active")
+    list_editable  = ("is_featured", "is_active", "sort_order")
+    search_fields  = ("author_name_en", "author_name_ar", "author_name_ur", "quote_en")
+    ordering       = ("sort_order", "-created_at")
+    fieldsets = (
+        ("Author — English", {
+            "fields": ("author_name_en", "author_title_en", "author_photo"),
+        }),
+        ("Author — Arabic (العربية)", {
+            "classes": ("collapse",),
+            "fields": ("author_name_ar", "author_title_ar"),
+        }),
+        ("Author — Urdu (اردو)", {
+            "classes": ("collapse",),
+            "fields": ("author_name_ur", "author_title_ur"),
+        }),
+        ("Author — Persian (فارسی)", {
+            "classes": ("collapse",),
+            "fields": ("author_name_fa", "author_title_fa"),
+        }),
+        ("Quote (short — shown on home page cards)", {
+            "description": "Keep this to 1–3 sentences. It appears on the home page testimonial strip.",
+            "fields": ("quote_en", "quote_ar", "quote_ur", "quote_fa"),
+        }),
+        ("Full Description (shown on Testimonials page only)", {
+            "classes": ("collapse",),
+            "description": "Longer story or background — optional.",
+            "fields": ("description_en", "description_ar", "description_ur", "description_fa"),
+        }),
+        ("Visibility & Ordering", {
+            "fields": ("is_featured", "is_active", "sort_order"),
         }),
     )

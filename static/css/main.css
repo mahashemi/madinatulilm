@@ -1821,3 +1821,93 @@ html[dir="rtl"] .founder-home-subtitle,
   .navbar-logo  { height: 42px; }
   .footer-logo-img { height: 52px; }
 }
+
+/* ═══════════════════════════════════════════════
+   TESTIMONIALS — home strip + full page cards
+   ═══════════════════════════════════════════════ */
+
+/* ── Home page card (col-lg-3) ── */
+.testi-card {
+  background: var(--white);
+  border: 1px solid rgba(201,168,76,.2);
+  border-radius: 12px;
+  padding: 1.75rem 1.5rem 1.5rem;
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: .9rem;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+  overflow: hidden;
+}
+.testi-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+  border-radius: 12px 12px 0 0;
+  opacity: 0;
+  transition: opacity .25s;
+}
+.testi-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.1); border-color: rgba(201,168,76,.45); }
+.testi-card:hover::before { opacity: 1; }
+
+/* Opening quote decoration */
+.testi-open-quote { color: var(--gold); font-size: 1.6rem; line-height: 1; opacity: .6; margin-bottom: -.3rem; }
+
+/* Quote text */
+.testi-quote {
+  flex: 1;
+  font-size: .95rem;
+  line-height: 1.7;
+  color: var(--text-dark);
+  font-style: italic;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Author row */
+.testi-author-row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-top: auto;
+  padding-top: .75rem;
+  border-top: 1px solid rgba(0,0,0,.06);
+}
+
+/* Avatar */
+.testi-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); flex-shrink: 0; }
+.testi-avatar-placeholder {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold); font-size: .95rem; flex-shrink: 0;
+}
+.testi-author-info { display: flex; flex-direction: column; min-width: 0; }
+.testi-name { font-weight: 700; font-size: .88rem; color: var(--green-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.testi-role { font-size: .78rem; color: var(--gold); font-style: italic; }
+
+/* Quote icon (full-page card only) */
+.testi-quote-icon { margin-left: auto; color: var(--gold); opacity: .4; font-size: 1.4rem; flex-shrink: 0; }
+
+/* ── Full-page card (col-lg-6) ── */
+.testi-card--full { padding: 2rem; }
+.testi-card--full .testi-author-row { margin-bottom: .85rem; border-top: none; padding-top: 0; }
+.testi-card--full .testi-quote { font-size: 1rem; border-left: 3px solid var(--gold); padding-left: 1rem; margin-bottom: .75rem; }
+.testi-description { font-size: .88rem; line-height: 1.75; color: var(--text-mid); white-space: pre-line; }
+.testi-date { font-size: .78rem; color: var(--text-light); margin-top: .5rem; }
+
+/* ── RTL ── */
+[dir="rtl"] .testi-card--full .testi-quote { border-left: none; border-right: 3px solid var(--gold); padding-left: 0; padding-right: 1rem; }
+[dir="rtl"] .testi-open-quote { transform: scaleX(-1); }
+[dir="rtl"] .testi-quote-icon { margin-left: 0; margin-right: auto; }
+
+/* ── Responsive ── */
+@media (max-width: 767px) {
+  .testi-card { padding: 1.25rem; }
+  .testi-card--full { padding: 1.4rem; }
+  .testi-quote { font-size: .9rem; }
+}

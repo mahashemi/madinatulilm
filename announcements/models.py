@@ -1,5 +1,5 @@
 """
-Announcements app models — Statements, Issued Messages, Events
+Announcements app models — Statements, Issued Messages, Events, Testimonials
 """
 from django.db import models
 from ckeditor.fields import RichTextField
@@ -67,3 +67,63 @@ class Announcement(models.Model):
             vid = url.split("youtu.be/")[-1].split("?")[0]
             return f"https://www.youtube.com/embed/{vid}"
         return url
+
+
+# ─────────────────────────────────────────────────────────────
+#  Testimonial
+# ─────────────────────────────────────────────────────────────
+class Testimonial(models.Model):
+    """
+    Community testimonial — students, parents, alumni, visiting scholars.
+
+    • quote_*        → short pull-quote shown on home page cards (1–3 sentences)
+    • description_*  → longer text shown only on the full testimonials page
+    • is_featured    → show on home page (max 4 displayed)
+    • is_active      → visibility toggle
+    """
+
+    # ── Author info (4 languages) ──
+    author_name_en = models.CharField(max_length=200, verbose_name="Author name (EN)")
+    author_name_ar = models.CharField(max_length=200, blank=True, verbose_name="Author name (AR)")
+    author_name_ur = models.CharField(max_length=200, blank=True, verbose_name="Author name (UR)")
+    author_name_fa = models.CharField(max_length=200, blank=True, verbose_name="Author name (FA)")
+
+    author_title_en = models.CharField(max_length=200, blank=True, verbose_name="Author title / role (EN)",
+                                       help_text="e.g. Student, Parent, Alumnus, Visiting Scholar")
+    author_title_ar = models.CharField(max_length=200, blank=True, verbose_name="Author title (AR)")
+    author_title_ur = models.CharField(max_length=200, blank=True, verbose_name="Author title (UR)")
+    author_title_fa = models.CharField(max_length=200, blank=True, verbose_name="Author title (FA)")
+
+    author_photo = models.ImageField(
+        upload_to="testimonials/photos/", null=True, blank=True,
+        help_text="Optional portrait photo"
+    )
+
+    # ── Short pull-quote shown on home page ──
+    quote_en = models.TextField(verbose_name="Quote (EN)")
+    quote_ar = models.TextField(blank=True, verbose_name="Quote (AR)")
+    quote_ur = models.TextField(blank=True, verbose_name="Quote (UR)")
+    quote_fa = models.TextField(blank=True, verbose_name="Quote (FA)")
+
+    # ── Longer description shown on full testimonials page ──
+    description_en = models.TextField(blank=True, verbose_name="Full description (EN)")
+    description_ar = models.TextField(blank=True, verbose_name="Full description (AR)")
+    description_ur = models.TextField(blank=True, verbose_name="Full description (UR)")
+    description_fa = models.TextField(blank=True, verbose_name="Full description (FA)")
+
+    # ── Flags ──
+    is_featured = models.BooleanField(
+        default=False,
+        help_text="Show this testimonial on the home page (up to 4 featured displayed)"
+    )
+    is_active   = models.BooleanField(default=True, help_text="Uncheck to hide from all pages")
+    sort_order  = models.PositiveIntegerField(default=0, help_text="Lower = displayed first")
+    created_at  = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["sort_order", "-created_at"]
+        verbose_name = "Testimonial"
+        verbose_name_plural = "Testimonials"
+
+    def __str__(self):
+        return f"{self.author_name_en} — {self.author_title_en or 'Testimonial'}"

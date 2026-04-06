@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         /* Hero subtitle */
-        var subtitleMap = { en:'Centre of Faqāhat — Under Muhammadiyah Trust', ar:'مركز الفقاهة — تحت إشراف المحمدية تراست', ur:'مرکزِ فقاہت — محمدیہ ٹرسٹ کے زیرِ نگرانی', fa:'مرکز فقاهت — زیر نظر محمدیه تراست' };
+        var subtitleMap = { en:'Centre of Faqāhat — Governed by Muhammadiyah Trust', ar:'مركز الفقاهة — تحت إشراف المحمدية تراست', ur:'مرکزِ فقاہت — محمدیہ ٹرسٹ کے زیرِ نگرانی', fa:'مرکز فقاهت — زیر نظر محمدیه تراست' };
         var heroSub = document.getElementById('mil-hero-subtitle');
         if (heroSub) { heroSub.textContent = subtitleMap[lang] || subtitleMap.en; heroSub.style.cssText = rtlInlineStyle; }
 

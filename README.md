@@ -1,5 +1,5 @@
 # مدرسة مدينة العلم — Madrasah Madinatul Ilm
-## Centre of Faqāhat | Under Muhammadiyah Trust
+## Centre of Faqāhat | Governed by Muhammadiyah Trust
 
 **Established:** 14 Sha'ban 1447 AH / 3 February 2026  
 **Location:** Gopalpur, Siwan, Bihar, India — 841286  
@@ -142,5 +142,5 @@ CREATE DATABASE madinatulilm CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 **Vice Principal:** Maulana Syed Javed Akhtar  
 +91 9973559812  
 
-**Address:** Madrasa Madinatul Ilm, Gopal Pur, Post: Baqir Ganj,  
+**Address:** Madrasah Madinatul Ilm, Gopal Pur, Post: Baqir Ganj,  
 Thana: Hussain Ganj, District: Siwan, Bihar — 841286

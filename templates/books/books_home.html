@@ -18,14 +18,22 @@
 
 <section class="py-6">
   <div class="container">
+    <!-- Useful Links shortcut -->
+    <div class="text-end mb-4" data-aos="fade-up">
+      <a href="{% url 'books:useful_links' %}" class="btn btn-outline-gold">
+        <i class="fas fa-external-link-alt me-2"></i>
+        <span data-lang-en="Useful Islamic Links" data-lang-ar="روابط إسلامية مفيدة" data-lang-ur="مفید اسلامی روابط" data-lang-fa="پیوندهای مفید">Useful Islamic Links</span>
+      </a>
+    </div>
+
     <!-- Category Filter -->
     <div class="category-filter-bar mb-5" data-aos="fade-up">
       <a href="{% url 'books:home' %}" class="filter-btn active"
          data-lang-en="All" data-lang-ar="الكل" data-lang-ur="سب" data-lang-fa="همه">All</a>
-      {% for cat in categories %}
+      {% for cat in categories %}{% if cat.slug != 'misc' %}
       <a href="{% url 'books:category' cat.slug %}" class="filter-btn"
          data-lang-en="{{ cat.title_en }}" data-lang-ar="{{ cat.title_ar }}" data-lang-ur="{{ cat.title_ur }}" data-lang-fa="{{ cat.title_fa }}">{{ cat.title_en }}</a>
-      {% endfor %}
+      {% endif %}{% endfor %}
     </div>
 
     <div class="row g-4">

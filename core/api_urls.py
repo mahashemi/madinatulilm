@@ -19,7 +19,7 @@ urlpatterns = [
     path("vision/",    ListAPIView.as_view(queryset=VisionSection.objects.filter(is_active=True),  serializer_class=VisionSerializer), name="vision"),
     path("about/",     ListAPIView.as_view(queryset=AboutSection.objects.filter(is_active=True),   serializer_class=AboutSerializer),  name="about"),
     path("founder/",   ListAPIView.as_view(queryset=Founder.objects.filter(is_active=True),        serializer_class=FounderSerializer), name="founder"),
-    path("ijazat/",    ListAPIView.as_view(queryset=Ijazah.objects.all(),              serializer_class=IjazahSerializer),        name="ijazat"),
+    path("ijazah/",    ListAPIView.as_view(queryset=Ijazah.objects.all(),              serializer_class=IjazahSerializer),        name="ijazah"),
     path("trustees/",  ListAPIView.as_view(queryset=Trustee.objects.filter(is_active=True),        serializer_class=TrusteeSerializer), name="trustees"),
     path("programs/",  ListAPIView.as_view(queryset=AcademicProgram.objects.filter(is_active=True),serializer_class=AcademicProgramSerializer), name="programs"),
     path("gallery/",   ListAPIView.as_view(queryset=MadrasahGallery.objects.filter(is_active=True),serializer_class=GallerySerializer),name="gallery"),

@@ -130,23 +130,28 @@ class Ijazah(models.Model):
     title = models.CharField(max_length=300)
     from_scholar = models.CharField(max_length=200)
     ijazah_type = models.CharField(max_length=20, choices=IJAZAH_TYPE_CHOICES, default="riwayat")
-    image = models.ImageField(upload_to="ijazat/")
+    image = models.ImageField(upload_to="ijazah/")
     description = models.TextField(blank=True)
     date_received = models.DateField(null=True, blank=True)
     sort_order = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
         ordering = ["sort_order", "from_scholar"]
-        verbose_name_plural = "Ijazat"
+        verbose_name_plural = "Ijazah"
 
     def __str__(self):
         return f"{self.ijazah_type} — {self.from_scholar}"
 
 
 class Trustee(models.Model):
+    MEMBER_TYPE_CHOICES = [
+        ("trustee",    "Trustee"),
+        ("consultant", "Consulting Member"),
+    ]
+
     name = models.CharField(max_length=200)
     designation = models.CharField(max_length=200, blank=True)
-    photo = models.ImageField(upload_to="trustees/", null=True, blank=True)
+    photo = models.ImageField(upload_to="team/", null=True, blank=True)
     bio = models.TextField(blank=True)
     phone = models.CharField(max_length=30, blank=True)
     sort_order = models.PositiveSmallIntegerField(default=0)
@@ -156,12 +161,21 @@ class Trustee(models.Model):
         verbose_name="Is Founder",
         help_text="Mark this trustee as the founder. Their card on the Trustees tab will link to the Founder biography page."
     )
+    member_type = models.CharField(
+        max_length=20,
+        choices=MEMBER_TYPE_CHOICES,
+        default="trustee",
+        verbose_name="Member Type",
+        help_text="Select 'Trustee' for board members or 'Consulting Member' for advisory/consulting members."
+    )
 
     class Meta:
         ordering = ["sort_order", "name"]
+        verbose_name = "Team Member"
+        verbose_name_plural = "Our Team"
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.get_member_type_display()})"
 
 
 class AcademicProgram(models.Model):

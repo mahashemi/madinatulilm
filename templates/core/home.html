@@ -524,6 +524,72 @@
 </section>
 {% endif %}
 
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+{% if featured_testimonials %}
+<section class="testimonials-section py-6 section-bg-light">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-5" data-aos="fade-up">
+      <div>
+        <div class="section-ornament text-start">❖</div>
+        <h2 class="section-title mb-0"
+            data-lang-en="What Our Community Says"
+            data-lang-ar="ماذا يقول مجتمعنا"
+            data-lang-ur="ہماری کمیونٹی کیا کہتی ہے"
+            data-lang-fa="جامعه ما چه می‌گوید">What Our Community Says</h2>
+      </div>
+      <a href="{% url 'announcements:testimonials' %}" class="btn btn-outline-gold">
+        <span data-lang-en="View All" data-lang-ar="عرض الكل" data-lang-ur="سب دیکھیں" data-lang-fa="مشاهده همه">View All</span>
+        <i class="fas fa-arrow-right ms-1"></i>
+      </a>
+    </div>
+
+    <div class="row g-4">
+      {% for t in featured_testimonials %}
+      <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+        <div class="testi-card">
+
+          <!-- Opening quote decoration -->
+          <div class="testi-open-quote"><i class="fas fa-quote-left"></i></div>
+
+          <!-- Quote text -->
+          <blockquote class="testi-quote"
+                       data-lang-en="{{ t.quote_en }}"
+                       data-lang-ar="{{ t.quote_ar|default:t.quote_en }}"
+                       data-lang-ur="{{ t.quote_ur|default:t.quote_en }}"
+                       data-lang-fa="{{ t.quote_fa|default:t.quote_en }}">{{ t.quote_en }}</blockquote>
+
+          <!-- Author row -->
+          <div class="testi-author-row">
+            {% if t.author_photo %}
+              <img src="{{ t.author_photo.url }}" alt="{{ t.author_name_en }}" class="testi-avatar">
+            {% else %}
+              <div class="testi-avatar-placeholder"><i class="fas fa-user"></i></div>
+            {% endif %}
+            <div class="testi-author-info">
+              <span class="testi-name"
+                    data-lang-en="{{ t.author_name_en }}"
+                    data-lang-ar="{{ t.author_name_ar|default:t.author_name_en }}"
+                    data-lang-ur="{{ t.author_name_ur|default:t.author_name_en }}"
+                    data-lang-fa="{{ t.author_name_fa|default:t.author_name_en }}">{{ t.author_name_en }}</span>
+              {% if t.author_title_en %}
+              <span class="testi-role"
+                    data-lang-en="{{ t.author_title_en }}"
+                    data-lang-ar="{{ t.author_title_ar|default:t.author_title_en }}"
+                    data-lang-ur="{{ t.author_title_ur|default:t.author_title_en }}"
+                    data-lang-fa="{{ t.author_title_fa|default:t.author_title_en }}">{{ t.author_title_en }}</span>
+              {% endif %}
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+{% endif %}
+
 <!-- ═══════════════ GALLERY STRIP ═══════════════ -->
 {% if gallery %}
 <section class="gallery-strip py-6 section-bg-dark">

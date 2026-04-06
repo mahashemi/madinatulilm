@@ -31,11 +31,11 @@
       <li class="nav-item" role="presentation">
         <button class="nav-link about-tab" id="tab-trustees" data-bs-toggle="tab" data-bs-target="#pane-trustees" type="button" role="tab">
           <i class="fas fa-users me-2"></i>
-          <span data-lang-en="Trustees" data-lang-ar="أمناء المؤسسة" data-lang-ur="ٹرسٹی" data-lang-fa="امنا">Trustees</span>
+          <span data-lang-en="Our Team" data-lang-ar="فريقنا" data-lang-ur="ہماری ٹیم" data-lang-fa="تیم ما">Our Team</span>
         </button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link about-tab" id="tab-ijazat" data-bs-toggle="tab" data-bs-target="#pane-ijazat" type="button" role="tab">
+        <button class="nav-link about-tab" id="tab-ijazah" data-bs-toggle="tab" data-bs-target="#pane-ijazah" type="button" role="tab">
           <i class="fas fa-certificate me-2"></i>
           <span data-lang-en="Ijāzah Certificates" data-lang-ar="الإجازات العلمية" data-lang-ur="اجازات" data-lang-fa="اجازه‌نامه‌ها">Ijāzah Certificates</span>
         </button>
@@ -119,6 +119,8 @@
   <div class="tab-pane fade" id="pane-trustees" role="tabpanel">
     <section class="py-6">
       <div class="container">
+
+        <!-- ── Board of Trustees ─────────────────────────────────── -->
         <div class="text-center mb-5" data-aos="fade-up">
           <div class="section-ornament">❖</div>
           <h2 class="section-title"
@@ -130,10 +132,9 @@
              data-lang-fa="موقوفه محمدیه — خادمان علم و جامعه">Muhammadiyah Trust — Dedicated Servants of Knowledge &amp; Community</p>
         </div>
 
-        <div class="row g-4 justify-content-center">
+        <div class="row g-4 justify-content-center mb-6">
           {% for trustee in trustees %}
           <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}0">
-            {# Wrap the founder's trustee card in a link to their biography page #}
             {% if trustee.is_founder %}
             <a href="{% url 'core:founder' %}" class="trustee-card-link" style="text-decoration:none;display:block;">
             {% endif %}
@@ -154,7 +155,6 @@
               </div>
               {% endif %}
               <h6 class="trustee-name mt-3">{{ trustee.name }}</h6>
-              <!-- Al Faqeeh subtitle — all languages -->
               {% if trustee.is_founder %}
               <p class="founder-home-subtitle mb-1"
                  data-lang-en="Al-Faqīh ul-Muḥaddith and Wakīl-e-Marājiʿ"
@@ -187,12 +187,57 @@
           </div>
           {% endfor %}
         </div>
+
+        <!-- ── Consulting Members ─────────────────────────────────── -->
+        {% if consultants %}
+        <div class="consulting-members-section" data-aos="fade-up">
+          <div class="consulting-divider">
+            <span class="consulting-divider-ornament">❖</span>
+          </div>
+          <div class="text-center mb-4">
+            <h3 class="section-title consulting-title"
+                data-lang-en="Consulting Members" data-lang-ar="الأعضاء الاستشاريون" data-lang-ur="مشاورتی اراکین" data-lang-fa="اعضای مشاور">Consulting Members</h3>
+            <p class="section-subtitle"
+               data-lang-en="Advisory &amp; Scholarly Council — Guiding the Mission of Madrasah Madinatul Ilm"
+               data-lang-ar="المجلس الاستشاري والعلمي — يرشد مسيرة مدرسة مدينة العلم"
+               data-lang-ur="مشاورتی و علمی کونسل — مدرسہ مدینۃ العلم کے مشن کی رہنمائی"
+               data-lang-fa="شورای مشورتی و علمی — راهنمای مأموریت مدرسه مدینةالعلم">Advisory &amp; Scholarly Council — Guiding the Mission of Madrasah Madinatul Ilm</p>
+          </div>
+          <div class="row g-4 justify-content-center">
+            {% for consultant in consultants %}
+            <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}0">
+              <div class="trustee-card trustee-card--consultant text-center">
+                <!-- <span class="trustee-consultant-badge">
+                  <i class="fas fa-star me-1"></i>
+                  <span data-lang-en="Consulting Member" data-lang-ar="عضو استشاري" data-lang-ur="مشاورتی رکن" data-lang-fa="عضو مشاور">Consulting Member</span>
+                </span> -->
+                {% if consultant.photo %}
+                <div class="trustee-photo-wrap">
+                  <img src="{{ consultant.photo.url }}" alt="{{ consultant.name }}" class="trustee-photo">
+                </div>
+                {% else %}
+                <div class="trustee-photo-placeholder trustee-photo-placeholder--consultant">
+                  <i class="fas fa-user-graduate"></i>
+                </div>
+                {% endif %}
+                <h6 class="trustee-name mt-3">{{ consultant.name }}</h6>
+                <p class="trustee-designation">{{ consultant.designation }}</p>
+                {% if consultant.phone %}
+                <p class="trustee-phone"><i class="fas fa-phone me-1 text-gold"></i>{{ consultant.phone }}</p>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
       </div>
     </section>
   </div>
 
   <!-- ── Tab 3: Ijazah Certificates ─────────────────────────────── -->
-  <div class="tab-pane fade" id="pane-ijazat" role="tabpanel">
+  <div class="tab-pane fade" id="pane-ijazah" role="tabpanel">
     <section class="py-6">
       <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
@@ -207,7 +252,7 @@
         </div>
 
         <!-- Riwayat group -->
-        {% regroup ijazat by get_ijazah_type_display as ijazah_groups %}
+        {% regroup ijazah by get_ijazah_type_display as ijazah_groups %}
         {% for group in ijazah_groups %}
         <div class="ijazah-group mb-5" data-aos="fade-up">
           <h4 class="ijazah-group-title">
@@ -217,7 +262,7 @@
             {% for ij in group.list %}
             <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="{{ forloop.counter0 }}0">
               <div class="ijazah-card">
-                <a href="{{ ij.image.url }}" class="ijazah-img-link" data-lightbox="ijazat" data-title="{{ ij.title }}">
+                <a href="{{ ij.image.url }}" class="ijazah-img-link" data-lightbox="ijazah" data-title="{{ ij.title }}">
                   <img src="{{ ij.image.url }}" alt="{{ ij.title }}" class="ijazah-img">
                   <div class="ijazah-img-overlay"><i class="fas fa-search-plus fa-2x"></i></div>
                 </a>
@@ -349,5 +394,53 @@
 .ijazah-info { padding: 1rem 1.2rem; }
 .ijazah-from { font-family: var(--font-primary); color: var(--color-navy); font-size: .95rem; font-weight: 700; margin-bottom: .2rem; }
 .ijazah-title-text { color: var(--color-text-muted); font-size: .8rem; }
+
+/* ── Consulting Members Section ─────────── */
+.consulting-members-section { margin-top: 1rem; padding-top: 2rem; }
+
+.consulting-divider {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.consulting-divider::before,
+.consulting-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(var(--color-gold-rgb),.5), transparent);
+}
+.consulting-divider-ornament {
+  color: var(--color-gold);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.consulting-title { font-size: 1.5rem; }
+
+/* Consultant badge — teal/green to distinguish from gold Founder badge */
+.trustee-consultant-badge {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--color-white);
+  background: linear-gradient(135deg, #1a7a5e, #0e5540);
+  border-radius: 20px;
+  padding: .25rem .85rem;
+  margin-bottom: .8rem;
+}
+
+/* Consultant card — subtle teal accent instead of gold */
+.trustee-card--consultant {
+  border-top: 3px solid #1a7a5e;
+}
+.trustee-card--consultant:hover {
+  border-bottom-color: #1a7a5e;
+}
+.trustee-photo-placeholder--consultant {
+  background: linear-gradient(135deg, #1a7a5e, #0e5540);
+  border-color: #1a7a5e;
+}
 </style>
 {% endblock %}

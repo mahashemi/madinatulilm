@@ -112,7 +112,7 @@ python manage.py migrate
 # Collect static files to /var/www/madinatulilm/staticfiles/
 python manage.py collectstatic --noinput
 
-# Seed all initial content (trustees, ijazat, programs, categories, etc.)
+# Seed all initial content (trustees, ijazah, programs, categories, etc.)
 python manage.py seed_content
 
 # Create admin superuser

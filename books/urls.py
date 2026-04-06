@@ -5,6 +5,7 @@ app_name = "books"
 
 urlpatterns = [
     path("",                      views.books_home,        name="home"),
+    path("useful-links/",         views.useful_links,      name="useful_links"),
     path("category/<str:slug>/",  views.books_by_category, name="category"),
     path("<int:pk>/",             views.book_detail,       name="detail"),
     path("<int:pk>/download/",    views.book_download,     name="download"),

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import FileResponse
-from .models import BookCategory, Book
+from itertools import groupby
+from .models import BookCategory, Book, UsefulLink
 
 
 def books_home(request):
@@ -26,3 +27,14 @@ def book_download(request, pk):
     book.download_count += 1
     book.save(update_fields=["download_count"])
     return FileResponse(book.pdf_file.open(), as_attachment=True, filename=f"{book.title_en}.pdf")
+
+
+def useful_links(request):
+    """Curated Islamic resource links, grouped by category."""
+    links = UsefulLink.objects.filter(is_active=True)
+    # Group by category label for the template
+    grouped = {}
+    for link in links:
+        label = link.get_category_display()
+        grouped.setdefault(label, []).append(link)
+    return render(request, "books/useful_links.html", {"grouped": grouped})

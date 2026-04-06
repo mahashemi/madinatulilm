@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% block title %}Useful Islamic Links{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <div class="page-header-overlay"></div>
+  <div class="container text-center">
+    <h1 class="page-header-title"
+        data-lang-en="Useful Islamic Links"
+        data-lang-ar="روابط إسلامية مفيدة"
+        data-lang-ur="مفید اسلامی روابط"
+        data-lang-fa="پیوندهای اسلامی مفید">Useful Islamic Links</h1>
+    <p class="page-header-subtitle"
+       data-lang-en="Curated resources for students and seekers of Islamic knowledge"
+       data-lang-ar="مصادر منتقاة لطلاب العلم الإسلامي"
+       data-lang-ur="طلبائے علوم دینیہ کے لیے منتخب وسائل"
+       data-lang-fa="منابع گزینش‌شده برای طالبان علم اسلامی">Curated resources for students and seekers of Islamic knowledge</p>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb justify-content-center">
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'books:home' %}">Books &amp; Articles</a></li>
+        <li class="breadcrumb-item active">Useful Links</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<section class="py-6">
+  <div class="container">
+
+    {% if grouped %}
+      {% for category_name, links in grouped.items %}
+      <div class="useful-links-group mb-5" data-aos="fade-up">
+        <div class="useful-links-group-header mb-3">
+          <span class="useful-links-cat-pill">
+            {% if "Marāji" in category_name %}<i class="fas fa-star-and-crescent me-2"></i>
+            {% elif "Qurʾān" in category_name or "Quran" in category_name %}<i class="fas fa-book-open me-2"></i>
+            {% elif "Hadith" in category_name %}<i class="fas fa-scroll me-2"></i>
+            {% elif "Duʿāʾ" in category_name or "Dua" in category_name %}<i class="fas fa-hands me-2"></i>
+            {% elif "Fiqh" in category_name or "Fatā" in category_name %}<i class="fas fa-balance-scale me-2"></i>
+            {% elif "Education" in category_name %}<i class="fas fa-graduation-cap me-2"></i>
+            {% elif "Librar" in category_name %}<i class="fas fa-library me-2"></i>
+            {% else %}<i class="fas fa-globe me-2"></i>{% endif %}
+            {{ category_name }}
+          </span>
+        </div>
+        <div class="row g-3">
+          {% for link in links %}
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}0">
+            <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="useful-link-card">
+              <div class="ulc-icon">
+                <i class="{{ link.icon_class|default:'fas fa-link' }}"></i>
+              </div>
+              <div class="ulc-body">
+                <h6 class="ulc-title">{{ link.title }}</h6>
+                {% if link.description %}
+                <p class="ulc-desc">{{ link.description }}</p>
+                {% endif %}
+                <span class="ulc-url">{{ link.url|slice:":50" }}{% if link.url|length > 50 %}…{% endif %}</span>
+              </div>
+              <div class="ulc-arrow">
+                <i class="fas fa-external-link-alt"></i>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="text-center py-6 text-muted">
+        <i class="fas fa-link fa-3x mb-3" style="color:var(--gold);opacity:.4;"></i>
+        <p>No links have been added yet. Check back soon.</p>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ── Useful Links page ─────────────────────────── */
+.useful-links-cat-pill {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+  color: var(--gold-light);
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0.45rem 1.2rem;
+  border-radius: 50px;
+  border-left: 4px solid var(--gold);
+  letter-spacing: 0.02em;
+}
+
+.useful-link-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.2rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.25s;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.useful-link-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--gold);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.useful-link-card:hover {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  color: inherit;
+}
+.useful-link-card:hover::before { opacity: 1; }
+
+.ulc-icon {
+  width: 40px; height: 40px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  color: var(--gold-light);
+}
+.ulc-body { flex: 1; min-width: 0; }
+.ulc-title {
+  font-family: var(--font-head);
+  color: var(--green-dark);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  line-height: 1.35;
+}
+.ulc-desc {
+  font-size: 0.8rem;
+  color: var(--text-mid);
+  margin-bottom: 0.3rem;
+  line-height: 1.5;
+}
+.ulc-url {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  font-family: monospace;
+  word-break: break-all;
+}
+.ulc-arrow {
+  font-size: 0.75rem;
+  color: var(--gold);
+  align-self: center;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.useful-link-card:hover .ulc-arrow { opacity: 1; transform: translateX(3px); }
+
+/* responsive */
+@media (max-width: 575px) {
+  .useful-links-cat-pill { font-size: 0.9rem; padding: 0.35rem 0.9rem; }
+  .ulc-icon { width: 34px; height: 34px; font-size: 0.85rem; }
+  .ulc-title { font-size: 0.88rem; }
+}
+</style>
+{% endblock %}

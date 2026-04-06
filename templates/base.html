@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{% block title %}{{ site.site_name_en|default:"Madrasah Madinatul Ilm" }}{% endblock %} | Centre of Faqāhat</title>
-  <meta name="description" content="{% block meta_description %}Madrasah Madinatul Ilm — Premier Shia Islamic Seminary, Gopalpur, Siwan, Bihar, India. Under Muhammadiyah Trust.{% endblock %}" />
+  <title>{% block title %}{{ site.site_name_en|default:"Madrasah Madinatul Ilm" }}{% endblock %} | Center of Faqāhat</title>
+  <meta name="description" content="{% block meta_description %}Madrasah Madinatul Ilm — Premier Shia Islamic Seminary, Gopalpur, Siwan, Bihar, India. Governed by Muhammadiyah Trust.{% endblock %}" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +19,13 @@
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   {% load static %}
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon"       href="{% static 'favicon/favicon.ico' %}">
+  <link rel="icon" type="image/svg+xml"      href="{% static 'favicon/favicon.svg' %}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+  <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+  <meta name="theme-color" content="#1a3a2a">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
   {% block extra_css %}{% endblock %}
 </head>
@@ -106,6 +113,8 @@
             <li><a class="dropdown-item" href="{% url 'announcements:category' 'statement' %}"><i class="fas fa-file-alt me-2"></i>Statement</a></li>
             <li><a class="dropdown-item" href="{% url 'announcements:category' 'message' %}"><i class="fas fa-envelope-open-text me-2"></i>Issued Message</a></li>
             <li><a class="dropdown-item" href="{% url 'announcements:category' 'event' %}"><i class="fas fa-calendar-alt me-2"></i>Events</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'announcements:testimonials' %}"><i class="fas fa-comment-dots me-2 text-warning"></i>Testimonials</a></li>
           </ul>
         </li>
 
@@ -144,7 +153,11 @@
             <li><a class="dropdown-item" href="{% url 'books:category' 'rational' %}">Rational Sciences</a></li>
             <li><a class="dropdown-item" href="{% url 'books:category' 'arabic' %}">Arabic Literature</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{% url 'books:category' 'misc' %}">Miscellaneous</a></li>
+            <li>
+              <a class="dropdown-item" href="{% url 'books:useful_links' %}">
+                <i class="fas fa-external-link-alt me-2 text-warning"></i>Useful Islamic Links
+              </a>
+            </li>
           </ul>
         </li>
 
@@ -227,13 +240,25 @@
                    height="70" class="footer-logo-img"
                    onerror="this.style.display='none'">
               <div>
-                <span class="footer-ar">مدرسة مدينة العلم</span>
-                <span class="footer-en">Madrasah Madinatul Ilm</span>
-                <span class="footer-trust">Under Muhammadiyah Trust</span>
+                <!-- Single language-switched madrasah name — no duplicate -->
+                <span class="footer-en"
+                      data-lang-en="Madrasah Madinatul Ilm"
+                      data-lang-ar="مدرسة مدينة العلم"
+                      data-lang-ur="مدرسہ مدینۃ العلم"
+                      data-lang-fa="مدرسه مدینةالعلم">Madrasah Madinatul Ilm</span>
+                <span class="footer-trust"
+                      data-lang-en="Governed by Muhammadiyah Trust"
+                      data-lang-ar="تحت إشراف المؤسسة المحمدية"
+                      data-lang-ur="محمدیہ ٹرسٹ کے زیر نگرانی"
+                      data-lang-fa="زیر نظر موقوفه محمدیه">Governed by Muhammadiyah Trust</span>
               </div>
             </div>
           </div>
-          <p class="footer-text">
+          <p class="footer-text"
+             data-lang-en="Centre of Faqāhat — Dedicated to advancing Islamic jurisprudence, ethics, and knowledge in India. Established 14 Sha'ban 1447 AH."
+             data-lang-ar="مركز الفقاهة — مكرّس لتطوير الفقه الإسلامي والأخلاق والعلم في الهند. تأسّست في ١٤ شعبان ١٤٤٧ هـ."
+             data-lang-ur="مرکزِ فقاہت — ہندوستان میں اسلامی فقہ، اخلاق اور علم کے فروغ کے لیے وقف۔ بتاریخ ۱۴ شعبان ۱۴۴۷ ھ قائم کی گئی۔"
+             data-lang-fa="مرکز فقاهت — وقف پیشرفت فقه اسلامی، اخلاق و دانش در هند. تأسیس: ۱۴ شعبان ۱۴۴۷ هـ.">
             Centre of Faqāhat — Dedicated to advancing Islamic jurisprudence, ethics, and knowledge in India. Established 14 Sha'ban 1447 AH.
           </p>
           <div class="footer-social mt-3">
@@ -244,19 +269,33 @@
         </div>
 
         <div class="col-lg-2 col-md-6">
-          <h5 class="footer-heading">Quick Links</h5>
+          <h5 class="footer-heading"
+              data-lang-en="Quick Links"
+              data-lang-ar="روابط سريعة"
+              data-lang-ur="فوری لنکس"
+              data-lang-fa="پیوندهای سریع">Quick Links</h5>
           <ul class="footer-links">
-            <li><a href="{% url 'core:home' %}">Home</a></li>
-            <li><a href="{% url 'core:about' %}">About Us</a></li>
-            <li><a href="{% url 'core:founder' %}">Founder</a></li>
-            <li><a href="{% url 'core:academics' %}">Academics</a></li>
-            <li><a href="{% url 'core:gallery' %}">Gallery</a></li>
-            <li><a href="{% url 'core:partner' %}">Be A Partner</a></li>
+            <li><a href="{% url 'core:home' %}"
+                   data-lang-en="Home" data-lang-ar="الرئيسية" data-lang-ur="ہوم" data-lang-fa="خانه">Home</a></li>
+            <li><a href="{% url 'core:about' %}"
+                   data-lang-en="About Us" data-lang-ar="من نحن" data-lang-ur="ہمارے بارے میں" data-lang-fa="درباره ما">About Us</a></li>
+            <li><a href="{% url 'core:founder' %}"
+                   data-lang-en="Founder" data-lang-ar="المؤسس" data-lang-ur="بانی" data-lang-fa="بنیانگذار">Founder</a></li>
+            <li><a href="{% url 'core:academics' %}"
+                   data-lang-en="Academics" data-lang-ar="الأقسام الأكاديمية" data-lang-ur="تعلیمی شعبہ" data-lang-fa="رشته‌ها">Academics</a></li>
+            <li><a href="{% url 'core:gallery' %}"
+                   data-lang-en="Gallery" data-lang-ar="معرض الصور" data-lang-ur="گیلری" data-lang-fa="گالری">Gallery</a></li>
+            <li><a href="{% url 'core:partner' %}"
+                   data-lang-en="Be A Partner" data-lang-ar="كن شريكاً" data-lang-ur="شراکت دار بنیں" data-lang-fa="شریک باشید">Be A Partner</a></li>
           </ul>
         </div>
 
         <div class="col-lg-3 col-md-6">
-          <h5 class="footer-heading">Academic Disciplines</h5>
+          <h5 class="footer-heading"
+              data-lang-en="Academic Disciplines"
+              data-lang-ar="التخصصات الأكاديمية"
+              data-lang-ur="تعلیمی شعبہ جات"
+              data-lang-fa="رشته‌های علمی">Academic Disciplines</h5>
           <ul class="footer-links">
             <li><a href="{% url 'lessons:subject' 'tafsir' %}">Tafsīr</a></li>
             <li><a href="{% url 'lessons:subject' 'hadith' %}">Hadith</a></li>
@@ -268,15 +307,28 @@
         </div>
 
         <div class="col-lg-3 col-md-6">
-          <h5 class="footer-heading">Contact Us</h5>
+          <h5 class="footer-heading"
+              data-lang-en="Contact Us"
+              data-lang-ar="تواصل معنا"
+              data-lang-ur="رابطہ کریں"
+              data-lang-fa="تماس با ما">Contact Us</h5>
           <ul class="footer-contact-list">
-            <li><i class="fas fa-map-marker-alt me-2"></i>Gopalpur, Siwan, Bihar — 841286</li>
+            <li><i class="fas fa-map-marker-alt me-2"></i>
+              <span data-lang-en="Gopalpur, Siwan, Bihar — 841286"
+                    data-lang-ar="گوپالپور، سيوان، بيهار — ٨٤١٢٨٦"
+                    data-lang-ur="گوپالپور، سیوان، بہار — ۸۴۱۲۸۶"
+                    data-lang-fa="گوپال‌پور، سیوان، بیهار — ۸۴۱۲۸۶">Gopalpur, Siwan, Bihar — 841286</span>
+            </li>
             {% if site and site.phone_primary %}<li><i class="fas fa-phone-alt me-2"></i><a href="tel:{{ site.phone_primary }}">{{ site.phone_primary }}</a></li>{% endif %}
             {% if site and site.phone_secondary %}<li><i class="fas fa-phone-alt me-2"></i><a href="tel:{{ site.phone_secondary }}">{{ site.phone_secondary }}</a></li>{% endif %}
             {% if site and site.email %}<li><i class="fas fa-envelope me-2"></i><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>{% endif %}
           </ul>
           <a href="{% url 'contact:ask' %}" class="btn btn-gold-outline mt-3 btn-sm">
-            <i class="fas fa-question-circle me-1"></i>Ask a Question
+            <i class="fas fa-question-circle me-1"></i>
+            <span data-lang-en="Ask a Question"
+                  data-lang-ar="اطرح سؤالاً"
+                  data-lang-ur="سوال پوچھیں"
+                  data-lang-fa="سؤال بپرسید">Ask a Question</span>
           </a>
         </div>
 

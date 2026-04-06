@@ -5,7 +5,7 @@ from .models import (
     Founder, Ijazah, Trustee, AcademicProgram, MadrasahGallery,
     HadithQuote, PartnerPage, Maraji, HeroBannerImage
 )
-from announcements.models import Announcement
+from announcements.models import Announcement, Testimonial
 from lessons.models import Subject, LessonSeries
 from books.models import Book
 
@@ -57,21 +57,24 @@ def home(request):
         "latest_announcements": Announcement.objects.filter(is_active=True)[:4],
         "latest_lessons":       LessonSeries.objects.filter(is_active=True)[:4],
         "latest_books":         Book.objects.filter(is_active=True)[:4],
-        "gallery":              MadrasahGallery.objects.filter(is_active=True)[:6],
-        "hadiths_json":         json.dumps(hadiths,      ensure_ascii=False),
-        "page_content_json":    json.dumps(page_content, ensure_ascii=False),
+        "gallery":                  MadrasahGallery.objects.filter(is_active=True)[:6],
+        "featured_testimonials":    Testimonial.objects.filter(is_active=True, is_featured=True)[:4],
+        "hadiths_json":             json.dumps(hadiths,      ensure_ascii=False),
+        "page_content_json":        json.dumps(page_content, ensure_ascii=False),
     }
     return render(request, "core/home.html", context)
 
 
 def about(request):
+    active_trustees = Trustee.objects.filter(is_active=True)
     context = {
-        "about": AboutSection.objects.filter(is_active=True).first(),
-        "mission": MissionSection.objects.filter(is_active=True).first(),
-        "vision": VisionSection.objects.filter(is_active=True).first(),
-        "trustees": Trustee.objects.filter(is_active=True),
-        "ijazat": Ijazah.objects.all().order_by("sort_order"),
-        "gallery": MadrasahGallery.objects.filter(is_active=True),
+        "about":       AboutSection.objects.filter(is_active=True).first(),
+        "mission":     MissionSection.objects.filter(is_active=True).first(),
+        "vision":      VisionSection.objects.filter(is_active=True).first(),
+        "trustees":    active_trustees.filter(member_type="trustee"),
+        "consultants": active_trustees.filter(member_type="consultant"),
+        "ijazah":      Ijazah.objects.all().order_by("sort_order"),
+        "gallery":     MadrasahGallery.objects.filter(is_active=True),
     }
     return render(request, "core/about.html", context)
 
@@ -79,7 +82,7 @@ def about(request):
 def founder(request):
     context = {
         "founder": Founder.objects.filter(is_active=True).first(),
-        "ijazat": Ijazah.objects.all(),
+        "ijazah": Ijazah.objects.all(),
     }
     return render(request, "core/founder.html", context)
 
