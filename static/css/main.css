@@ -1100,8 +1100,8 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
   .uhero-ring--2         { width: 248px; height: 248px; transform: translate(-50%, calc(-50% - 40px)); }
   .uhero-ring--3         { width: 280px; height: 280px; transform: translate(-50%, calc(-50% - 40px)); }
 
-  .uhero-name            { font-size: 2.3rem; }
-  .uhero-name-ar         { font-size: 1.3rem; }
+  .uhero-name            { font-size: 2.4rem; }
+  .uhero-name-ar         { font-size: 2.0rem; }
   .uhero-maraji-name-ar  { font-size: 1.7rem; }
   .uhero-maraji-name-local { font-size: 1.05rem; }
 
@@ -1116,8 +1116,8 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
 
 @media (max-width: 767px) {
   .unified-hero          { padding: 3.5rem 0 2.5rem; }
-  .uhero-name            { font-size: 2rem; }
-  .uhero-maraji-name-ar  { font-size: 1.5rem; }
+  .uhero-name            { font-size: 2.2rem; }
+  .uhero-maraji-name-ar  { font-size: 1.8rem; }
   .uhero-portrait-frame  { width: 170px; height: 170px; }  /* circle */
   .uhero-ring--1         { width: 185px; height: 185px; }
   .uhero-ring--2         { width: 212px; height: 212px; }
@@ -1128,8 +1128,8 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
 @media (max-width: 575px) {
   .unified-hero          { padding: 3rem 0 2rem; }
   .uhero-basmala         { font-size: 0.95rem; }
-  .uhero-name            { font-size: 1.7rem; }
-  .uhero-name-ar         { font-size: 1.1rem; }
+  .uhero-name            { font-size: 2rem; }
+  .uhero-name-ar         { font-size: 1.5rem; }
   .uhero-tagline         { font-size: 0.88rem; }
   .uhero-maraji-name-ar  { font-size: 1.3rem; }
   .uhero-maraji-name-local { font-size: 0.95rem; }
@@ -1448,7 +1448,7 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
   .hadith-quote-block::before,
   .hadith-quote-block::after            { font-size: 1.6rem; }
   /* sm variant: keep readable but not oversized */
-  .hadith-quote-block--sm .hadith-arabic { font-size: 1.4rem; }
+  .hadith-quote-block--sm .hadith-arabic { font-size: 2.2rem; }
   .hadith-quote-block--sm::before,
   .hadith-quote-block--sm::after        { font-size: 1.1rem; }
 }
@@ -1458,7 +1458,7 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
   .hadith-translation                   { font-size: 1rem; }
   .hadith-quote-block::before,
   .hadith-quote-block::after            { font-size: 1.4rem; }
-  .hadith-quote-block--sm .hadith-arabic { font-size: 1.3rem; }
+  .hadith-quote-block--sm .hadith-arabic { font-size: 2rem; }
   .hadith-quote-block--sm::before,
   .hadith-quote-block--sm::after        { font-size: 1rem; }
 }
@@ -1468,7 +1468,7 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
   .hadith-quote-block                   { padding: 1.6rem 0.5rem; }
   .hadith-quote-block::before,
   .hadith-quote-block::after            { font-size: 1.2rem; }
-  .hadith-quote-block--sm .hadith-arabic { font-size: 1.2rem; }
+  .hadith-quote-block--sm .hadith-arabic { font-size: 1.8rem; }
   .hadith-quote-block--sm::before,
   .hadith-quote-block--sm::after        { font-size: 0.9rem; }
 }
