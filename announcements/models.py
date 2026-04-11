@@ -36,7 +36,6 @@ class Announcement(models.Model):
     body_ur    = RichTextField(blank=True)
     body_fa    = RichTextField(blank=True)
     attachment = models.FileField(upload_to="announcements/", null=True, blank=True)
-    image      = models.ImageField(upload_to="announcements/images/", null=True, blank=True)
     # Event-specific fields (used when category.slug == "event")
     event_date       = models.DateField(null=True, blank=True, help_text="Date of the event")
     event_location   = models.CharField(max_length=300, blank=True, help_text="Location / venue")
@@ -67,6 +66,34 @@ class Announcement(models.Model):
             vid = url.split("youtu.be/")[-1].split("?")[0]
             return f"https://www.youtube.com/embed/{vid}"
         return url
+
+    @property
+    def first_image(self):
+        """Return the first AnnouncementImage for this announcement, or None."""
+        return self.images.order_by("sort_order", "id").first()
+
+
+class AnnouncementImage(models.Model):
+    """
+    One image slide belonging to an Announcement.
+    Multiple images per announcement → carousel on the detail page.
+    """
+    announcement = models.ForeignKey(
+        Announcement,
+        on_delete=models.CASCADE,
+        related_name="images",
+    )
+    image      = models.ImageField(upload_to="announcements/images/")
+    caption    = models.CharField(max_length=300, blank=True, help_text="Short caption shown below this image")
+    sort_order = models.PositiveSmallIntegerField(default=0, help_text="Lower number = shown first")
+
+    class Meta:
+        ordering = ["sort_order", "id"]
+        verbose_name = "Image"
+        verbose_name_plural = "Images"
+
+    def __str__(self):
+        return f"Image {self.sort_order} — {self.announcement.title_en[:40]}"
 
 
 # ─────────────────────────────────────────────────────────────

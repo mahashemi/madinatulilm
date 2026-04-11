@@ -318,6 +318,75 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--green-dark); }
 .ann-read-more { color: var(--gold-dark); font-weight: 600; font-size: 0.85rem; text-decoration: none; }
 .ann-read-more:hover { color: var(--gold); }
 
+/* ── Announcement card thumbnail ────────────────────────── */
+.ann-card-thumb { overflow: hidden; border-radius: var(--radius); max-height: 200px; }
+.ann-card-thumb img { width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; }
+.announcement-card:hover .ann-card-thumb img { transform: scale(1.04); }
+
+/* ── Announcement detail carousel ───────────────────────── */
+.ann-carousel { border-radius: var(--radius-lg); overflow: hidden; background: #000; }
+.ann-carousel-img {
+  height: 480px;
+  object-fit: cover;
+  object-position: center;
+}
+/* Arrow buttons tinted gold */
+.ann-carousel .carousel-control-prev-icon,
+.ann-carousel .carousel-control-next-icon {
+  filter: drop-shadow(0 0 3px rgba(0,0,0,.8));
+}
+.ann-carousel .carousel-indicators [data-bs-target] {
+  background-color: var(--gold);
+  opacity: 0.6;
+}
+.ann-carousel .carousel-indicators .active { opacity: 1; }
+
+/* ── Caption bar below carousel / single image ───────────── */
+.ann-img-caption {
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--text-light);
+  background: var(--bg-light);
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 var(--radius) var(--radius);
+  border: 1px solid var(--border);
+  border-top: none;
+  min-height: 2rem;
+}
+
+/* ── Single image (no carousel) ─────────────────────────── */
+.ann-single-image { border-radius: var(--radius-lg); overflow: hidden; }
+.ann-single-image img { width: 100%; max-height: 480px; object-fit: cover; }
+
+/* ── Event badges ────────────────────────────────────────── */
+.event-date-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+}
+.event-location-badge {
+  display: inline-block;
+  background: var(--green-dark);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+}
+
+/* Responsive carousel height */
+@media (max-width: 767px) {
+  .ann-carousel-img,
+  .ann-single-image img { height: 240px; }
+  .ann-card-thumb img { height: 160px; }
+  .ann-card-thumb { max-height: 160px; }
+}
+
 /* ── Lesson Cards ───────────────────────────────────────── */
 .lesson-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: all 0.3s; }
 .lesson-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }

@@ -28,12 +28,33 @@
           {% if ann.is_pinned %}
           <span class="pinned-badge"><i class="fas fa-thumbtack me-1"></i>Pinned</span>
           {% endif %}
+
+          {# ── Thumbnail (first image if available) ── #}
+          {% with thumb=ann.first_image %}
+          {% if thumb %}
+          <div class="ann-card-thumb mb-3">
+            <img src="{{ thumb.image.url }}" alt="{{ thumb.caption }}" class="img-fluid rounded">
+          </div>
+          {% endif %}
+          {% endwith %}
+
           <div class="announcement-meta">
             <span class="ann-category">{{ category.title_en }}</span>
             <span class="ann-date"><i class="far fa-calendar-alt me-1"></i>{{ ann.publish_date }}</span>
+            {% if category.slug == "event" and ann.event_date %}
+            <span class="ms-2 event-date-badge"><i class="fas fa-star-and-crescent me-1"></i>{{ ann.event_date }}</span>
+            {% endif %}
           </div>
-          <h5 class="announcement-title">{{ ann.title_en }}</h5>
+
+          <h5 class="announcement-title mt-2">{{ ann.title_en }}</h5>
           {% if ann.title_ar %}<p class="announcement-title-ar">{{ ann.title_ar }}</p>{% endif %}
+
+          {% if category.slug == "event" and ann.event_location %}
+          <p class="event-location-badge mt-1 mb-2">
+            <i class="fas fa-map-marker-alt me-1"></i>{{ ann.event_location }}
+          </p>
+          {% endif %}
+
           <div class="announcement-excerpt">{{ ann.body_en|safe|truncatewords_html:30 }}</div>
           <div class="mt-3 d-flex gap-2">
             <a href="{% url 'announcements:detail' ann.pk %}" class="btn btn-sm btn-gold">Read More</a>

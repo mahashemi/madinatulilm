@@ -1,7 +1,16 @@
 from django.contrib import admin
-from .models import AnnouncementCategory, Announcement, Testimonial
+from .models import AnnouncementCategory, Announcement, AnnouncementImage, Testimonial
 
 
+# ─── Inline: images belong to an Announcement ────────────────────────────────
+class AnnouncementImageInline(admin.TabularInline):
+    model      = AnnouncementImage
+    extra      = 3          # show 3 empty slots by default
+    fields     = ("image", "caption", "sort_order")
+    ordering   = ("sort_order", "id")
+
+
+# ─── Category ────────────────────────────────────────────────────────────────
 @admin.register(AnnouncementCategory)
 class AnnouncementCategoryAdmin(admin.ModelAdmin):
     list_display  = ("slug", "title_en", "icon_class")
@@ -17,6 +26,7 @@ class AnnouncementCategoryAdmin(admin.ModelAdmin):
     )
 
 
+# ─── Announcement ─────────────────────────────────────────────────────────────
 @admin.register(Announcement)
 class AnnouncementAdmin(admin.ModelAdmin):
     list_display   = ("title_en", "category", "is_pinned", "is_active", "publish_date")
@@ -24,7 +34,10 @@ class AnnouncementAdmin(admin.ModelAdmin):
     list_editable  = ("is_pinned", "is_active")
     search_fields  = ("title_en", "title_ar", "title_ur", "title_fa")
     date_hierarchy = "publish_date"
+    inlines        = [AnnouncementImageInline]
+
     fieldsets = (
+        # ── Core content (all category types) ──────────────────────────────
         ("English — Displayed when language is set to English", {
             "fields": ("category", "title_en", "body_en"),
         }),
@@ -40,19 +53,29 @@ class AnnouncementAdmin(admin.ModelAdmin):
             "classes": ("collapse",),
             "fields": ("title_fa", "body_fa"),
         }),
-        ("Media & Attachment", {
-            "fields": ("image", "attachment"),
+        # ── Attachment (all category types) ────────────────────────────────
+        ("Attachment", {
+            "fields": ("attachment",),
         }),
-        ("Event Details — Fill only for items in the 'Event' category", {
+        # ── Event-specific — only visible / relevant for slug == "event" ───
+        ("Event Details  \u27f5  Fill only for announcements in the 'Event' category", {
             "classes": ("collapse",),
+            "description": (
+                "These fields only apply when the Category above is set to 'Event'. "
+                "Upload multiple images using the Images section below — they will be "
+                "shown in a carousel on the event detail page. "
+                "You can also embed a YouTube link or raw iframe inside the body text above."
+            ),
             "fields": ("event_date", "event_location", "youtube_url", "video_embed_code"),
         }),
+        # ── Visibility ──────────────────────────────────────────────────────
         ("Visibility", {
             "fields": ("is_pinned", "is_active"),
         }),
     )
 
 
+# ─── Testimonial ──────────────────────────────────────────────────────────────
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
     list_display   = ("author_name_en", "author_title_en", "is_featured", "is_active", "sort_order", "created_at")

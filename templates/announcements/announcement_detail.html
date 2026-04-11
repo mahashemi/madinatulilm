@@ -25,21 +25,117 @@
     <div class="row justify-content-center">
       <div class="col-lg-9" data-aos="fade-up">
         <div class="detail-card">
+
+          {# ── Meta bar ─────────────────────────────────────────────────── #}
           <div class="detail-meta mb-3">
             <span class="ann-category me-3">{{ announcement.category.title_en }}</span>
             <span class="text-muted"><i class="fas fa-calendar-alt me-1"></i>{{ announcement.publish_date }}</span>
+            {% if announcement.category.slug == "event" and announcement.event_date %}
+            <span class="ms-3 event-date-badge">
+              <i class="fas fa-star-and-crescent me-1"></i>Event: {{ announcement.event_date }}
+            </span>
+            {% endif %}
+            {% if announcement.category.slug == "event" and announcement.event_location %}
+            <span class="ms-3 event-location-badge">
+              <i class="fas fa-map-marker-alt me-1"></i>{{ announcement.event_location }}
+            </span>
+            {% endif %}
           </div>
-          <h2 class="detail-title"
+
+          {# ── Title ────────────────────────────────────────────────────── #}
+          <h2 class="detail-title mb-4"
               data-lang-en="{{ announcement.title_en }}"
               data-lang-ar="{{ announcement.title_ar }}"
               data-lang-ur="{{ announcement.title_ur }}"
               data-lang-fa="{{ announcement.title_fa }}">{{ announcement.title_en }}</h2>
-          {% if announcement.image %}<img src="{{ announcement.image.url }}" class="img-fluid rounded mb-4" alt="">{% endif %}
+
+          {# ── Image carousel ───────────────────────────────────────────── #}
+          {% with images=announcement.images.all %}
+          {% if images %}
+            {% if images|length == 1 %}
+            {# Single image — no carousel controls #}
+            <div class="ann-single-image mb-2">
+              <img src="{{ images.0.image.url }}" class="img-fluid rounded" alt="{{ images.0.caption }}">
+            </div>
+            {% if images.0.caption %}
+            <p class="ann-img-caption mb-4">{{ images.0.caption }}</p>
+            {% endif %}
+
+            {% else %}
+            {# Multiple images — Bootstrap carousel with 10-second timer #}
+            <div id="annCarousel" class="carousel slide ann-carousel mb-0" data-bs-ride="carousel" data-bs-interval="10000">
+              {# Indicator dots #}
+              <div class="carousel-indicators">
+                {% for img in images %}
+                <button type="button" data-bs-target="#annCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
+                  {% if forloop.first %}class="active" aria-current="true"{% endif %}
+                  aria-label="Slide {{ forloop.counter }}"></button>
+                {% endfor %}
+              </div>
+              {# Slides #}
+              <div class="carousel-inner">
+                {% for img in images %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                  <img src="{{ img.image.url }}" class="d-block w-100 ann-carousel-img" alt="{{ img.caption }}">
+                </div>
+                {% endfor %}
+              </div>
+              {# Prev / Next arrows #}
+              <button class="carousel-control-prev" type="button" data-bs-target="#annCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#annCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+            {# Caption bar — updates via JS when slide changes #}
+            <div class="ann-carousel-captions" style="display:none;">
+              {% for img in images %}
+              <span data-index="{{ forloop.counter0 }}">{{ img.caption }}</span>
+              {% endfor %}
+            </div>
+            <p id="annCarouselCaption" class="ann-img-caption mb-4">{{ images.0.caption }}</p>
+            <script>
+              (function () {
+                var el = document.getElementById('annCarousel');
+                if (!el) return;
+                var captions = {};
+                document.querySelectorAll('.ann-carousel-captions span').forEach(function (s) {
+                  captions[s.dataset.index] = s.textContent.trim();
+                });
+                el.addEventListener('slid.bs.carousel', function (e) {
+                  var cap = captions[e.to] || '';
+                  var capEl = document.getElementById('annCarouselCaption');
+                  if (capEl) capEl.textContent = cap;
+                });
+              })();
+            </script>
+            {% endif %}
+          {% endif %}
+          {% endwith %}
+
+          {# ── Rich-text body ───────────────────────────────────────────── #}
           <div class="rich-text"
                data-html-lang-en="{{ announcement.body_en|force_escape }}"
                data-html-lang-ar="{{ announcement.body_ar|default:''|force_escape }}"
                data-html-lang-ur="{{ announcement.body_ur|default:''|force_escape }}"
                data-html-lang-fa="{{ announcement.body_fa|default:''|force_escape }}">{{ announcement.body_en|safe }}</div>
+
+          {# ── YouTube embed (if provided separately) ───────────────────── #}
+          {% if announcement.youtube_embed_url %}
+          <div class="ratio ratio-16x9 mt-4">
+            <iframe src="{{ announcement.youtube_embed_url }}" allowfullscreen
+                    title="Event video" loading="lazy"></iframe>
+          </div>
+          {% elif announcement.video_embed_code %}
+          <div class="ratio ratio-16x9 mt-4">
+            {{ announcement.video_embed_code|safe }}
+          </div>
+          {% endif %}
+
+          {# ── Attachment ───────────────────────────────────────────────── #}
           {% if announcement.attachment %}
           <div class="mt-4">
             <a href="{{ announcement.attachment.url }}" class="btn btn-gold" download>
@@ -47,13 +143,17 @@
             </a>
           </div>
           {% endif %}
+
+          {# ── Back link ────────────────────────────────────────────────── #}
           <div class="mt-5">
-          <a href="{% url 'announcements:home' %}" class="btn btn-outline-gold">
-            <i class="fas fa-arrow-left me-2"></i>
-            <span data-lang-en="Back to Announcements" data-lang-ar="العودة للإعلانات" data-lang-ur="اعلانات پر واپس" data-lang-fa="بازگشت به اطلاعیه‌ها">Back to Announcements</span>
-          </a>
+            <a href="{% url 'announcements:home' %}" class="btn btn-outline-gold">
+              <i class="fas fa-arrow-left me-2"></i>
+              <span data-lang-en="Back to Announcements" data-lang-ar="العودة للإعلانات"
+                    data-lang-ur="اعلانات پر واپس" data-lang-fa="بازگشت به اطلاعیه‌ها">Back to Announcements</span>
+            </a>
           </div>
-        </div>
+
+        </div>{# /detail-card #}
       </div>
     </div>
   </div>

@@ -33,11 +33,31 @@
       <div class="col-lg-4 col-md-6" data-aos="fade-up">
         <div class="announcement-card {% if ann.is_pinned %}pinned{% endif %}">
           {% if ann.is_pinned %}<span class="pinned-badge"><i class="fas fa-thumbtack"></i> Pinned</span>{% endif %}
+
+          {# ── Thumbnail for any announcement that has images ── #}
+          {% with thumb=ann.first_image %}
+          {% if thumb %}
+          <div class="ann-card-thumb mb-3">
+            <img src="{{ thumb.image.url }}" alt="{{ thumb.caption }}" class="img-fluid rounded">
+          </div>
+          {% endif %}
+          {% endwith %}
+
           <div class="ann-category"
                data-lang-en="{{ ann.category.title_en }}" data-lang-ar="{{ ann.category.title_ar }}" data-lang-ur="{{ ann.category.title_ur }}" data-lang-fa="{{ ann.category.title_fa }}">{{ ann.category.title_en }}</div>
           <h6 class="ann-title"
               data-lang-en="{{ ann.title_en }}" data-lang-ar="{{ ann.title_ar }}" data-lang-ur="{{ ann.title_ur }}" data-lang-fa="{{ ann.title_fa }}">{{ ann.title_en }}</h6>
           <p class="ann-date"><i class="fas fa-calendar-alt me-1"></i>{{ ann.publish_date }}</p>
+          {% if ann.category.slug == "event" and ann.event_date %}
+          <p class="ann-date event-date-badge mb-1">
+            <i class="fas fa-star-and-crescent me-1"></i>Event: {{ ann.event_date }}
+          </p>
+          {% endif %}
+          {% if ann.category.slug == "event" and ann.event_location %}
+          <p class="ann-date event-location-badge mb-2">
+            <i class="fas fa-map-marker-alt me-1"></i>{{ ann.event_location }}
+          </p>
+          {% endif %}
           <a href="{% url 'announcements:detail' ann.pk %}" class="ann-read-more">
             <span data-lang-en="Read more" data-lang-ar="اقرأ المزيد" data-lang-ur="مزید پڑھیں" data-lang-fa="بیشتر بخوانید">Read more</span>
             <i class="fas fa-arrow-right ms-1"></i></a>

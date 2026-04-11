@@ -8,8 +8,8 @@ from .models import (
 )
 
 # ── Custom Admin Site Branding ─────────────────────────────────────────────
-admin.site.site_header  = "Muhammadiyah Trust — Admin"
-admin.site.site_title   = "Muhammadiyah Admin"
+admin.site.site_header  = "Muhammadiyyah Trust — Admin"
+admin.site.site_title   = "Muhammadiyyah Admin"
 admin.site.index_title  = "Madrasah Madinatul Ilm — Dashboard"
 
 
